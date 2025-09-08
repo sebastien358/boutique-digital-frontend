@@ -1,0 +1,43 @@
+.form-container {
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  border: var(--border);
+  padding: 20px;
+  margin-bottom: 20px;
+  h2 {
+    font-size: 22px;
+  }
+  label {
+    color: var(--gray-3);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  input, 
+  select, 
+  textarea {
+    color: var(--gray-3);
+    border: 0;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 10px;
+  }
+  .error-fields {
+    color: var(--danger-1);
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  .error-message, 
+  .success-message {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .error-message {
+    color: var(--danger-1);
+  }
+  .success-message {
+    color: var(--green-validate-form);
+  }
+}

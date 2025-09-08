@@ -1,11 +1,41 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="app-content">
+    <Header class="header" />
+    <div class="views">
+      <router-view v-slot="{Component}">
+        <template v-if="Component">
+          <Suspense>
+            <Component :is="Component" />
+          </Suspense>
+        </template>
+      </router-view>
+    </div>
+    <Footer class="footer" />
+  </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+</script>
+
+<style scoped lang="scss">
+.app-content {
+  display: grid;
+  grid-template-areas: 'header' 'views' 'footer';
+  grid-template-rows: 45px 1fr 45px;
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+}
+
+.views {
+  grid-area: views;
+}
+
+.footer {
+  grid-area: footer;
+}
+</style>

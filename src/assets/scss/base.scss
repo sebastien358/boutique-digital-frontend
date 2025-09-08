@@ -1,0 +1,199 @@
+:root {
+  --primary-1: #3498db;
+  --primary-2: #2980b9;
+  --danger-1: #e74c3c;
+  --danger-2: #c0392b;
+  --success-1: #2ecc71;
+  --success-2: #27ae60;
+  --green-1: #4CAF50;
+  --green-2: #3e8e41;
+  --gray-1: #f6f6f6;
+  --gray-2: #ddd;
+  --gray-3: #34495e;
+  --text-color: #444;
+  --text-primary-color: #ffffff;
+  --green-validate-form: #008000;
+  --border: 1px solid var(--gray-2);
+  --border-radius: 4px;
+  --font-family: 'Roboto', sans-serif;
+}
+
+// reset
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--gray-1);
+}
+
+// flex
+
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+// flex fill
+
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+// padding
+
+.p-10 {
+  padding: 10px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
+// margin
+
+.m-10 {
+  margin: 10px;
+}
+
+.m-20 {
+  margin: 20px;
+}
+
+.m-30 {
+  margin: 30px;
+}
+
+// margin bottom
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+// margin right
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+// margin left
+
+.ml-5 {
+  margin-left: 5px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.ml-20 {
+  margin-left: 20px;
+}
+
+// margin-top
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+
+a.router-link-active {
+  text-decoration: underline;
+}
+
+// text center
+
+.text-center {
+  text-align: center;
+}
+
+// util
+
+
