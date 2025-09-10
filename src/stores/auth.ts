@@ -1,3 +1,4 @@
+import type { LoginInterface, RegisterInterface } from '@/shared/interfaces';
 import { authMiddleware, axiosEmailExists, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
 import { defineStore } from 'pinia'
 
@@ -9,7 +10,7 @@ export const useAuthStore = defineStore('auth', {
     isLoggedIn: !!localStorage.getItem(TOKEN_KEY)
   }),
   actions: {
-    async register(dataRegister) {
+    async register(dataRegister: RegisterInterface) {
       try {
         const response = await axiosRegister(dataRegister);
         return response;
@@ -17,7 +18,7 @@ export const useAuthStore = defineStore('auth', {
         console.error('Erreur: inscription utilisateur', e);
       }
     },
-    async login(dataLogin) {
+    async login(dataLogin: LoginInterface) {
       try {
         const response = await axiosLogin(dataLogin);
         if (response && response.token) {
@@ -31,17 +32,17 @@ export const useAuthStore = defineStore('auth', {
         console.error('Erreur: connexion utilisateur', e);
       }
     },
-    async emailExists(dataLogin) {
+    async emailExists(dataLogin?: LoginInterface, dataRegister?: RegisterInterface) {
       try {
-        const response = await axiosEmailExists(dataLogin);
+        const response = await axiosEmailExists(dataLogin, dataRegister);
         return response;
       } catch(e) {
         console.error('Erreur: récupération email utilisateur', e);
       }
     },
-    logout(router) {
+    logout(router: any) {
       this.isLoggedIn = false;
-      this.token = null;
+      this.token = '';
       localStorage.removeItem(TOKEN_KEY);
       router.push({path: '/login'});
     }

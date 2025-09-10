@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export async function axiosRegister(dataRegister): Promise<any> {
+import type { LoginInterface, RegisterInterface } from '../interfaces';
+
+export async function axiosRegister(dataRegister: RegisterInterface): Promise<RegisterInterface> {
   try {
     const { lastname, firstname, email, password } = dataRegister;
     const response = await axios.post('http://127.0.0.1:8000/api/register', {
@@ -16,7 +18,7 @@ export async function axiosRegister(dataRegister): Promise<any> {
   }
 }
 
-export async function axiosLogin(dataLogin): Promise<any> {
+export async function axiosLogin(dataLogin: LoginInterface): Promise<LoginInterface> {
   try {
     const { email, password } = dataLogin;
     const response = await axios.post('http://127.0.0.1:8000/api/login_check', {
@@ -30,13 +32,22 @@ export async function axiosLogin(dataLogin): Promise<any> {
   }
 }
 
-export async function axiosEmailExists(dataLogin): Promise<any> {
+export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?: RegisterInterface): Promise<any> {
   try {
-    const { email } = dataLogin;
-    const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
-      email
-    });
-    return response.data;
+    if (dataLogin) {
+       const { email } = dataLogin;
+      const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
+        email
+      });
+      return response.data;
+    }
+    if (dataRegister) {
+      const { email } = dataRegister;
+      const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
+        email
+      });
+      return response.data;
+    }
   } catch(e) {
     console.log('Erreur: ', e);
     throw e;
@@ -48,7 +59,6 @@ export const authMiddleware = (TOKEN_KEY: string) => (config: any) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log('TOKEN_KEY', token);
   return config;
 }
 

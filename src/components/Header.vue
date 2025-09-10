@@ -1,12 +1,12 @@
 <template>
   <header class="d-flex align-items-center space-between">
     <div class="d-flex align-items-center">
-      <router-link to="/boutique" class="d-flex align-items-center mr-20">
+      <router-link to="/boutique" class="d-flex align-items-center mr-20 router-link-title">
         <img src="@/assets/images/logo.svg" />
         <h1>Boutique</h1>
       </router-link>
 
-      <nav>
+      <div>
         <ul class="d-flex align-items-center">
           <li class="mr-10">
             <router-link to="/boutique">Boutique</router-link>
@@ -15,10 +15,10 @@
             <router-link to="/admin">Admin</router-link>
           </li>
         </ul>
-      </nav>
+      </div>
     </div>
 
-    <nav v-if="!authStore.isLoggedIn">
+    <div v-if="!authStore.isLoggedIn">
       <ul class="d-flex align-items-center">
         <li class="mr-10">
           <router-link to="/register">Inscription</router-link>
@@ -27,14 +27,14 @@
           <router-link to="/login">Connexion</router-link>
         </li>
       </ul>
-    </nav>
-    <nav v-else>
+    </div>
+    <div v-else>
       <ul>
         <li>
           <a @click="onClickLogout()" href="#">Déconnexion</a>
         </li>
       </ul>
-    </nav>
+    </div>
   </header>
 </template>
 
@@ -54,8 +54,10 @@ function onClickLogout() {
 header {
   background-color: var(--primary-1);
   padding: 0 10px;
-  a {
+  .router-link-title {
     text-decoration: none;
+  }
+  a {
     color: var(--text-primary-color);
   }
   img {

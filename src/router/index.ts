@@ -1,4 +1,5 @@
 import Admin from '@/features/admin/Admin.vue'
+import { ADMIN_ROUTES } from '@/features/admin/routes/index.admin'
 import Login from '@/features/auth/components/Login.vue'
 import Register from '@/features/auth/components/Register.vue'
 import Boutique from '@/features/boutique/Boutique.vue'
@@ -10,7 +11,11 @@ const router = createRouter({
   routes: [
     {path: '/', redirect: '/boutique'},
     {path: '/boutique', component: Boutique},
-    {path: '/admin', component: Admin, meta: {requiresAuth: true}},
+    {
+      path: '/admin', component: Admin, 
+      children: ADMIN_ROUTES,
+      meta: {requiresAuth: true}
+    },
     {path: '/register', component: Register},
     {path: '/login', component: Login}
   ],
