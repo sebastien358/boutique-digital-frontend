@@ -10,7 +10,7 @@
     <div v-else class="not-product">
       <p>Pas de produits disponibles pour le moment.</p>
     </div>
-    <div v-if="products.length > 0" class="mt-10">
+    <div v-if="products.length" class="mt-10">
       <button @click="productStore.loadProducts()" class="btn btn-primary">Plus de produits...</button>
     </div>
   </div>

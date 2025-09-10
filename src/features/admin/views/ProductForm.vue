@@ -32,7 +32,7 @@
           <label for="category"><span>*</span>catégories</label>
           <select v-model="category" name="category" id="category">
             <option value="" selected disabled>--Please choose an option--</option>
-            <option v-for="cat in categories" :value="cat.id" :key="cat.id">{{ cat.name }}</option>
+            <option v-for="cat in categoryAdminStore.category" :value="cat.id" :key="cat.id">{{ cat.name }}</option>
           </select>
           <span v-if="errorCategory" class="error-fields"> {{ errorCategory }} </span>
         </div>
@@ -58,7 +58,7 @@ import { useAdminProductStore } from '@/stores/admin/product.admin.ts'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const schema = z.object({
   title: z
@@ -116,7 +116,6 @@ const errorMessage = ref<string>('');
 // Load catégories
 
 const categoryAdminStore = useAdminCategory();
-const categories = computed(() => categoryAdminStore.category);
 
 async function loadCategory() {
   try {

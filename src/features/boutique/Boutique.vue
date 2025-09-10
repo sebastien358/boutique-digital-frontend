@@ -1,8 +1,7 @@
 <template>
   <div>
     <Shop 
-      :products="products" 
-      :categories="categories"
+      :products="productStore.products" 
     />
   </div>
 </template>
@@ -10,12 +9,11 @@
 <script setup lang="ts">
 import Shop from '../boutique/components/shop/Shop.vue'
 import { useProductStore } from '@/stores/product'
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 
 // Load Products
 
 const productStore = useProductStore();
-const products = computed(() => productStore.products);
 
 async function loadProducts() {
   try {

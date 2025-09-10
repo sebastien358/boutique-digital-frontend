@@ -1,11 +1,11 @@
 <template>
   <div class="shop-product">
     <div class="d-flex flex-column">
-      <div v-if="product.pictures && product.pictures.length > 0">
-        <!-- <img :src="product.pictures[0].url" class="img-product" /> -->
+      <div v-if="product.pictures.length > 0"> 
+        <img :src="product.pictures[0].url" class="img-product" /> 
       </div>
       <div v-else>
-        <img src="../../../../assets//images/not-found.webp" class="img-product" />
+        <img src="../../../../assets/images/not-found.webp" class="img-product" />
       </div>
       <div class="d-flex flex-column shop-product_text">
         <h3>{{ product.title }}</h3>

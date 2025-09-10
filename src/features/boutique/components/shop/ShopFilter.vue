@@ -8,10 +8,10 @@
       </div>
       <div class="d-flex flex-column shop-filter_price">
         <h3>Filtrer par prix</h3>
-        <div v-for="(priceRange, index) in [[0, 4000], [800, 1000], [1000, 1500], [1500, 2000], [2000, 4000]]" :key="index" class="mb-10">
+        <div v-for="(priceRange, index) in [[0, 4000], [500, 1000], [1000, 1500], [1500, 2000], [2000, 4000]]" :key="index" class="mb-10">
           <input 
-            @click="filteredByPrice(priceRange)" 
-            :checked="productStore.priceRange[0] === priceRange[0] && productStore.priceRange[1] === priceRange[1]" 
+            @click="filteredByPrice(priceRange)"
+            :checked="productStore.priceRange[0] === priceRange[0]"
             name="priceRange" 
             type="radio" 
           />
@@ -27,7 +27,9 @@
       <div class="d-flex flex-column shop-filter_category">
         <h3>Filtrer par catégories</h3>
         <div v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']" :key="index" class="mb-15">
-          <span @click="filteredByCategory(category)" :class="{'active-category': productStore.category.includes(category)}">{{ category }}</span>
+          <span @click="filteredByCategory(category)" :class="{'active-category': productStore.category.includes(category)}">
+            {{ category }}
+          </span>
         </div>
       </div>
     </div>

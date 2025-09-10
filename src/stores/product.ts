@@ -6,7 +6,7 @@ interface ProductState {
   products: ProductInterface[],
   searchTerm: string,
   priceRange: [number, number],
-  category: [string],
+  category: string,
   offset: number,
   limit: number
 }
@@ -16,7 +16,7 @@ export const useProductStore = defineStore('product', {
     products: [],
     searchTerm: '',
     priceRange: [0, 4000],
-    category: ['all'],
+    category: 'all',
     offset: 0,
     limit: 20
   }),
@@ -34,6 +34,7 @@ export const useProductStore = defineStore('product', {
       try {
         this.offset += this.limit;
         await this.getProducts(true);
+        return true;
       } catch(e) {
         console.error('Erreur: button load products', e);
       } 
@@ -52,7 +53,7 @@ export const useProductStore = defineStore('product', {
         const response = await axiosFilteredProductByPrice(minPrice, maxPrice);
         response ? this.products = response : this.products = [];
       } catch(e) {
-        console.error('Erreur: search products', e);      
+        console.error('Erreur: filtration par prix', e);      
       }
     },
     async filteredProductByCategory(category: string) {
@@ -72,14 +73,14 @@ export const useProductStore = defineStore('product', {
             break;
         }
       } catch(e) {
-        console.error('Erreur: search products', e);      
+        console.error('Erreur: filtration par catégories', e);      
       }
     },
     async initProductFilters() {
       await this.getProducts(false);
       this.searchTerm = '';
       this.priceRange = [0, 4000];  
-      this.category = ['all'];
+      this.category = 'all';
       this.offset = 0;
       this.limit = 20;
     }
