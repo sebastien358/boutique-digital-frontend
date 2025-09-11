@@ -21,13 +21,17 @@ export const useAuthStore = defineStore('auth', {
     async login(dataLogin: LoginInterface) {
       try {
         const response = await axiosLogin(dataLogin);
-        if (response && response.token) {
-          localStorage.setItem(TOKEN_KEY, response.token);
-          this.isLoggedIn = true;
-          authMiddleware(TOKEN_KEY);
-        } else {
-          console.log('Erreur: token introuvable');
-        }
+        switch(response) {
+          case response:
+          case response.token:
+            localStorage.setItem(TOKEN_KEY, response.token);
+            this.isLoggedIn = true;
+            authMiddleware(TOKEN_KEY);
+            break;
+            default:
+              console.log('Erreur: token introuvable');
+              break;
+          }
       } catch(e) {
         console.error('Erreur: connexion utilisateur', e);
       }
@@ -42,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
     },
     logout(router: any) {
       this.isLoggedIn = false;
-      this.token = '';
+      this.token = null;
       localStorage.removeItem(TOKEN_KEY);
       router.push({path: '/login'});
     }

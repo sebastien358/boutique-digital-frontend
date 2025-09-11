@@ -24,5 +24,6 @@ import NavAdmin from './components/NavAdmin.vue'
 
 .views {
   height: 100%;
+  // width: 100%;
 }
 </style>

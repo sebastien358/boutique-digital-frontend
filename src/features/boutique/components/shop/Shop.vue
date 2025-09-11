@@ -2,6 +2,7 @@
   <div class="shop">
     <ShopFilter 
       :products="products"
+      @init-product-filters="emit('initProductFilters')"
       class="shop-product-filter" 
     />
     <div class="d-flex flex-column">
@@ -21,6 +22,10 @@ import ShopFilter from './ShopFilter.vue'
 defineProps<{
   products: ProductInterface[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'initProductFilters'): void
+}>()
 </script>
 
 <style scoped lang="scss">
@@ -30,8 +35,6 @@ defineProps<{
 }
 
 .scrollable {
-  overflow-y: auto;
-  height: calc(100vh - 96px);
   padding: 20px 20px 10px 20px;
 }
 

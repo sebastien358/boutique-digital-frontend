@@ -39,14 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth.ts'
-import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/authStore'
+import { useRouter } from 'vue-router'
 
-const authStore = useAuthStore();
-const router = useRouter();
+const authStore = useAuthStore()
+const router = useRouter()
 
 function onClickLogout() {
-  authStore.logout(router);
+  authStore.logout(router)
 }
 </script>
 
@@ -70,3 +70,4 @@ header {
   }
 }
 </style>
+@/stores/authStore

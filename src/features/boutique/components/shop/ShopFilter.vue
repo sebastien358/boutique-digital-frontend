@@ -1,79 +1,110 @@
 <template>
   <div class="d-flex flex-column space-between shop-filter">
-
-    <div class="d-flex flex-column"> 
+    <div class="d-flex flex-column">
       <div class="d-flex flex-column shop-filter_search">
         <h3>Rechercher</h3>
-        <input @input="inputSearchTerm()" v-model="productStore.searchTerm" type="text" placeholder="Rechercher" />
+        <input
+          @input="inputSearchTerm()"
+          v-model="productStore.searchTerm"
+          type="text"
+          placeholder="Rechercher"
+        />
       </div>
       <div class="d-flex flex-column shop-filter_price">
         <h3>Filtrer par prix</h3>
-        <div v-for="(priceRange, index) in [[0, 4000], [500, 1000], [1000, 1500], [1500, 2000], [2000, 4000]]" :key="index" class="mb-10">
-          <input 
-            @click="filteredByPrice(priceRange)"
-            :checked="productStore.priceRange[0] === priceRange[0]"
-            name="priceRange" 
-            type="radio" 
-          />
+        <div
+          v-for="(priceRange, index) in [
+            [0, 4000],
+            [500, 1000],
+            [1000, 1500],
+            [1500, 2000],
+            [2000, 4000],
+          ]"
+          :key="index"
+          class="mb-10"
+        >
+          <input @click="filteredByPrice(priceRange)" name="priceRange" type="radio" />
           <span>
-            {{ 
-              priceRange[0] === 0 ? 
-              'Tous les produits' : priceRange[0] === 2000 ? 
-              'Plus de 2000' : `Entre ${priceRange[0]} et ${priceRange[1]}`  
+            {{
+              priceRange[0] === 0
+                ? 'Tous les produits'
+                : priceRange[0] === 2000
+                  ? 'Plus de 2000'
+                  : `Entre ${priceRange[0]} et ${priceRange[1]}`
             }}
           </span>
         </div>
       </div>
       <div class="d-flex flex-column shop-filter_category">
         <h3>Filtrer par catégories</h3>
-        <div v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']" :key="index" class="mb-15">
-          <span @click="filteredByCategory(category)" :class="{'active-category': productStore.category.includes(category)}">
+        <div
+          v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']"
+          :key="index"
+          class="mb-15"
+        >
+          <span @click="filteredByCategory(category)">
             {{ category }}
           </span>
         </div>
       </div>
     </div>
     <div class="d-flex flex-column shop-filter_reinitialisation">
-      <p>Nombre de produits : <span>{{ products.length }}</span></p>
-      <button @click="productStore.initProductFilters()" class="btn btn-danger">Réinitialisation</button>
+      <p>
+        Nombre de produits : <span>{{ products.length }}</span>
+      </p>
+      <button @click="emit('initProductFilters')" class="btn btn-danger">Réinitialisation</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useProductStore } from '@/stores/product'
-import type { ProductInterface }from '@/shared/interfaces'
+import { useProductStore } from '../../../../stores/productStore'
+import type { ProductInterface } from '@/shared/interfaces'
+
+// Récupération des produits : PROPS
 
 defineProps<{
   products: ProductInterface[]
 }>()
 
-const productStore = useProductStore();
+// Filtrer les produits : SEARCH
+
+const productStore = useProductStore()
 
 async function inputSearchTerm() {
   try {
-    await productStore.searchProducts(productStore.searchTerm);
-  } catch(e) {
-    console.error(e);
+    await productStore.searchProducts(productStore.searchTerm)
+  } catch (e) {
+    console.error(e)
   }
 }
 
+// Filtrer les produits : PRICE
+
 async function filteredByPrice(priceRange: number[]) {
-    try {
-    await productStore.filteredProductByPrice(priceRange);
-  } catch(e) {
-    console.error(e);
+  try {
+    await productStore.filteredProductByPrice(priceRange)
+  } catch (e) {
+    console.error(e)
   }
 }
+
+// Filtrer les produits : CATEGORY
 
 async function filteredByCategory(category: string) {
   try {
-    await productStore.filteredProductByCategory(category);
-    productStore.category = category;
-  } catch(e) {
-    console.error(e);
+    await productStore.filteredProductByCategory(category)
+    productStore.category = category
+  } catch (e) {
+    console.error(e)
   }
 }
+
+// Initialisation des produits : ÉVÉNEMENT
+
+const emit = defineEmits<{
+  (e: 'initProductFilters'): void
+}>()
 </script>
 
 <style scoped lang="scss">
@@ -129,3 +160,4 @@ async function filteredByCategory(category: string) {
   }
 }
 </style>
+@/stores/productStore

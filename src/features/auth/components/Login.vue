@@ -25,80 +25,78 @@
             {{ successMessage }}
           </span>
         </div>
-        <button class="btn btn-primary" :disabled="isSubmitting">
-          Soumettre
-        </button>
+        <button class="btn btn-primary" :disabled="isSubmitting">Soumettre</button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth.ts'
+import { useAuthStore } from '../../../stores/authStore'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 import * as z from 'zod'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const schema = z.object({
   email: z
-    .string({message: 'Veuillez remplir votre adresse e-mail'})
+    .string({ message: 'Veuillez remplir votre adresse e-mail' })
     .email('Adresse e-mail invalide'),
   password: z
-    .string({message: 'Veuillez remplir votre mot de passe'})
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
-});
+    .string({ message: 'Veuillez remplir votre mot de passe' })
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères'),
+})
 
 const { handleSubmit, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema)
-});
+  validationSchema: toTypedSchema(schema),
+})
 
-const { value: email, errorMessage: errorEmail } = useField('email');
-const { value: password, errorMessage: errorPassword } = useField('password');
+const { value: email, errorMessage: errorEmail } = useField('email')
+const { value: password, errorMessage: errorPassword } = useField('password')
 
-const authStore = useAuthStore();
+const authStore = useAuthStore()
 
-const onSubmit = handleSubmit(async (dataLogin, {resetForm}) => {
+const onSubmit = handleSubmit(async (dataLogin, { resetForm }) => {
   try {
-    const response = await authStore.emailExists(dataLogin);
+    const response = await authStore.emailExists(dataLogin)
     if (!response.exists) {
-      setErrorMessage('Aucun compte n\'est associé à cette adresse e-mail');
+      setErrorMessage("Aucun compte n'est associé à cette adresse e-mail")
     } else {
-      const response = await authStore.login(dataLogin);
+      const response = await authStore.login(dataLogin)
       if (authStore.isLoggedIn) {
-        setSuccessMessage('Connexion établie avec succès', resetForm);
+        setSuccessMessage('Connexion établie avec succès', resetForm)
       } else {
-        setErrorMessage('Identifiants incorrects. Vérifiez votre email et votre mot de passe');
+        setErrorMessage('Identifiants incorrects. Vérifiez votre email et votre mot de passe')
       }
     }
-  } catch(e) {
-    setErrorMessage('Erreur de la validation du formulaire');
-    console.log('Erreur de la validation du formulaire', e);
+  } catch (e) {
+    setErrorMessage('Erreur de la validation du formulaire')
+    console.log('Erreur de la validation du formulaire', e)
   }
-}) 
+})
 
-const successMessage = ref<string>('');
-const errorMessage = ref<string>('');
+const successMessage = ref<string>('')
+const errorMessage = ref<string>('')
 
-const router = useRouter();
+const router = useRouter()
 
 function setSuccessMessage(message: string, resetForm: () => void) {
-  errorMessage.value = '';
-  successMessage.value = message;
+  errorMessage.value = ''
+  successMessage.value = message
   setTimeout(() => {
-    successMessage.value = '';
-    resetForm();
-    router.push({path: '/admin'});
-  }, 2000);
+    successMessage.value = ''
+    resetForm()
+    router.push({ path: '/admin' })
+  }, 2000)
 }
 
 function setErrorMessage(message: string) {
-  successMessage.value = '';
-  errorMessage.value = message;
+  successMessage.value = ''
+  errorMessage.value = message
   setTimeout(() => {
-    errorMessage.value = '';
-  }, 4000);
+    errorMessage.value = ''
+  }, 4000)
 }
 </script>
 
@@ -107,3 +105,4 @@ function setErrorMessage(message: string) {
   height: 100%;
 }
 </style>
+@/stores/authStore
