@@ -14,7 +14,7 @@
               <h4>{{ product.title }}</h4>
             </div>
             <div class="d-flex align-items-center"> 
-              <button class="btn btn-success mr-5">Modifier</button>
+              <router-link :to="{name: 'edit', params: {id: product.id}}" class="btn btn-success mr-5">Modifier</router-link>
               <button @click="openModal(product.id)" class="btn btn-danger">Supprimer</button>
             </div>
           </div>
@@ -66,7 +66,7 @@ const itemsPerPage = ref<number>(20)
 
 async function loadProducts() {
   try {
-    await productAdminStore.getAdminProducts(currentPage.value, itemsPerPage.value)
+    await productAdminStore.getProducts(currentPage.value, itemsPerPage.value)
   } catch (e) {
     console.error('Erreur: récupération des produits', e)
   }
@@ -77,7 +77,7 @@ async function previousPage() {
     currentPage.value--
   }
   try {
-    await productAdminStore.getAdminProducts(currentPage.value, itemsPerPage.value)
+    await productAdminStore.getProducts(currentPage.value, itemsPerPage.value)
   } catch (e) {
     console.error(e)
   }
@@ -88,7 +88,7 @@ async function nextPage() {
     currentPage.value++
   }
   try {
-    await productAdminStore.getAdminProducts(currentPage.value, itemsPerPage.value)
+    await productAdminStore.getProducts(currentPage.value, itemsPerPage.value)
   } catch (e) {
     console.error(e)
   }
@@ -102,7 +102,9 @@ onMounted(async () => {
   }
 })
 
-const totalPages = computed(() => Math.ceil(productAdminStore.totalItems / itemsPerPage.value))
+const totalPages = computed(() => 
+  Math.ceil(productAdminStore.totalItems / itemsPerPage.value)
+)
 </script>
 
 <style scoped lang="scss">
@@ -141,7 +143,7 @@ const totalPages = computed(() => Math.ceil(productAdminStore.totalItems / items
 }
 
 .products {
-  width: 1400px;
+  width: 800px;
   .products-views {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -158,4 +160,4 @@ const totalPages = computed(() => Math.ceil(productAdminStore.totalItems / items
   }
 }
 </style>
-../../../stores/admin/productAdminStore
+

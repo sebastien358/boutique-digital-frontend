@@ -1,6 +1,8 @@
 import type { ProductFormInterface, ProductInterface } from '@/shared/interfaces'
 import {
+  axiosAdminDeleteImage,
   axiosAdminDeleteProduct,
+  axiosAdminGetCurrentProduct,
   axiosAdminGetProducts,
   axiosAdminProductNew,
 } from '@/shared/services/admin/productAdmin.service'
@@ -20,7 +22,7 @@ export const useProductAdminStore = defineStore('productAdmin', {
     totalItems: 0,
   }),
   actions: {
-    async getAdminProducts(currentPage: number, itemsPerPage: number) {
+    async getProducts(currentPage: number, itemsPerPage: number) {
       try {
         this.isLoggedIn = true
         const response = await axiosAdminGetProducts(currentPage, itemsPerPage)
@@ -37,12 +39,28 @@ export const useProductAdminStore = defineStore('productAdmin', {
         this.isLoggedIn = false
       }
     },
+    async getCurrentProduct(id: number) {
+      try {
+        const response = await axiosAdminGetCurrentProduct(id);
+        return response;
+      } catch(e) {
+        console.error('Erreur : récupération d\'un produit', e);
+      }
+    },
     async deleteProduct(id: number) {
       try {
         const response = await axiosAdminDeleteProduct(id);
         const productStore = useProductStore();
         this.products = this.products.filter(p => p.id !== id);
         productStore.products = productStore.products.filter(p => p.id !== id);
+      } catch(e) {
+        console.error('Erreur: suppression d\'un produit', e);
+      }
+    },
+    async deleteImage(productId: number, pictureId: number) {
+      try {
+        const response = await axiosAdminDeleteImage(productId, pictureId);
+        return response;
       } catch(e) {
         console.error('Erreur: suppression d\'un produit', e);
       }

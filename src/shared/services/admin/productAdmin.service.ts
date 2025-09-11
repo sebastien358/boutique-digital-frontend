@@ -15,9 +15,27 @@ export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: n
   }
 };
 
+export async function axiosAdminGetCurrentProduct(id: number): Promise<any> {
+  try {
+    const response = await axios.get(`http://127.0.0.1:8000/admin/product/${id}` );
+    return response.data;
+  } catch(e) {
+    console.error('Erreur: ', e);
+  }
+};
+
 export async function axiosAdminDeleteProduct(id: number): Promise<any> {
   try {
     const response = await axios.delete(`http://127.0.0.1:8000/admin/product/delete/${id}` );
+    return response.data;
+  } catch(e) {
+    console.error('Erreur: ', e);
+  }
+};
+
+export async function axiosAdminDeleteImage(productId: number, pictureId: number): Promise<any> {
+  try {
+    const response = await axios.delete(`http://127.0.0.1:8000/admin/product/${productId}/picture/${pictureId}`);
     return response.data;
   } catch(e) {
     console.error('Erreur: ', e);
