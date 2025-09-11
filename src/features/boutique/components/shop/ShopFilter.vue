@@ -13,24 +13,13 @@
       <div class="d-flex flex-column shop-filter_price">
         <h3>Filtrer par prix</h3>
         <div
-          v-for="(priceRange, index) in [
-            [0, 4000],
-            [500, 1000],
-            [1000, 1500],
-            [1500, 2000],
-            [2000, 4000],
-          ]"
-          :key="index"
-          class="mb-10"
-        >
-          <input @click="filteredByPrice(priceRange)" name="priceRange" type="radio" />
+          v-for="(priceRange, index) in [[0, 4000],[500, 1000],[1000, 1500],[1500, 2000],[2000, 4000]]" :key="index" class="mb-10">
+          <input @click="filteredByPrice(priceRange)" v-model="productStore.priceRange" :checked="productStore.priceRange[0] === priceRange[0]" name="priceRange" type="radio" />
           <span>
             {{
-              priceRange[0] === 0
-                ? 'Tous les produits'
-                : priceRange[0] === 2000
-                  ? 'Plus de 2000'
-                  : `Entre ${priceRange[0]} et ${priceRange[1]}`
+              priceRange[0] === 0 ? 'Tous les produits' : 
+              priceRange[0] === 2000 ? 'Plus de 2000' : 
+              `Entre ${priceRange[0]} et ${priceRange[1]}`
             }}
           </span>
         </div>
@@ -39,6 +28,7 @@
         <h3>Filtrer par catégories</h3>
         <div
           v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']"
+          :class="{'active-category' : productStore.category.includes(category)}"
           :key="index"
           class="mb-15"
         >
@@ -73,9 +63,9 @@ const productStore = useProductStore()
 
 async function inputSearchTerm() {
   try {
-    await productStore.searchProducts(productStore.searchTerm)
+    await productStore.searchProducts(productStore.searchTerm);
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
@@ -83,9 +73,9 @@ async function inputSearchTerm() {
 
 async function filteredByPrice(priceRange: number[]) {
   try {
-    await productStore.filteredProductByPrice(priceRange)
+    await productStore.filteredProductByPrice(priceRange);
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
@@ -93,10 +83,10 @@ async function filteredByPrice(priceRange: number[]) {
 
 async function filteredByCategory(category: string) {
   try {
-    await productStore.filteredProductByCategory(category)
-    productStore.category = category
+    await productStore.filteredProductByCategory(category);
+    productStore.category = category;
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 

@@ -6,7 +6,7 @@ interface CategoryState {
   category: CategoryInterface[]
 }
 
-export const useAdminCategory = defineStore('category', {
+export const useAdminCategory = defineStore('categoryAdmin', {
   state: (): CategoryState => ({
     category: []
   }),

@@ -1,5 +1,6 @@
 import type { ProductFormInterface, ProductInterface } from '@/shared/interfaces'
 import {
+  axiosAdminDeleteProduct,
   axiosAdminGetProducts,
   axiosAdminProductNew,
 } from '@/shared/services/admin/productAdmin.service'
@@ -24,11 +25,9 @@ export const useProductAdminStore = defineStore('productAdmin', {
         this.isLoggedIn = true
         const response = await axiosAdminGetProducts(currentPage, itemsPerPage)
         if (response) {
-          const products = Array.isArray(response.products)
-            ? response.products
-            : [response.products]
-          this.products = products
-          this.totalItems = response.total
+          const products = Array.isArray(response.products) ? response.products : [response.products];
+          this.products = products;
+          this.totalItems = response.total;
         } else {
           console.error('Erreur: la response est vide')
         }
@@ -36,6 +35,16 @@ export const useProductAdminStore = defineStore('productAdmin', {
         console.error('Erreur: récupération des produits', e)
       } finally {
         this.isLoggedIn = false
+      }
+    },
+    async deleteProduct(id: number) {
+      try {
+        const response = await axiosAdminDeleteProduct(id);
+        const productStore = useProductStore();
+        this.products = this.products.filter(p => p.id !== id);
+        productStore.products = productStore.products.filter(p => p.id !== id);
+      } catch(e) {
+        console.error('Erreur: suppression d\'un produit', e);
       }
     },
     async newProduct(dataProduct: ProductFormInterface) {

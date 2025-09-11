@@ -30,7 +30,7 @@ onMounted(async () => {
   }
 })
 
-// function initialisation
+// function initialisation de la filtration des produits
 
 async function initProductFilters() {
   try {
@@ -42,4 +42,3 @@ async function initProductFilters() {
 </script>
 
 <style scoped lang="scss"></style>
-../../stores/productStore

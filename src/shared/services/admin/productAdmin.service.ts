@@ -15,6 +15,15 @@ export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: n
   }
 };
 
+export async function axiosAdminDeleteProduct(id: number): Promise<any> {
+  try {
+    const response = await axios.delete(`http://127.0.0.1:8000/admin/product/delete/${id}` );
+    return response.data;
+  } catch(e) {
+    console.error('Erreur: ', e);
+  }
+};
+
 export async function axiosAdminProductNew(formData: ProductFormInterface): Promise<any> {
   try {
     const response = await axios.post('http://127.0.0.1:8000/admin/product/new', formData);
