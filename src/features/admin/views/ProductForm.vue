@@ -148,16 +148,16 @@ const { value: category, errorMessage: errorCategory } = useField('category')
 
 const onSubmit = handleSubmit(async (dataProduct) => {
   try {
-    if (Object.keys(!state.product).length > 0) {
-      delete dataProduct.image
-      dataProduct.images = state.images
-      await productAdminStore.newProduct(dataProduct)
-      setSuccessMessage('Le produit a été ajouté avec succès', null)
-    } else {
+    if (Object.keys(state.product).length > 0) {
       delete dataProduct.image
       dataProduct.images = [ ...state.images ]
       await productAdminStore.updateProduct(dataProduct, route.params.id);
       setSuccessMessage('Le produit a été modifié avec succès')
+    } else {
+      delete dataProduct.image
+      dataProduct.images = state.images
+      await productAdminStore.newProduct(dataProduct)
+      setSuccessMessage('Le produit a été ajouté avec succès', null)
     }
   } catch (e) {
     setErrorMessage("L'envoi d'un produit n'a pas pu aboutir")
