@@ -58,7 +58,7 @@ async function deleteProduct(id: number) {
       p {
         color: #747d8c;
         font-size: 15px;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
       }
     }
   }

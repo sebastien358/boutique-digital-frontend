@@ -50,3 +50,12 @@ export async function axiosAdminProductNew(formData: ProductFormInterface): Prom
     console.error('Erreur: ', e);
   }
 };
+
+export async function axiosAdminProductEdit(formData: ProductFormInterface, id: number): Promise<any> {
+  try {
+    const response = await axios.post(`http://127.0.0.1:8000/admin/product/edit/${id}`, formData);
+    return response.data;
+  } catch(e) {
+    console.error('Erreur: ', e);
+  }
+};

@@ -35,7 +35,7 @@ export async function axiosLogin(dataLogin: LoginInterface): Promise<LoginInterf
 export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?: RegisterInterface): Promise<any> {
   try {
     if (dataLogin) {
-       const { email } = dataLogin;
+      const { email } = dataLogin;
       const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
         email
       });

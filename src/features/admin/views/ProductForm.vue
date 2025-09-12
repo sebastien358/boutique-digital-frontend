@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex align-items-center justify-content-center product-form">
-    <div class="d-flex flex-column align-items-center">
+    <div class="d-flex align-items-center flex-column">
       <div class="form-container">
-        <h2 class="mb-15 text-center">{{ product ? 'Éditer le produit' : 'Ajouter un produit' }}</h2>
+        <h2 class="mb-15 text-center">{{ Object.keys(state.product).length > 0 ? 'Éditer le produit' : 'Ajouter un produit' }}</h2>
         <form @submit.prevent="onSubmit">
           <div class="d-flex flex-column mb-20">
             <label><span>*</span>Title</label>
@@ -54,10 +54,10 @@
           <button class="btn btn-primary" :disabled="isSubmitting">Soumettre</button>
         </form>
       </div>
-      <div v-if="product.pictures && product.pictures.length > 0" class="container-image">
-        <div v-for="(picture, index) in product.pictures" :key="index" class="d-flex align-items-center flex-column">
+      <div v-if="state.product.pictures && state.product.pictures.length > 0" class="container-image">
+        <div v-for="(picture, index) in state.product.pictures" :key="index" class="d-flex align-items-center flex-column">
           <img :src="picture.url" class="img-product" />
-          <button @click="deleteImage(product.id, picture.id, index)" class="btn btn-danger">Delete</button>
+          <font-awesome-icon @click="deleteImage(state.product.id, picture.id, index)" icon="fa-solid fa-trash" />
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ import { useAdminCategory } from '../../../stores/admin/categoryAdminStore'
 import { useProductAdminStore } from '../../../stores/admin/productAdminStore'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import * as z from 'zod'
 
@@ -79,16 +79,22 @@ const productAdminStore = useProductAdminStore()
 
 const route = useRoute();
 
-const product = ref('');
+const state = reactive<{ 
+  product: any, 
+  images: object }>({ 
+    product: {}, 
+    images: [] 
+})
 
 if (route.params.id) {
-  product.value = await productAdminStore.getCurrentProduct(route.params.id);
+  state.product = await productAdminStore.getCurrentProduct(route.params.id);
+  // console.log(state.product)
 }
 
 async function deleteImage(productId: number, pictureId: number, index?: any) {
   try {
     await productAdminStore.deleteImage(productId, pictureId, index);
-    product.value.pictures.splice(index, 1);
+    state.product.pictures.splice(index, 1);
   } catch(e) {
     console.error('Erreur: suppression d\'une image', e);
   }
@@ -96,11 +102,12 @@ async function deleteImage(productId: number, pictureId: number, index?: any) {
 
 // Initialisation des champs du formulaire
 
+
 const initialValues = {
-  title: product.value ? product.value.title : '',
-  price: product.value ? product.value.price : 0,
-  description: product.value ? product.value.description : '',
-  category: product.value ? product.value.category : ''
+  title: state.product?.title ?? '',
+  price: state.product?.price ?? 0,
+  description: state.product?.description ?? '',
+  category: state.product?.category ?? ''
 }
 
 // Schema
@@ -124,10 +131,8 @@ const schema = z.object({
 
 // Gestion upload images
 
-const images = ref(product.value ? product.value.images : [])
-
 function onChangeImages(files: File[]) {
-  images.value = [...images.value, ...files].flat(Infinity)
+  state.images = [...state.images, ...files].flat(Infinity)
 }
 
 const { handleSubmit, isSubmitting } = useForm({
@@ -141,12 +146,19 @@ const { value: price, errorMessage: errorPrice } = useField('price')
 const { value: image, errorMessage: errorImage } = useField('image')
 const { value: category, errorMessage: errorCategory } = useField('category')
 
-const onSubmit = handleSubmit(async (dataProduct, { resetForm }) => {
+const onSubmit = handleSubmit(async (dataProduct) => {
   try {
-    delete dataProduct.image
-    dataProduct.images = images.value
-    await productAdminStore.newProduct(dataProduct)
-    setSuccessMessage('Le produit a été ajouté avec succès', resetForm)
+    if (Object.keys(!state.product).length > 0) {
+      delete dataProduct.image
+      dataProduct.images = state.images
+      await productAdminStore.newProduct(dataProduct)
+      setSuccessMessage('Le produit a été ajouté avec succès', null)
+    } else {
+      delete dataProduct.image
+      dataProduct.images = [ ...state.images ]
+      await productAdminStore.updateProduct(dataProduct, route.params.id);
+      setSuccessMessage('Le produit a été modifié avec succès')
+    }
   } catch (e) {
     setErrorMessage("L'envoi d'un produit n'a pas pu aboutir")
     console.error(e)
@@ -158,13 +170,13 @@ const errorMessage = ref<string>('')
 
 const router = useRouter()
 
-const setSuccessMessage = (messsage: string, resetForm: () => void) => {
+const setSuccessMessage = (message: string, resetForm: () => void) => {
   errorMessage.value = ''
-  successMessage.value = messsage
+  successMessage.value = message
   setTimeout(() => {
     successMessage.value = ''
-    resetForm()
-    router.push({ path: '/product-list' })
+    // resetForm()
+    // router.push({ path: '/product-list' })
   }, 2000)
 }
 
@@ -192,7 +204,7 @@ onMounted(async () => {
   try {
     await loadCategory();
   } catch(e) {
-    console.error('Erreur: récupération des catégories', e);
+    console.error(e);
   }
 })
 </script>
@@ -200,6 +212,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .product-form {
   height: 100%;
+  padding: 20px;
 }
 
 .container-image {
@@ -208,6 +221,11 @@ onMounted(async () => {
   justify-content: center;
   gap: 30px;
   margin-top: 40px;
+  .fa-trash {
+    cursor: pointer;
+    color: var(--danger-1);
+    font-size: 16px;
+  }
   .img-product {
     width: 200px;
     height: 200px;

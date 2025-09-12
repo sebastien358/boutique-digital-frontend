@@ -14,16 +14,11 @@ export const useAdminCategory = defineStore('categoryAdmin', {
     async getCategories() {
       try {
         const response = await axiosAdminGetCategories();
-        switch(response) {
-          case response:
-          case Array.isArray(response):
-            this.category = response;
-            break;
-          case !Array.isArray(response):
-            this.category = [response];
-          default:
-            console.log('Liste des catégories introuvables');
-            break;
+        if (response) {
+          const categories: CategoryInterface[] = Array.isArray(response) ? response : [response]
+          this.category = categories
+        } else {
+          console.log('Erreur: response vide');
         }
       } catch(e) {
         console.error('Erreur: récupération de la liste des catégories', e);

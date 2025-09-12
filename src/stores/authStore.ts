@@ -28,9 +28,9 @@ export const useAuthStore = defineStore('auth', {
             this.isLoggedIn = true;
             authMiddleware(TOKEN_KEY);
             break;
-            default:
-              console.log('Erreur: token introuvable');
-              break;
+          default:
+            console.log('Erreur: token introuvable');
+            break;
           }
       } catch(e) {
         console.error('Erreur: connexion utilisateur', e);
