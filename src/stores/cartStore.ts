@@ -10,13 +10,21 @@ export const useCartStore = defineStore('cart', {
     async addToCart(product) {
       try {
         const existingProduct = this.cart.find((item) => item.id === product.id);
+        let productToAdd;
         if (existingProduct) {
           existingProduct.quantity += 1;
+          productToAdd = { id: product.id, title: product.title, price: product.price, quantity: 1 };
         } else {
-          const cart = { id: product.id, title: product.title, price: product.price, quantity: 1 }
+          const cart = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            quantity: 1
+          }
           this.cart.push(cart);
-          await axiosAddToCart(this.cart);
+          productToAdd = cart;
         }
+        await axiosAddToCart([productToAdd]);
       } catch(e) {
         console.error('Erreur: ajout d\'un produit dans le panier', e)
       }
