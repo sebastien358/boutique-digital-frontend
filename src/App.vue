@@ -2,7 +2,7 @@
   <div class="app-content">
     <Header class="header" />
     <div class="views">
-      <router-view v-slot="{Component}">
+      <router-view v-slot="{ Component }">
         <template v-if="Component">
           <Suspense>
             <Component :is="Component" />
@@ -20,6 +20,8 @@ import Footer from './components/Footer.vue'
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/mixins' as m;
+
 .app-content {
   display: grid;
   grid-template-areas: 'header' 'views' 'footer';

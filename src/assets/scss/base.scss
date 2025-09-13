@@ -1,3 +1,5 @@
+@use '@/assets/scss/mixins' as mixin;
+
 :root {
   --primary-1: #3498db;
   --primary-2: #2980b9;
@@ -195,15 +197,11 @@ a.router-link-active {
   text-align: center;
 }
 
-// Animation
+// utils
 
-.v-leave-to,
-.v-enter-from {
-  transform: translateY(-10px);
-  opacity: 0;
+@include mixin.lg-tablet {
+  .hide-tablet {
+    display: none;
+  }
 }
 
-.v-leave-active,
-.v-enter-active {
-  transition: all 0.2s;
-}

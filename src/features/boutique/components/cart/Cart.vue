@@ -123,4 +123,15 @@ function goToPayement() {
     }
   }
 }
+
+.v-leave-to,
+.v-enter-from {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.v-leave-active,
+.v-enter-active {
+  transition: all 0.3s;
+}
 </style>
