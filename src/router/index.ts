@@ -3,6 +3,7 @@ import { ADMIN_ROUTES } from '@/features/admin/routes/index.admin'
 import Login from '@/features/auth/components/Login.vue'
 import Register from '@/features/auth/components/Register.vue'
 import Boutique from '@/features/boutique/Boutique.vue'
+import PayementProcessing from '@/features/boutique/components/cart/PayementProcessing.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -19,6 +20,7 @@ const router = createRouter({
     },
     { path: '/register', component: Register },
     { path: '/login', component: Login },
+    { path: '/payement', component: PayementProcessing}
   ],
 })
 

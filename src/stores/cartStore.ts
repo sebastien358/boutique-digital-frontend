@@ -1,4 +1,3 @@
-// cartStore.js
 import { axiosAddToCart, axiosDeleteItemCart, axiosGetCarts } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
 import { useProductStore } from './productStore';

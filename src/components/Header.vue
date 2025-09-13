@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center">
       <router-link to="/boutique" class="d-flex align-items-center mr-20 router-link-title">
         <img src="@/assets/images/logo.svg" />
-        <h1>Boutique</h1>
+        <h1>DigitalShop</h1>
       </router-link>
 
       <div>

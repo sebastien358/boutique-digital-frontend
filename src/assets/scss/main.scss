@@ -1,3 +1,5 @@
+// racine css
+
 @use './base.scss' as *;
 
 // buttons
@@ -15,3 +17,7 @@
 // scrollable
 
 @use './scrollable/scrollable.scss' as *;
+
+// mixins
+
+@use './mixins' as *;

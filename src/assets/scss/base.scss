@@ -195,4 +195,15 @@ a.router-link-active {
   text-align: center;
 }
 
-// util
+// Animation
+
+.v-leave-to,
+.v-enter-from {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.v-leave-active,
+.v-enter-active {
+  transition: all 0.2s;
+}

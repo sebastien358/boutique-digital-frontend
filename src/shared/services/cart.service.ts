@@ -20,7 +20,7 @@ export async function axiosAddToCart(cart) {
 
 export async function axiosDeleteItemCart(id: number) {
   try {
-    const response = await axios.delete(`http://127.0.0.1:8000/api/cart/delete/${id}`);
+    const response = await axios.delete(`http://127.0.0.1:8000/api/delete/cart/${id}`);
     return response.data;
   } catch(e) {
     console.error('Erreur: ', e);

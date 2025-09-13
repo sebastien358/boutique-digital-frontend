@@ -1,32 +1,42 @@
 <template>
   <!-- Panier de la boutique -->
   <div class="basket">
+    <Transition mode="out-in">
     <div v-if="!state.open">
       <div @click="state.open = !state.open" class="basket_tooglebasket">
         <div class="count-cart">
-          <span>{{ carts.length }}</span>
+          <span>{{ props.carts.length }}</span>
         </div>
         <font-awesome-icon icon="fa-solid fa-basket-shopping" />
       </div>
     </div>
     <div v-else class="d-flex flex-column basket_content"> 
       <h2>Panier</h2>
-      <p :class="{'empty-basket': !carts.length, 'filled-basket': carts.length }">
-        {{ carts.length ? 'Liste des éléments du panier' : 'Votre panier est vide pour le moment.' }}
+      <p :class="{'empty-basket': !props.carts.length, 'filled-basket': props.carts.length }">
+        {{ props.carts.length ? 'Liste des éléments du panier :' : 'Votre panier est vide pour le moment.' }}
       </p>
+      <!-- Composant données panier -->
       <CartProductList 
         @remove-from-cart="emit('removeFromCart', $event)"
         :carts="carts"
       />
-      <button class="btn btn-success">Commander ({{ totalBasket }})€</button>
-    </div>
+      <button @click="goToPayement()" class="btn btn-success text-center">
+        Commander ({{ props.totalBasket }})€
+      </button> 
+      <Calc :open="state.open" @close="state.open = false" :transparent="false" />
+    </div>    
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
 import CartProductList from './CartProductList.vue'
+import Calc from '../../../../components/Calc.vue'
 import type { ProductCartInterface } from '@/shared/interfaces';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const state = reactive<{
   open: boolean
@@ -34,7 +44,7 @@ const state = reactive<{
   open: false
 })
 
-defineProps<{
+const props = defineProps<{
   carts: ProductCartInterface[]
   totalBasket: number
 }>()
@@ -42,18 +52,27 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'removeFromCart', id: number): void
 }>()
+
+function goToPayement() {
+  if (props.carts.length > 0) {
+    router.push({path: '/payement'})
+  } else {
+    console.error('Votre panier est vide')
+  }
+}
 </script>
 
 <style scoped lang="scss">
 .basket {
+  z-index: 1;
   position: fixed;
   bottom: 20px;
   right: 20px;
   &_tooglebasket {
     cursor: pointer;
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     background: var(--primary-1);
     border-radius: 50%;
     display: flex;
