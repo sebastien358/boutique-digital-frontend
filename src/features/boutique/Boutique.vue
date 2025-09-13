@@ -1,15 +1,17 @@
 <template>
   <div>
     <Shop 
-    :products="products" 
-    @init-product-filters="initProductFilters" 
-    @add-to-cart="addToCart"
+      :products="products" 
+      @init-product-filters="initProductFilters" 
+      @add-to-cart="addToCart"
     />
+    <Cart />
   </div>
 </template>
 
 <script setup lang="ts">
 import Shop from '../boutique/components/shop/Shop.vue'
+import Cart from './components/cart/Cart.vue'
 import { useProductStore } from '../../stores/productStore'
 import { computed, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore';
@@ -32,6 +34,26 @@ async function loadProducts() {
 onMounted(async () => {
   try {
     await loadProducts()
+  } catch (e) {
+    console.error(e)
+  }
+})
+
+// Load Items Cart
+
+const carts = computed(() => cartStore.cart)
+
+async function loadItemsCart() {
+  try {
+    await cartStore.getCarts()
+  } catch (e) {
+    console.error('Erreur: récupération des éléments du panier', e)
+  }
+}
+
+onMounted(async () => {
+  try {
+    await loadItemsCart()
   } catch (e) {
     console.error(e)
   }

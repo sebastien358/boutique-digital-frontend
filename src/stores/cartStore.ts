@@ -1,13 +1,27 @@
 // cartStore.js
-import { axiosAddToCart } from '@/shared/services/cart.service';
+import { axiosAddToCart, axiosGetCarts } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
 import { useProductStore } from './productStore';
+import type { ProductCartInterface } from '@/shared/interfaces/Cart.interface';
+
+interface CartState {
+  cart: ProductCartInterface[]
+}
 
 export const useCartStore = defineStore('cart', {
-  state: () => ({
+  state: (): CartState => ({
     cart: [],
   }),
   actions: {
+    async getCarts() {
+       try {
+        const response = await axiosGetCarts();
+        const productToCart: ProductCartInterface[] = Array.isArray(response) ? response : [response]
+        this.cart.push(productToCart)
+      } catch(e) {
+        console.error('Erreur: récupération des éléments du panier', e)
+      }
+    },
     async addToCart(id: number) {
       try {
         const productStore = useProductStore()
