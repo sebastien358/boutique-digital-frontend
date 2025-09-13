@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Shop :products="products" @init-product-filters="initProductFilters" />
+    <Shop 
+    :products="products" 
+    @init-product-filters="initProductFilters" 
+    @add-to-cart="addToCart"
+    />
   </div>
 </template>
 
@@ -8,10 +12,13 @@
 import Shop from '../boutique/components/shop/Shop.vue'
 import { useProductStore } from '../../stores/productStore'
 import { computed, onMounted } from 'vue'
+import { useCartStore } from '@/stores/cartStore';
+
+const productStore = useProductStore()
+const cartStore = useCartStore()
 
 // Load Products
 
-const productStore = useProductStore()
 const products = computed(() => productStore.products)
 
 async function loadProducts() {
@@ -30,13 +37,23 @@ onMounted(async () => {
   }
 })
 
-// function initialisation de la filtration des produits
+// Événenement :  initialisation de la filtration des produits au clic
 
 async function initProductFilters() {
   try {
     await productStore.initProductFilters()
   } catch (e) {
-    console.error('Erreur de l\initialisation des produits', e)
+    console.error(e)
+  }
+}
+
+// Événement : ajouter un produit au panier au clic
+
+async function addToCart(id: number) {
+  try {
+    await cartStore.addToCart(id)
+  } catch(e) {
+     console.error(e)
   }
 }
 </script>

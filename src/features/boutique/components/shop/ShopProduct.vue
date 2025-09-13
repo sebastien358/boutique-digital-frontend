@@ -12,7 +12,7 @@
         <p>{{ product.description }}</p>
         <div class="d-flex align-items-center space-between">
           <strong>Prix : {{ product.price }}€</strong>
-          <button @click="addProductToCart(product)" class="btn btn-primary">Ajouter au panier</button>
+          <button @click="emit('addToCart', product.id)" class="btn btn-primary">Ajouter au panier</button>
         </div>
       </div>
     </div>
@@ -21,21 +21,14 @@
 
 <script setup lang="ts">
 import type { ProductInterface }from '@/shared/interfaces'
-import { useCartStore } from '@/stores/cartStore';
-
-const cartStore = useCartStore();
 
 defineProps<{
   product: ProductInterface
 }>()
 
-async function addProductToCart(product: Object) {
-  try {
-    await cartStore.addToCart(product)
-  } catch(e) {
-    console.error(e);
-  }
-}
+const emit = defineEmits<{
+  (e: 'addToCart', id: number): void
+}>()
 </script>
 
 <style scoped lang="scss">

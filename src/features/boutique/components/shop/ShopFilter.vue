@@ -150,4 +150,3 @@ const emit = defineEmits<{
   }
 }
 </style>
-@/stores/productStore

@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column align-items-center">
     <div v-if="products.length > 0" class="shop-product-list">
-      <ShopProduct v-for="product in products" :product="product" :key="product.id" />
+      <ShopProduct v-for="product in products" :product="product" :key="product.id" @add-to-cart="emit('addToCart', $event)" />
     </div>
     <div v-else class="not-product">
       <p>Pas de produits disponibles pour le moment.</p>
@@ -24,6 +24,10 @@ const productStore = useProductStore()
 defineProps<{
   products: ProductInterface[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'addToCart', id: number): void
+}>()
 </script>
 
 <style scoped lang="scss">
@@ -45,4 +49,4 @@ defineProps<{
   }
 }
 </style>
-@/stores/productStore
+

@@ -1,32 +1,28 @@
 // cartStore.js
 import { axiosAddToCart } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
+import { useProductStore } from './productStore';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
     cart: [],
   }),
   actions: {
-    async addToCart(product) {
+    async addToCart(id: number) {
       try {
-        const existingProduct = this.cart.find((item) => item.id === product.id);
-        let productToAdd;
-        if (existingProduct) {
-          existingProduct.quantity += 1;
-          productToAdd = { id: product.id, title: product.title, price: product.price, quantity: 1 };
-        } else {
-          const cart = {
-            id: product.id,
-            title: product.title,
-            price: product.price,
+        const productStore = useProductStore()
+        const productExisting = productStore.products.find((p) => p.id === id)
+        if(productExisting) {
+          const productToCart = {
+            id: productExisting.id, 
+            title: productExisting.title, 
+            price: productExisting.price, 
             quantity: 1
           }
-          this.cart.push(cart);
-          productToAdd = cart;
+          axiosAddToCart([productToCart])
         }
-        await axiosAddToCart([productToAdd]);
       } catch(e) {
-        console.error('Erreur: ajout d\'un produit dans le panier', e)
+        console.error('Erreur: ajout d\'un produit dans le panier', e);
       }
     },
     async removeFromCart(productId: number) {

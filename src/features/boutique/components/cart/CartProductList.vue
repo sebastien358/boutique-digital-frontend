@@ -1,11 +1,11 @@
 <template>
   <div>
-    <CartProductList />
+    <CarProduct />
   </div>
 </template>
 
 <script setup lang="ts">
-import CartProductList from './CartProductList.vue'
+import CarProduct from './CartProduct.vue'
 </script>
 
 <style scoped lang="scss">
