@@ -1,5 +1,5 @@
 // cartStore.js
-import { axiosAddToCart, axiosGetCarts } from '@/shared/services/cart.service';
+import { axiosAddToCart, axiosDeleteItemCart, axiosGetCarts } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
 import { useProductStore } from './productStore';
 import type { ProductCartInterface } from '@/shared/interfaces/Cart.interface';
@@ -12,12 +12,18 @@ export const useCartStore = defineStore('cart', {
   state: (): CartState => ({
     cart: [],
   }),
+  getters: {
+    totatBasket(state) {
+      const initialValue = 0;
+      return state.cart.reduce((acc, product) => acc + product.price * product.quantity, initialValue)
+    }
+  },
   actions: {
     async getCarts() {
        try {
         const response = await axiosGetCarts();
         const productToCart: ProductCartInterface[] = Array.isArray(response) ? response : [response]
-        this.cart.push(productToCart)
+        this.cart = productToCart
       } catch(e) {
         console.error('Erreur: récupération des éléments du panier', e)
       }
@@ -33,15 +39,20 @@ export const useCartStore = defineStore('cart', {
             price: productExisting.price, 
             quantity: 1
           }
-          axiosAddToCart([productToCart])
+          await axiosAddToCart([productToCart])
+          await this.getCarts()
         }
       } catch(e) {
         console.error('Erreur: ajout d\'un produit dans le panier', e);
       }
     },
-    async removeFromCart(productId: number) {
+    async removeFromCart(id: number) {
        try {
-        this.cart = this.cart.filter((product) => product.id !== productId);
+        const productExisting = this.cart.find((p) => p.id === id)
+        if (productExisting) {
+          const response = await axiosDeleteItemCart(id)
+        } 
+        await this.getCarts()
       } catch(e) {
         console.error(e)
       }

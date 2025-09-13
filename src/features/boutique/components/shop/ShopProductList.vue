@@ -1,7 +1,12 @@
 <template>
   <div class="d-flex flex-column align-items-center">
     <div v-if="products.length > 0" class="shop-product-list">
-      <ShopProduct v-for="product in products" :product="product" :key="product.id" @add-to-cart="emit('addToCart', $event)" />
+      <ShopProduct 
+        v-for="product in products" 
+        :product="product" 
+        :key="product.id" 
+        @add-to-cart="emit('addToCart', $event)" 
+      />
     </div>
     <div v-else class="not-product">
       <p>Pas de produits disponibles pour le moment.</p>

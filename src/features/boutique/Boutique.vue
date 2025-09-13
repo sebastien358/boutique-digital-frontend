@@ -5,7 +5,11 @@
       @init-product-filters="initProductFilters" 
       @add-to-cart="addToCart"
     />
-    <Cart />
+    <Cart 
+      :carts="carts"
+      :totalBasket="cartStore.totatBasket"
+      @remove-from-cart="removeFromCart"
+    />
   </div>
 </template>
 
@@ -76,6 +80,16 @@ async function addToCart(id: number) {
     await cartStore.addToCart(id)
   } catch(e) {
      console.error(e)
+  }
+}
+
+// Événement : supprimer un produit du panier 
+
+async function removeFromCart(id: number) {
+  try {
+    await cartStore.removeFromCart(id)
+  } catch(e) {
+    console.error(e)    
   }
 }
 </script>
