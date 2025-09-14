@@ -66,6 +66,7 @@ export async function axiosGetUserInfo() {
 export const authMiddleware = (TOKEN_KEY: string) => (config: any) => {
   const token = localStorage.getItem(TOKEN_KEY);
   if (token) {
+    config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

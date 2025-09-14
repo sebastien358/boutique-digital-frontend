@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem(TOKEN_KEY),
     isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
-    userRole: null,
+    userRole: [],
   }),
   actions: {
     async register(dataRegister: RegisterInterface) {
@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await axiosGetUserInfo()
         this.userRole = response.roles;
-        console.log(this.userRole[0])
+        console.log(this.userRole)
       } catch(e) {
         console.error('Erreur: récupération des informations de l\'utilisateur', e);
       }
