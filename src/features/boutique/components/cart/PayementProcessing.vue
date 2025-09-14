@@ -117,20 +117,14 @@ button[type="submit"]:hover {
   background-color: #3e8e41;
 }
 
-button[type="submit"]:disabled {    
+button[type="submit"]:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 </style> -->
 
+<template></template>
 
-<template>
-  <div>
-  </div>
-</template>
+<script setup></script>
 
-<script setup>
-</script>
-
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,7 +1,7 @@
-import type { ProductFormInterface, ProductInterface } from '@/shared/interfaces';
+import type { ProductFormInterface } from '@/shared/interfaces';
 import axios from 'axios';
 
-export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: number): Promise<ProductInterface[]> {
+export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: number) {
   try {
     const response = await axios.get('http://127.0.0.1:8000/admin/products', {
       params: {
@@ -15,7 +15,7 @@ export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: n
   }
 };
 
-export async function axiosAdminGetCurrentProduct(id: number): Promise<any> {
+export async function axiosAdminGetCurrentProduct(id: number) {
   try {
     const response = await axios.get(`http://127.0.0.1:8000/admin/product/${id}` );
     return response.data;
@@ -24,7 +24,7 @@ export async function axiosAdminGetCurrentProduct(id: number): Promise<any> {
   }
 };
 
-export async function axiosAdminDeleteProduct(id: number): Promise<any> {
+export async function axiosAdminDeleteProduct(id: number) {
   try {
     const response = await axios.delete(`http://127.0.0.1:8000/admin/product/delete/${id}` );
     return response.data;
@@ -33,7 +33,7 @@ export async function axiosAdminDeleteProduct(id: number): Promise<any> {
   }
 };
 
-export async function axiosAdminDeleteImage(productId: number, pictureId: number): Promise<any> {
+export async function axiosAdminDeleteImage(productId: number, pictureId: number) {
   try {
     const response = await axios.delete(`http://127.0.0.1:8000/admin/product/${productId}/picture/${pictureId}`);
     return response.data;
@@ -42,7 +42,7 @@ export async function axiosAdminDeleteImage(productId: number, pictureId: number
   }
 };
 
-export async function axiosAdminProductNew(formData: ProductFormInterface): Promise<any> {
+export async function axiosAdminProductNew(formData: ProductFormInterface) {
   try {
     const response = await axios.post('http://127.0.0.1:8000/admin/product/new', formData);
     return response.data;
@@ -51,7 +51,7 @@ export async function axiosAdminProductNew(formData: ProductFormInterface): Prom
   }
 };
 
-export async function axiosAdminProductEdit(formData: ProductFormInterface, id: number): Promise<any> {
+export async function axiosAdminProductEdit(formData: ProductFormInterface, id: number) {
   try {
     const response = await axios.post(`http://127.0.0.1:8000/admin/product/edit/${id}`, formData);
     return response.data;

@@ -36,7 +36,7 @@
     <!-- Menu Tablet -->
     <div class="container-menu">
       <font-awesome-icon @click="state.open = !state.open" icon="fa-solid fa-bars" />
-      <Transition>   
+      <Transition>
       <ul v-if="state.open" class="menu-tablet">
         <li>
           <router-link to="/boutique">Boutique</router-link>
@@ -57,7 +57,7 @@
             <a @click="onClickLogout()" class="logout" href="#">Déconnexion</a>
           </li>
         </div>
-      </ul>      
+      </ul>
       </Transition>
       <Calc :open="state.open" @close="state.open = false" :transparent="true" />
     </div>
@@ -121,6 +121,7 @@ header {
     position: absolute;
     padding: 15px 30px;
     background: var(--text-primary-color);
+    border: var(--border);
     right: -5px;
     top: 40px;
     line-height: 32px;
@@ -140,6 +141,7 @@ header {
 }
 
 /* we will explain what these classes do next! */
+
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.2s ease;

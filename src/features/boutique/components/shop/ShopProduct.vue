@@ -1,8 +1,8 @@
 <template>
   <div class="shop-product">
     <div class="d-flex flex-column">
-      <div v-if="product.pictures.length > 0"> 
-        <img :src="product.pictures[0].url" class="img-product" /> 
+      <div v-if="product.pictures && product.pictures.length > 0">
+        <img :src="product.pictures[0].url" alt="image du produit" class="img-product" />
       </div>
       <div v-else>
         <img src="../../../../assets/images/not-found.webp" class="img-product" />
@@ -45,8 +45,15 @@ const emit = defineEmits<{
   }
   &_text {
     padding: 10px;
+    h3 {
+      font-size: 16px;
+    }
     p {
       margin: 10px 0 10px 0;
+      font-size: 14px;
+    }
+    strong {
+      font-size: 12px;
     }
   }
 }

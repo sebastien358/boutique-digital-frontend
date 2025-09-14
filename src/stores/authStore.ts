@@ -1,5 +1,5 @@
 import type { LoginInterface, RegisterInterface } from '@/shared/interfaces';
-import { authMiddleware, axiosEmailExists, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
+import { authMiddleware, axiosEmailExists, axiosGetUserInfo, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
 import { defineStore } from 'pinia'
 
 const TOKEN_KEY = 'token';
@@ -7,7 +7,8 @@ const TOKEN_KEY = 'token';
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem(TOKEN_KEY),
-    isLoggedIn: !!localStorage.getItem(TOKEN_KEY)
+    isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
+    userRole: null,
   }),
   actions: {
     async register(dataRegister: RegisterInterface) {
@@ -21,17 +22,10 @@ export const useAuthStore = defineStore('auth', {
     async login(dataLogin: LoginInterface) {
       try {
         const response = await axiosLogin(dataLogin);
-        switch(response) {
-          case response:
-          case response.token:
-            localStorage.setItem(TOKEN_KEY, response.token);
-            this.isLoggedIn = true;
-            authMiddleware(TOKEN_KEY);
-            break;
-          default:
-            console.log('Erreur: token introuvable');
-            break;
-          }
+        localStorage.setItem(TOKEN_KEY, response.token);
+        this.isLoggedIn = true;
+        await this.getUserInfo();
+        authMiddleware(TOKEN_KEY);
       } catch(e) {
         console.error('Erreur: connexion utilisateur', e);
       }
@@ -44,6 +38,15 @@ export const useAuthStore = defineStore('auth', {
         console.error('Erreur: récupération email utilisateur', e);
       }
     },
+    async getUserInfo() {
+      try {
+        const response = await axiosGetUserInfo()
+        this.userRole = response.roles;
+        console.log(this.userRole[0])
+      } catch(e) {
+        console.error('Erreur: récupération des informations de l\'utilisateur', e);
+      }
+    },
     logout(router: any) {
       this.isLoggedIn = false;
       this.token = null;
@@ -52,3 +55,6 @@ export const useAuthStore = defineStore('auth', {
     }
   }
 })
+
+
+

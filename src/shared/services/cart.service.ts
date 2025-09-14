@@ -2,28 +2,28 @@ import axios from 'axios';
 
 export async function axiosGetCarts() {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/carts');
+    const response = await axios.get('http://127.0.0.1:8000/api/items');
     return response.data;
   } catch(e) {
     console.error('Erreur: ', e);
   }
 }
 
-export async function axiosAddToCart(cart) {
+export async function axiosAddToCart(itemToCart) {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/api/cart/new', cart);
+    const response = await axios.post('http://127.0.0.1:8000/api/item/new', itemToCart);
     return response.data;
   } catch(e) {
-    console.error('Erreur: ', e);
+    console.error('Erreur: ', e)
   }
 }
 
-export async function axiosDeleteItemCart(id: number) {
+export async function axiosRemoveFromCart(id: number) {
   try {
-    const response = await axios.delete(`http://127.0.0.1:8000/api/delete/cart/${id}`);
+    const response = await axios.delete(`http://127.0.0.1:8000/api/delete/item/${id}`);
     return response.data;
   } catch(e) {
-    console.error('Erreur: ', e);
+    console.error('Erreur: ', e)
   }
 }
 

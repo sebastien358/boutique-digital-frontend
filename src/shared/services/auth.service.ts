@@ -6,9 +6,9 @@ export async function axiosRegister(dataRegister: RegisterInterface): Promise<Re
   try {
     const { lastname, firstname, email, password } = dataRegister;
     const response = await axios.post('http://127.0.0.1:8000/api/register', {
-      lastname, 
-      firstname, 
-      email, 
+      lastname,
+      firstname,
+      email,
       password
     });
     return response.data;
@@ -51,6 +51,15 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
   } catch(e) {
     console.log('Erreur: ', e);
     throw e;
+  }
+}
+
+export async function axiosGetUserInfo() {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/user/me');
+    return response.data;
+  } catch (e) {
+    console.error('Erreur: ', e);
   }
 }
 

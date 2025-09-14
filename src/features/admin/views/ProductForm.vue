@@ -2,7 +2,9 @@
   <div class="d-flex align-items-center justify-content-center product-form">
     <div class="d-flex align-items-center flex-column">
       <div class="form-container">
-        <h2 class="mb-15 text-center">{{ Object.keys(state.product).length > 0 ? 'Éditer le produit' : 'Ajouter un produit' }}</h2>
+        <h2 class="mb-15 text-center">
+          {{ Object.keys(state.product).length > 0 ? 'Éditer le produit' : 'Ajouter un produit' }}
+        </h2>
         <form @submit.prevent="onSubmit">
           <div class="d-flex flex-column mb-20">
             <label><span>*</span>Title</label>
@@ -79,11 +81,11 @@ const productAdminStore = useProductAdminStore()
 
 const route = useRoute();
 
-const state = reactive<{ 
-  product: any, 
-  images: object }>({ 
-    product: {}, 
-    images: [] 
+const state = reactive<{
+  product: any,
+  images: object }>({
+    product: {},
+    images: []
 })
 
 if (route.params.id) {
@@ -101,7 +103,6 @@ async function deleteImage(productId: number, pictureId: number, index?: any) {
 }
 
 // Initialisation des champs du formulaire
-
 
 const initialValues = {
   title: state.product?.title ?? '',

@@ -1,6 +1,6 @@
 <template>
   <div class="app-content">
-    <Header class="header" />
+    <TheHeader class="header" />
     <div class="views">
       <router-view v-slot="{ Component }">
         <template v-if="Component">
@@ -10,13 +10,13 @@
         </template>
       </router-view>
     </div>
-    <Footer class="footer" />
+    <TheFooter class="footer" />
   </div>
 </template>
 
 <script setup lang="ts">
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import TheHeader from './components/Header.vue'
+import TheFooter from './components/Footer.vue'
 </script>
 
 <style scoped lang="scss">
