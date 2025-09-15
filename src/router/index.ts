@@ -37,8 +37,8 @@ router.beforeEach(async (to, from, next) => {
     next({ path: '/login' })
   } else if(to.meta.requiresAdmin && (!authStore.userRole || !authStore.userRole.includes('ROLE_ADMIN'))) {
     next({ path: '/' })
-  } else if(to.meta.requiresUser && (!authStore.userRole && !authStore.userRole.includes('ROLE_USER'))) {
-    next('/')
+  } else if(to.meta.requiresUser && (!authStore.userRole || !authStore.userRole.includes('ROLE_USER'))) {
+    next({ path: '/' })
   } else {
     next()
   }
