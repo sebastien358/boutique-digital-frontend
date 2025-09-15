@@ -14,6 +14,7 @@ interface ProductState {
   category: string
   offset: number
   limit: number
+  isLoading: boolean
 }
 
 export const useProductStore = defineStore('product', {
@@ -24,10 +25,12 @@ export const useProductStore = defineStore('product', {
     category: 'all',
     offset: 0,
     limit: 20,
+    isLoading: true
   }),
   actions: {
     async getProducts(append = false) {
       try {
+        this.isLoading = true
         const response = await axiosGetProducts(this.offset, this.limit);
         if (response) {
           const products: ProductInterface[] = Array.isArray(response) ? response : [response];
@@ -37,6 +40,8 @@ export const useProductStore = defineStore('product', {
         }
       } catch (e) {
         console.error('Erreur: récupération des produits', e)
+      } finally {
+        this.isLoading = false
       }
     },
     async loadProducts() {

@@ -1,17 +1,18 @@
 <template>
   <div class="shop">
     <!-- Filtrer les produits -->
-    <ShopFilter 
+    <ShopFilter
       :products="products"
       @init-product-filters="emit('initProductFilters')"
-      class="shop-product-filter" 
+      class="shop-product-filter"
     />
     <!-- Affichage des produits -->
-    <ShopProductList 
+    <ShopProductList
       :products="products"
+      :isLoggedIn="isLoggedIn"
       @add-to-cart="emit('addToCart', $event)"
       class="scrollable"
-    />    
+    />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import ShopFilter from './ShopFilter.vue'
 
 defineProps<{
   products: ProductInterface[]
+  isLoggedIn: boolean
 }>()
 
 const emit = defineEmits<{

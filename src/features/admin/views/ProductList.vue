@@ -13,7 +13,7 @@
               </div>
               <h4>{{ product.title }}</h4>
             </div>
-            <div class="d-flex align-items-center"> 
+            <div class="d-flex align-items-center">
               <router-link :to="{name: 'edit', params: {id: product.id}}" class="btn btn-success mr-5">Modifier</router-link>
               <button @click="openModal(product.id)" class="btn btn-danger">Supprimer</button>
             </div>
@@ -31,7 +31,7 @@
       <p>Aucun produit à afficher pour le moment.</p>
     </div>
   </div>
-  <div v-else class="spinner">
+  <div v-else class="d-flex align-items-center justify-content-center spinner">
     <span class="loader"></span>
   </div>
 </template>
@@ -102,7 +102,7 @@ onMounted(async () => {
   }
 })
 
-const totalPages = computed(() => 
+const totalPages = computed(() =>
   Math.ceil(productAdminStore.totalItems / itemsPerPage.value)
 )
 </script>
@@ -116,8 +116,9 @@ const totalPages = computed(() =>
 }
 
 .product-list {
-  @include center-page;
+
   .products {
+
     padding: 20px;
     display: grid;
     row-gap: 10px;
@@ -139,12 +140,12 @@ const totalPages = computed(() =>
 }
 
 .spinner {
-  @include center-page;
+  height: 100%;
 }
 
 .products {
-  width: 800px;
   .products-views {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
     background: white;

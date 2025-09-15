@@ -2,6 +2,7 @@
   <div>
     <Shop
       :products="products"
+      :isLoggedIn="isLoggedIn"
       @init-product-filters="initProductFilters"
       @add-to-cart="addToCart"
     />
@@ -25,9 +26,14 @@ const cartStore = useCartStore()
 
 // Load Products
 
-const products = computed(() => productStore.products)
+const products = computed(() =>
+  productStore.products
+)
+const isLoggedIn = computed(() =>
+  productStore.isLoading
+)
 
-async function loadProductlist() {
+async function loadProductList() {
   try {
     await productStore.getProducts()
   } catch (e) {
@@ -37,7 +43,7 @@ async function loadProductlist() {
 
 onMounted(async () => {
   try {
-    await loadProductlist()
+    await loadProductList()
   } catch (e) {
     console.error(e)
   }

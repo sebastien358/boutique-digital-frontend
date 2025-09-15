@@ -46,14 +46,14 @@ const emit = defineEmits<{
   &_text {
     padding: 10px;
     h3 {
-      font-size: 16px;
+      font-size: 17px;
     }
     p {
       margin: 10px 0 10px 0;
-      font-size: 14px;
+      font-size: 15px;
     }
     strong {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
 }

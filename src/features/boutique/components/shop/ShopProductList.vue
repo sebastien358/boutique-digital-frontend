@@ -1,11 +1,11 @@
 <template>
-  <div class="d-flex flex-column">
-    <div v-if="products.length > 0" class="shop-product-list">
-      <ShopProduct 
-        v-for="product in products" 
-        :product="product" 
-        :key="product.id" 
-        @add-to-cart="emit('addToCart', $event)" 
+  <div v-if="!isLoggedIn">
+    <div v-if="products.length && products.length > 0" class="shop-product-list">
+      <ShopProduct
+        v-for="product in products"
+        :product="product"
+        :key="product.id"
+        @add-to-cart="emit('addToCart', $event)"
       />
     </div>
     <div v-else class="not-product">
@@ -16,6 +16,9 @@
         Plus de produits...
       </button>
     </div>
+  </div>
+  <div v-else class="d-flex align-items-center justify-content-center spinner">
+   <span class="loader"></span>
   </div>
 </template>
 
@@ -28,6 +31,7 @@ const productStore = useProductStore()
 
 defineProps<{
   products: ProductInterface[]
+  isLoggedIn: boolean
 }>()
 
 const emit = defineEmits<{
@@ -41,7 +45,7 @@ const emit = defineEmits<{
 .shop-product-list {
   display: grid;
   grid-auto-rows: 475px;
-  gap: 20px;  
+  gap: 20px;
   grid-template-columns: repeat(1, 1fr);
   @include mixin.lg {
     grid-template-columns: repeat(2, 1fr);
@@ -50,7 +54,7 @@ const emit = defineEmits<{
     grid-template-columns: repeat(3, 1fr);
   }
   @include mixin.xxl {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
