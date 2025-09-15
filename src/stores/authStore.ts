@@ -2,13 +2,13 @@ import type { LoginInterface, RegisterInterface } from '@/shared/interfaces';
 import { authMiddleware, axiosEmailExists, axiosGetUserInfo, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
 import { defineStore } from 'pinia'
 
-const TOKEN_KEY = 'token';
+const TOKEN_KEY = 'token'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem(TOKEN_KEY),
     isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
-    userRole: [],
+    userRole: JSON.parse(localStorage.getItem('userRole')) || [],
   }),
   actions: {
     async register(dataRegister: RegisterInterface) {
@@ -42,16 +42,22 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await axiosGetUserInfo()
         this.userRole = response.roles;
+        localStorage.setItem('userRole', JSON.stringify(response.roles));
         console.log(this.userRole)
       } catch(e) {
         console.error('Erreur: récupération des informations de l\'utilisateur', e);
       }
     },
+    roleAdmin() {
+      return this.userRole.includes('ROLE_ADMIN')
+    },
     logout(router: any) {
-      this.isLoggedIn = false;
-      this.token = null;
-      localStorage.removeItem(TOKEN_KEY);
-      router.push({path: '/login'});
+      this.isLoggedIn = false
+      this.token = null
+      this.userRole = null
+      localStorage.removeItem(TOKEN_KEY)
+      localStorage.removeItem('userRole')
+      router.push({path: '/login'})
     }
   }
 })

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Shop 
-      :products="products" 
-      @init-product-filters="initProductFilters" 
+    <Shop
+      :products="products"
+      @init-product-filters="initProductFilters"
       @add-to-cart="addToCart"
     />
-    <Cart 
+    <Cart
       :carts="carts"
       :totalBasket="cartStore.totatBasket"
       @remove-from-cart="removeFromCart"
@@ -27,7 +27,7 @@ const cartStore = useCartStore()
 
 const products = computed(() => productStore.products)
 
-async function loadProducts() {
+async function loadProductlist() {
   try {
     await productStore.getProducts()
   } catch (e) {
@@ -37,7 +37,7 @@ async function loadProducts() {
 
 onMounted(async () => {
   try {
-    await loadProducts()
+    await loadProductlist()
   } catch (e) {
     console.error(e)
   }
@@ -83,15 +83,16 @@ async function addToCart(id: number) {
   }
 }
 
-// Événement : supprimer un produit du panier 
+// Événement : supprimer un produit du panier
 
 async function removeFromCart(id: number) {
   try {
     await cartStore.removeFromCart(id)
   } catch(e) {
-    console.error(e)    
+    console.error(e)
   }
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

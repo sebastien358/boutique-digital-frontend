@@ -9,7 +9,7 @@
         <li class="mr-10">
           <router-link to="/boutique">Boutique</router-link>
         </li>
-        <li>
+        <li v-if="authStore.roleAdmin()">
           <router-link to="/admin">Admin</router-link>
         </li>
       </ul>
@@ -41,7 +41,7 @@
         <li>
           <router-link to="/boutique">Boutique</router-link>
         </li>
-        <li>
+        <li v-if="authStore.roleAdmin()">
           <router-link to="/admin">Admin</router-link>
         </li>
         <div v-if="!authStore.isLoggedIn">
@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import Calc from './Calc.vue'
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 
@@ -77,6 +77,7 @@ const state = reactive<{
 })
 
 const authStore = useAuthStore()
+
 const router = useRouter()
 
 function onClickLogout() {
