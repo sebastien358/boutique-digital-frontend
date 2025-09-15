@@ -35,10 +35,10 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next({ path: '/login' })
-  } else if (to.meta.requiresAdmin && (!authStore.userRole || !authStore.userRole.includes('ROLE_ADMIN'))) {
+  } else if(to.meta.requiresAdmin && (!authStore.userRole || !authStore.userRole.includes('ROLE_ADMIN'))) {
     next({ path: '/' })
-  } else if(to.meta.requiresUser && (!authStore.userRole || !authStore.userRole.includes('ROLE_USER'))) {
-    next({ path: '/' })
+  } else if(to.meta.requiresUser && (!authStore.userRole && !authStore.userRole.includes('ROLE_USER'))) {
+    next('/')
   } else {
     next()
   }

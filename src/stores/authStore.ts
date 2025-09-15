@@ -3,12 +3,13 @@ import { authMiddleware, axiosEmailExists, axiosGetUserInfo, axiosLogin, axiosRe
 import { defineStore } from 'pinia'
 
 const TOKEN_KEY = 'token'
+const USER_ROLE = 'userRole'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem(TOKEN_KEY),
     isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
-    userRole: JSON.parse(localStorage.getItem('userRole')) || [],
+    userRole: JSON.stringify(localStorage.getItem(USER_ROLE)) || []
   }),
   actions: {
     async register(dataRegister: RegisterInterface) {
@@ -24,8 +25,8 @@ export const useAuthStore = defineStore('auth', {
         const response = await axiosLogin(dataLogin);
         localStorage.setItem(TOKEN_KEY, response.token);
         this.isLoggedIn = true;
-        await this.getUserInfo();
         authMiddleware(TOKEN_KEY);
+        await this.userGetInfo()
       } catch(e) {
         console.error('Erreur: connexion utilisateur', e);
       }
@@ -38,25 +39,25 @@ export const useAuthStore = defineStore('auth', {
         console.error('Erreur: récupération email utilisateur', e);
       }
     },
-    async getUserInfo() {
+    async userGetInfo() {
       try {
         const response = await axiosGetUserInfo()
-        this.userRole = response.roles;
         localStorage.setItem('userRole', JSON.stringify(response.roles));
+        this.userRole = response.roles;
         console.log(this.userRole)
       } catch(e) {
-        console.error('Erreur: récupération des informations de l\'utilisateur', e);
+        console.error('Erreur: récupérarion utilisateur', e)
       }
     },
-    roleAdmin() {
-      return this.userRole.includes('ROLE_ADMIN')
+    roleAdmin(): boolean {
+      return this.userRole !== null && this.userRole.includes('ROLE_ADMIN')
     },
     logout(router: any) {
       this.isLoggedIn = false
       this.token = null
       this.userRole = null
       localStorage.removeItem(TOKEN_KEY)
-      localStorage.removeItem('userRole')
+      localStorage.removeItem(USER_ROLE)
       router.push({path: '/login'})
     }
   }

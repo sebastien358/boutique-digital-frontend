@@ -56,10 +56,10 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
 
 export async function axiosGetUserInfo() {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/user/me');
-    return response.data;
-  } catch (e) {
-    console.error('Erreur: ', e);
+    const response = await axios.get('http://127.0.0.1:8000/api/user/me')
+    return response.data
+  } catch(e) {
+    console.error('Erreur: ', e)
   }
 }
 
