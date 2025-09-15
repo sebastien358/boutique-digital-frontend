@@ -24,8 +24,9 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await axiosLogin(dataLogin);
         localStorage.setItem(TOKEN_KEY, response.token);
-        this.isLoggedIn = true;
-        authMiddleware(TOKEN_KEY);
+        console.log(response) //pour récupérer les données que à authentification ?
+        this.isLoggedIn = true
+        authMiddleware(TOKEN_KEY)
         await this.userGetInfo()
       } catch(e) {
         console.error('Erreur: connexion utilisateur', e);

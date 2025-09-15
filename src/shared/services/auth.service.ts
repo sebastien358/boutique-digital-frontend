@@ -36,7 +36,7 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
   try {
     if (dataLogin) {
       const { email } = dataLogin;
-      const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
+      const response = await axios.post('http://127.0.0.1:8000/api/user/email-exists', {
         email
       });
       return response.data;
@@ -64,7 +64,8 @@ export async function axiosGetUserInfo() {
 }
 
 export const authMiddleware = (TOKEN_KEY: string) => (config: any) => {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const token: string | null = localStorage.getItem(TOKEN_KEY);
+
   if (token) {
     config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;

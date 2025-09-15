@@ -13,7 +13,7 @@ const router = createRouter({
     { path: '/', redirect: '/boutique' },
     { path: '/boutique', component: Boutique },
     {
-      path: '/admin',
+      path: '/admin', // la partie admin est bien sécurisé, il faut etre role user pour y accéder, parcontre une route est accessible malgrès tout, je te montre le code du router admmin et je t'explique
       component: Admin,
       meta: {
         requiresAuth: true,
@@ -25,7 +25,7 @@ const router = createRouter({
     { path: '/login', component: Login },
     {
       path: '/payement',
-      meta: { requiresUser: true },
+      meta: { requiresUser: true }, // la partie paiement est sécurisé, il faut etre authentifié pour y accéder...
       component: PayementProcessing
     }
   ]
@@ -35,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next({ path: '/login' })
-  } else if(to.meta.requiresAdmin && (!authStore.userRole || !authStore.userRole.includes('ROLE_ADMIN'))) {
+  } else if(to.meta.requiresAdmin && (!authStore.userRole || !authStore.roleAdmin())) {
     next({ path: '/' })
   } else if(to.meta.requiresUser && (!authStore.userRole || !authStore.userRole.includes('ROLE_USER'))) {
     next({ path: '/' })
