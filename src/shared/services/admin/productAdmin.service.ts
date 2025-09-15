@@ -15,7 +15,7 @@ export async function axiosAdminGetProducts(currentPage: number, itemsPerPage: n
     console.error('Status: ', e.response.status);
     console.error('Data: ', e.response.data);
   }
-};
+}
 
 export async function axiosAdminGetCurrentProduct(id: number) {
   try {
@@ -24,7 +24,7 @@ export async function axiosAdminGetCurrentProduct(id: number) {
   } catch(e) {
     console.error('Erreur: ', e);
   }
-};
+}
 
 export async function axiosAdminDeleteProduct(id: number) {
   try {
@@ -33,7 +33,7 @@ export async function axiosAdminDeleteProduct(id: number) {
   } catch(e) {
     console.error('Erreur: ', e);
   }
-};
+}
 
 export async function axiosAdminDeleteImage(productId: number, pictureId: number) {
   try {
@@ -42,7 +42,7 @@ export async function axiosAdminDeleteImage(productId: number, pictureId: number
   } catch(e) {
     console.error('Erreur: ', e);
   }
-};
+}
 
 export async function axiosAdminProductNew(formData: ProductFormInterface) {
   try {
@@ -51,7 +51,7 @@ export async function axiosAdminProductNew(formData: ProductFormInterface) {
   } catch(e) {
     console.error('Erreur: ', e);
   }
-};
+}
 
 export async function axiosAdminProductEdit(formData: ProductFormInterface, id: number) {
   try {
@@ -60,4 +60,4 @@ export async function axiosAdminProductEdit(formData: ProductFormInterface, id: 
   } catch(e) {
     console.error('Erreur: ', e);
   }
-};
+}

@@ -13,7 +13,7 @@ const router = createRouter({
     { path: '/', redirect: '/boutique' },
     { path: '/boutique', component: Boutique },
     {
-      path: '/admin', // la partie admin est bien sécurisé, il faut etre role user pour y accéder, parcontre une route est accessible malgrès tout, je te montre le code du router admmin et je t'explique
+      path: '/admin',
       component: Admin,
       meta: {
         requiresAuth: true,
@@ -25,7 +25,7 @@ const router = createRouter({
     { path: '/login', component: Login },
     {
       path: '/payement',
-      meta: { requiresUser: true }, // la partie paiement est sécurisé, il faut etre authentifié pour y accéder...
+      meta: { requiresUser: true },
       component: PayementProcessing
     }
   ]
