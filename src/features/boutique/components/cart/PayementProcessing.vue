@@ -1,13 +1,16 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center">
+  <div class="d-flex align-items-center justify-content-center p-20 container">
     <div class="payment-form">
-      <h2 class="text-center">Paiement</h2>
+      <h1 class="text-center mb-15">Paiement sécurisé</h1>
+      <p class="text-center mb-20">Entrez vos informations de carte de crédit pour effectuer le paiement</p>
       <form @submit.prevent="handleSubmit">
-        <div class="form-group">
+        <div class="form-group mb-5">
           <label for="card-element">Carte</label>
           <div id="card-element" ref="cardElement"></div>
         </div>
-        <button class="btn btn-primary" type="submit">Payer</button>
+        <div class="d-flex flex-column">
+          <button class="btn btn-primary" type="submit">Payer</button>
+        </div>
       </form>
     </div>
   </div>
@@ -16,7 +19,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { loadStripe } from '@stripe/stripe-js';
-
 const stripe = ref(null);
 const cardStripe = ref(null);
 const cardElement = ref(null);
@@ -37,8 +39,6 @@ onMounted(async () => {
   cardStripe.value.mount(cardElement.value);
 });
 
-import axios from 'axios';
-
 const handleSubmit = async () => {
   try {
     const { token, error } = await stripe.value.createToken(cardStripe.value);
@@ -56,21 +56,28 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped lang="scss">
-.payment-form {
-  margin-top: 60px;
-  height: 100%;
-  width: 450px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#card-element {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  height: 40px;
+.container {
+  min-height: 100%;
+  .payment-form {
+    width: 100%;
+    max-width: 550px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .payment-form > h1 {
+    font-size: 26px;
+  }
+  .payment-form > p {
+    font-size: 16px;
+  }
+  #card-element {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 40px;
+  }
 }
 </style>
 
