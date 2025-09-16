@@ -133,6 +133,4 @@ const handleSubmit = async (values) => {
     cursor: not-allowed;
   }
 }
-
-
 </style>
