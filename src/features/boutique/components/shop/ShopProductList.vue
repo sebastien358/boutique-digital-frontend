@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoggedIn">
+  <div class="d-flex flex-column">
     <div v-if="products.length && products.length > 0" class="shop-product-list">
       <ShopProduct
         v-for="product in products"
@@ -17,13 +17,10 @@
       </button>
     </div>
   </div>
-  <div v-else class="d-flex align-items-center justify-content-center spinner">
-   <span class="loader"></span>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { useProductStore } from '../../../../stores/productStore'
+import { useProductStore } from '@/stores/productStore.ts'
 import type { ProductInterface } from '@/shared/interfaces'
 import ShopProduct from './ShopProduct.vue'
 

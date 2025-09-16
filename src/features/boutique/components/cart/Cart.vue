@@ -58,7 +58,7 @@ const emit = defineEmits<{
 
 function goToPayement() {
   if (props.carts.length > 0) {
-    router.push({path: '/payement'})
+    router.push({ path: '/payement' })
   } else {
     console.error('Votre panier est vide')
   }
@@ -72,8 +72,8 @@ function goToPayement() {
   bottom: 20px;
   right: 20px;
   .on-products-basket {
-    border: 1px solid #32ff7e;
-    box-shadow: #32ff7e 0 2px 11px, #32ff7e 0 2px 11px;
+    border: var(--border-basket);
+    box-shadow: var(--on-basket) 0 2px 11px, var(--on-basket) 0 2px 11px;
   }
   &_toggle {
     cursor: pointer;
