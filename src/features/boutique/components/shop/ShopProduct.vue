@@ -12,7 +12,9 @@
         <p>{{ product.description }}</p>
         <div class="d-flex align-items-center space-between">
           <strong>Prix : {{ product.price }}€</strong>
-          <button @click="emit('addToCart', product.id)" class="btn btn-primary">Ajouter au panier</button>
+          <button @click="emit('addToCart', product.id)" class="btn btn-primary">
+            Ajouter au panier
+          </button>
         </div>
       </div>
     </div>
@@ -33,7 +35,7 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 .shop-product {
-  background-color: #ffffff;
+  background-color: var(--text-primary-color);
   border: var(--border);
   border-radius: var(--border-radius);
   overflow: hidden;

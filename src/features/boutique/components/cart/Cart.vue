@@ -1,30 +1,33 @@
 <template>
-  <!-- Panier de la boutique -->
   <div class="basket">
     <Transition mode="out-in">
     <div v-if="!state.open">
-      <div @click="state.open = !state.open" class="basket_tooglebasket">
+      <!-- Open panier -->
+      <div @click="state.open = !state.open" class="basket_toggle" :class="{
+        'on-products-basket': props.carts.length
+      }">
         <div class="count-cart">
           <span>{{ props.carts.length }}</span>
         </div>
         <font-awesome-icon icon="fa-solid fa-basket-shopping" />
       </div>
     </div>
-    <div v-else class="d-flex flex-column basket_content"> 
+    <!-- Panier de la boutique -->
+    <div v-else class="d-flex flex-column basket_content">
       <h2>Panier</h2>
       <p :class="{'empty-basket': !props.carts.length, 'filled-basket': props.carts.length }">
         {{ props.carts.length ? 'Liste des éléments du panier :' : 'Votre panier est vide pour le moment.' }}
       </p>
       <!-- Composant données panier -->
-      <CartProductList 
+      <CartProductList
         @remove-from-cart="emit('removeFromCart', $event)"
         :carts="carts"
       />
       <button @click="goToPayement()" class="btn btn-success text-center">
         Commander ({{ props.totalBasket }})€
-      </button> 
+      </button>
       <Calc :open="state.open" @close="state.open = false" :transparent="false" />
-    </div>    
+    </div>
     </Transition>
   </div>
 </template>
@@ -68,22 +71,26 @@ function goToPayement() {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  &_tooglebasket {
+  .on-products-basket {
+    border: 1px solid #32ff7e;
+    box-shadow: #32ff7e 0 2px 11px, #32ff7e 0 2px 11px;
+  }
+  &_toggle {
     cursor: pointer;
     position: relative;
-    width: 65px;
-    height: 65px;
+    width: 70px;
+    height: 70px;
     background: var(--primary-1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  &_tooglebasket > .fa-basket-shopping {
+  &_toggle > .fa-basket-shopping {
     font-size: 17px;
     color: var(--text-primary-color);
   }
-  &_tooglebasket > .count-cart {
+  &_toggle > .count-cart {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,7 +102,7 @@ function goToPayement() {
     top: 0;
     right: 5px;
   }
-  &_tooglebasket > .count-cart > span {
+  &_toggle > .count-cart > span {
     color: var(--text-primary-color);
     font-size: 9px;
   }
@@ -107,18 +114,18 @@ function goToPayement() {
     h2 {
       font-size: 18px;
     }
-    .empty-basket, 
+    .empty-basket,
     .filled-basket {
       font-size: 12px;
       font-weight: 500;
     }
     .empty-basket {
-      margin: 5px 0 10px 0; 
+      margin: 5px 0 10px 0;
       color: var(--danger-1);
       text-align: center;
     }
     .filled-basket {
-      margin: 6px 0 5px 0; 
+      margin: 6px 0 5px 0;
       color: var(--gray-3);
     }
   }

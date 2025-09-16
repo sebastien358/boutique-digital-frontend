@@ -6,6 +6,7 @@ import Boutique from '@/features/boutique/Boutique.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { createRouter, createWebHistory } from 'vue-router'
 import PayementProcessing from '@/features/boutique/components/cart/PayementProcessing.vue'
+import NotFound from '@/components/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,7 +28,8 @@ const router = createRouter({
       path: '/payement',
       meta: { requiresUser: true },
       component: PayementProcessing
-    }
+    },
+    { path: '/:notFound(.*)*', component: NotFound }
   ]
 })
 

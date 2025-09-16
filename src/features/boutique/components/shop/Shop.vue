@@ -21,7 +21,6 @@ import type { ProductInterface }from '@/shared/interfaces'
 import ShopProductList from './ShopProductList.vue'
 import ShopFilter from './ShopFilter.vue'
 
-
 defineProps<{
   products: ProductInterface[]
   isLoggedIn: boolean
@@ -34,13 +33,21 @@ const emit = defineEmits<{
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/mixins' as m;
+
 .shop {
   display: grid;
   grid-template-columns: 240px auto;
 }
 
 .scrollable {
-  padding: 20px 20px 10px 20px;
+  padding: 12px 12px 10px 12px;
+  @include m.xl {
+    padding: 15px 15px 10px 15px;
+  }
+  @include m.xxl {
+    padding: 20px 20px 10px 20px;
+  }
 }
 
 .shop-product-filter {

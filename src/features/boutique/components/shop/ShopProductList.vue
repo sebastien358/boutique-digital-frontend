@@ -45,16 +45,19 @@ const emit = defineEmits<{
 .shop-product-list {
   display: grid;
   grid-auto-rows: 475px;
-  gap: 20px;
+  gap: 12px;
   grid-template-columns: repeat(1, 1fr);
   @include mixin.lg {
     grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
   @include mixin.xl {
     grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
   }
   @include mixin.xxl {
     grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
   }
 }
 

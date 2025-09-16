@@ -18,12 +18,11 @@ import NavAdmin from './components/NavAdmin.vue'
 <style scoped lang="scss">
 .admin {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: auto 1fr;
   height: 100%;
 }
 
 .views {
   height: 100%;
-  // width: 100%;
 }
 </style>

@@ -11,6 +11,7 @@ footer {
   background-color: var(--gray-3);
   p {
     color: var(--text-primary-color);
+    font-size: 14px;
   }
 }
 </style>
