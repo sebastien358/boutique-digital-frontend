@@ -24,19 +24,19 @@ const cardStripe = ref(null);
 const cardElement = ref(null);
 
 onMounted(async () => {
-  stripe.value = await loadStripe('');
-  const elements = stripe.value.elements();
-  cardStripe.value = elements.create('card', {
-    style: {
-      base: {
-        fontSize: '16px',
-        color: '#32325d',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-        padding: '10px',
+  stripe.value = await loadStripe('pk_test_51S7vMKGrri7JBEMH0ETlCFzS9xiN409EHLpu07ZRfJURU9LZ79aR2M1NcPjseKOXgZRo1W0MR2qPDb8Z50W3sszt00ksAK8QBQ');
+    const elements = stripe.value.elements();
+    cardStripe.value = elements.create('card', {
+      style: {
+        base: {
+          fontSize: '16px',
+          color: '#32325d',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          padding: '10px',
+        },
       },
-    },
-  });
-  cardStripe.value.mount(cardElement.value);
+    });
+    cardStripe.value.mount(cardElement.value);
 });
 
 const handleSubmit = async () => {
@@ -56,21 +56,32 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/mixins' as m;
+
 .container {
   min-height: 100%;
   .payment-form {
     width: 100%;
-    max-width: 550px;
+    max-width: 480px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    @include m.xl {
+      max-width: 550px;
+    }
   }
   .payment-form > h1 {
-    font-size: 26px;
+    font-size: 21px;
+    @include m.xl {
+      font-size: 26px;
+    }
   }
   .payment-form > p {
-    font-size: 16px;
+    font-size: 14px;
+    @include m.xl {
+      font-size: 16px;
+    }
   }
   #card-element {
     padding: 10px;
@@ -80,4 +91,6 @@ const handleSubmit = async () => {
   }
 }
 </style>
+
+
 

@@ -32,20 +32,19 @@ export const useProductAdminStore = defineStore('productAdmin', {
           this.products = products;
           this.totalItems = response.total;
         } else {
-          console.log('Erreur: la response est vide')
+          console.log('Error: la response est vide')
         }
       } catch (e) {
-        console.error('Erreur: récupération des produits', e)
+        console.error('Error: récupération des produits', e)
       } finally {
         this.isLoggedIn = false
       }
     },
     async getCurrentProduct(id: number) {
       try {
-        const response = await axiosAdminGetCurrentProduct(id);
-        return response;
+        return await axiosAdminGetCurrentProduct(id);
       } catch(e) {
-        console.error('Erreur : récupération d\'un produit', e);
+        console.error('Error : récupération d\'un produit', e);
       }
     },
     async deleteProduct(id: number) {
@@ -55,15 +54,14 @@ export const useProductAdminStore = defineStore('productAdmin', {
         this.products = this.products.filter(p => p.id !== id);
         productStore.products = productStore.products.filter(p => p.id !== id);
       } catch(e) {
-        console.error('Erreur: suppression d\'un produit', e);
+        console.error('Error: suppression d\'un produit', e);
       }
     },
     async deleteImage(productId: number, pictureId: number) {
       try {
-        const response = await axiosAdminDeleteImage(productId, pictureId);
-        return response;
+        return await axiosAdminDeleteImage(productId, pictureId);
       } catch(e) {
-        console.error('Erreur: suppression d\'un produit', e);
+        console.error('Error: suppression d\'un produit', e);
       }
     },
     async newProduct(dataProduct: ProductFormInterface) {
@@ -84,10 +82,9 @@ export const useProductAdminStore = defineStore('productAdmin', {
         this.products.push(response)
         productStore.products.push(response)
       } catch (e) {
-        console.error("Erreur: ajout d'un produit", e)
+        console.error("Error: ajout d'un produit", e)
       }
     },
-
     async updateProduct(dataProduct: ProductFormInterface, id: number) {
       try {
         const { title, price, description, images, category } = dataProduct
@@ -115,7 +112,7 @@ export const useProductAdminStore = defineStore('productAdmin', {
           productStore.products[productIndex].images = response.pictures
         }
       } catch(e) {
-        console.error("Erreur: modification d'un produit", e)
+        console.error('Error: modification d\'un produit', e)
       }
     }
   }

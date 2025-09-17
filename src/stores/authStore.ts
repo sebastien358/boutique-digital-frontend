@@ -14,8 +14,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async register(dataRegister: RegisterInterface) {
       try {
-        const response = await axiosRegister(dataRegister);
-        return response;
+        return await axiosRegister(dataRegister);
       } catch(e) {
         console.error('Erreur: inscription utilisateur', e);
       }
@@ -24,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await axiosLogin(dataLogin);
         localStorage.setItem(TOKEN_KEY, response.token);
-        console.log(response) //pour récupérer les données que à authentification ?
+        console.log(response)
         this.isLoggedIn = true
         authMiddleware(TOKEN_KEY)
         await this.userGetInfo()
@@ -34,8 +33,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async emailExists(dataLogin?: LoginInterface, dataRegister?: RegisterInterface) {
       try {
-        const response = await axiosEmailExists(dataLogin, dataRegister);
-        return response;
+        return await axiosEmailExists(dataLogin, dataRegister);
       } catch(e) {
         console.error('Erreur: récupération email utilisateur', e);
       }
@@ -43,9 +41,8 @@ export const useAuthStore = defineStore('auth', {
     async userGetInfo() {
       try {
         const response = await axiosGetUserInfo()
-        localStorage.setItem('userRole', JSON.stringify(response.roles));
+        localStorage.setItem(USER_ROLE, JSON.stringify(response.roles));
         this.userRole = response.roles;
-        console.log(this.userRole)
       } catch(e) {
         console.error('Erreur: récupérarion utilisateur', e)
       }
@@ -53,13 +50,16 @@ export const useAuthStore = defineStore('auth', {
     roleAdmin(): boolean {
       return this.userRole !== null && this.userRole.includes('ROLE_ADMIN')
     },
+    roleUser() {
+      return this.userRole !== null && this.userRole.includes('ROLE_USER')
+    },
     logout(router: any) {
       this.isLoggedIn = false
       this.token = null
       this.userRole = null
       localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(USER_ROLE)
-      router.push({path: '/login'})
+      router.push({ path: '/login' })
     }
   }
 })

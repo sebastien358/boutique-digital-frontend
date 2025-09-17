@@ -4,7 +4,9 @@
       <h4>{{ product.title }}</h4>
       <div class="d-flex align-items-center">
         <span class="mr-20">x{{ product.quantity }}</span>
-        <button @click="emit('removeFromCart', product.id)" class="btn btn-danger">Supprimer</button>
+        <button @click="emit('removeFromCart', product.id)" class="btn btn-danger">
+          Supprimer
+        </button>
       </div>
     </div>
   </div>

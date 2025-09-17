@@ -26,7 +26,10 @@ const router = createRouter({
     { path: '/login', component: Login },
     {
       path: '/payement',
-      meta: { requiresUser: true },
+      meta: {
+        requiresAuth: true,
+        requiresUser: true
+      },
       component: PayementProcessing
     },
     { path: '/:notFound(.*)*', component: NotFound }
@@ -39,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
     next({ path: '/login' })
   } else if(to.meta.requiresAdmin && (!authStore.userRole || !authStore.roleAdmin())) {
     next({ path: '/' })
-  } else if(to.meta.requiresUser && (!authStore.userRole || !authStore.userRole.includes('ROLE_USER'))) {
+  } else if(to.meta.requiresUser && (!authStore.userRole || !authStore.roleUser())) {
     next({ path: '/' })
   } else {
     next()

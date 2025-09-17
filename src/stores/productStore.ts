@@ -36,10 +36,10 @@ export const useProductStore = defineStore('product', {
           const products: ProductInterface[] = Array.isArray(response) ? response : [response];
           this.products = append ? [...this.products, ...products] : products;
         } else {
-          console.log('Erreur: response vide');
+          console.log('Error: response vide');
         }
       } catch (e) {
-        console.error('Erreur: récupération des produits', e)
+        console.error('Error: récupération des produits', e)
       } finally {
         this.isLoading = false
       }
@@ -50,7 +50,7 @@ export const useProductStore = defineStore('product', {
         await this.getProducts(true);
         return true
       } catch (e) {
-        console.error('Erreur: button load products', e)
+        console.error('Error: button load products', e)
       }
     },
     async searchProducts(search: string) {
@@ -59,7 +59,7 @@ export const useProductStore = defineStore('product', {
         const response = await axiosSearchProducts(this.searchTerm);
         this.products = response;
       } catch (e) {
-        console.error('Erreur: search products', e)
+        console.error('Error: search products', e)
       }
     },
     async filteredProductByPrice(priceRange: number[]) {
@@ -68,7 +68,7 @@ export const useProductStore = defineStore('product', {
         const response = await axiosFilteredProductByPrice(minPrice, maxPrice);
         this.products = response;
       } catch (e) {
-        console.error('Erreur: filtration par prix', e);
+        console.error('Error: filtration par prix', e);
       }
     },
     async filteredProductByCategory(category: string) {
@@ -88,7 +88,7 @@ export const useProductStore = defineStore('product', {
             break
         }
       } catch (e) {
-        console.error('Erreur: filtration par catégories', e);
+        console.error('Error: filtration par catégories', e);
       }
     },
     async initProductFilters() {

@@ -66,6 +66,8 @@ function goToPayement() {
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/mixins' as m;
+
 .basket {
   z-index: 1;
   position: fixed;
@@ -78,13 +80,17 @@ function goToPayement() {
   &_toggle {
     cursor: pointer;
     position: relative;
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     background: var(--primary-1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include m.xl {
+      width: 70px;
+      height: 70px;
+    }
   }
   &_toggle > .fa-basket-shopping {
     font-size: 17px;

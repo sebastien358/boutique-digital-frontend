@@ -1,4 +1,4 @@
-import { axiosAddToCart, axiosGetCarts, axiosRemoveFromCart } from '@/shared/services/cart.service';
+import { axiosAddToCart, axiosGetCarts, axiosRemoveFromToCart } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
 import type { ProductCartInterface } from '@/shared/interfaces/Cart.interface';
 import { useProductStore } from '@/stores/productStore.ts'
@@ -27,7 +27,7 @@ export const useCartStore = defineStore('cart', {
         const productToCart: ProductCartInterface[] = Array.isArray(response) ? response : [response]
         this.cart = productToCart
       } catch (e) {
-        console.error('Erreur: récupération des éléments du panier', e)
+        console.error('Error: récupération des éléments du panier', e)
       }
     },
     async addToCart(id: number) {
@@ -35,31 +35,31 @@ export const useCartStore = defineStore('cart', {
         const productStore = useProductStore()
         const productExisting = productStore.products.find((p) => p.id === id)
         if (productExisting) {
-          const dataItemToCart = {
+          const item = {
             id: productExisting.id,
             title: productExisting.title,
             price: productExisting.price,
-            quantity: 1,
+            quantity: 1
           }
-          let itemToCart = [dataItemToCart]
+          let itemToCart = [item]
           await axiosAddToCart(itemToCart)
           await this.getCarts()
         }
-      } catch (e) {
-        console.error("Erreur: ajout d'un produit dans le panier", e)
+      } catch(e) {
+        console.error('Error: ajout d\'produit dans le formulaire', e)
       }
     },
     async removeFromCart(id: number) {
       try {
-        const itemExist = this.cart.find((p) => p.id === id)
-        if (itemExist) {
-          await axiosRemoveFromCart(id)
+        const itemExisting = this.cart.find((p) => p.id === id)
+        if (itemExisting) {
+          await axiosRemoveFromToCart(id)
           await this.getCarts()
         }
-      } catch (e) {
-        console.error(e)
+      } catch(e) {
+        console.error('Error: supprimer un produit du panier', e)
       }
-    },
+    }
   },
 })
 
