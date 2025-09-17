@@ -43,6 +43,7 @@ export const useAuthStore = defineStore('auth', {
         const response = await axiosGetUserInfo()
         localStorage.setItem(USER_ROLE, JSON.stringify(response.roles));
         this.userRole = response.roles;
+        console.log(response)
       } catch(e) {
         console.error('Erreur: récupérarion utilisateur', e)
       }

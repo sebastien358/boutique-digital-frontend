@@ -16,8 +16,9 @@
     <div v-else class="d-flex flex-column basket_content">
       <h2>Panier</h2>
       <p :class="{'empty-basket': !props.carts.length, 'filled-basket': props.carts.length }">
-        {{ props.carts.length ? 'Liste des éléments du panier :' : 'Votre panier est vide pour le moment.' }}
+        {{ props.carts.length > 0 ? 'Votre panier :' : 'Votre panier est vide...' }}
       </p>
+
       <!-- Composant données panier -->
       <CartProductList
         @remove-from-cart="emit('removeFromCart', $event)"
@@ -60,7 +61,7 @@ function goToPayement() {
   if (props.carts.length > 0) {
     router.push({ path: '/payement' })
   } else {
-    console.error('Votre panier est vide')
+    router.push({ path: '/login' })
   }
 }
 </script>

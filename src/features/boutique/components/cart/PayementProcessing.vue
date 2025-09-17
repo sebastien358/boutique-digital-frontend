@@ -74,14 +74,17 @@ const handleSubmit = async () => {
   .payment-form > h1 {
     font-size: 21px;
     @include m.xl {
-      font-size: 26px;
+      font-size: 24px;
     }
   }
   .payment-form > p {
     font-size: 14px;
     @include m.xl {
-      font-size: 16px;
+      font-size: 15px;
     }
+  }
+  .payment-form button {
+    padding: 11px;
   }
   #card-element {
     padding: 10px;
