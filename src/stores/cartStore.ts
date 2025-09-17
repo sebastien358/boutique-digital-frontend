@@ -26,6 +26,7 @@ export const useCartStore = defineStore('cart', {
         const response = await axiosGetCarts()
         const productToCart: ProductCartInterface[] = Array.isArray(response) ? response : [response]
         this.cart = productToCart
+        console.log(this.cart)
       } catch (e) {
         console.error('Error: récupération des éléments du panier', e)
       }
