@@ -1,34 +1,33 @@
 <template>
   <div class="basket">
     <Transition mode="out-in">
-    <div v-if="!state.open">
-      <!-- Open panier -->
-      <div @click="state.open = !state.open" class="basket_toggle" :class="{
-        'on-products-basket': props.carts.length
-      }">
-        <div class="count-cart">
-          <span>{{ props.carts.length }}</span>
+      <div v-if="!state.open">
+        <!-- Open panier -->
+        <div @click="state.open = !state.open" class="basket_toggle" :class="{
+          'on-products-basket': props.carts.length
+        }">
+          <div class="count-cart">
+            <span>{{ props.carts.length }}</span>
+          </div>
+          <font-awesome-icon icon="fa-solid fa-basket-shopping" />
         </div>
-        <font-awesome-icon icon="fa-solid fa-basket-shopping" />
       </div>
-    </div>
-    <!-- Panier de la boutique -->
-    <div v-else class="d-flex flex-column basket_content">
-      <h2>Panier</h2>
-      <p :class="{'empty-basket': !props.carts.length, 'filled-basket': props.carts.length }">
-        {{ props.carts.length > 0 ? 'Votre panier :' : 'Votre panier est vide...' }}
-      </p>
-
-      <!-- Composant données panier -->
-      <CartProductList
-        @remove-from-cart="emit('removeFromCart', $event)"
-        :carts="carts"
-      />
-      <button @click="goToPayement()" class="btn btn-success text-center">
-        Commander ({{ props.totalBasket }})€
-      </button>
-      <Calc :open="state.open" @close="state.open = false" :transparent="false" />
-    </div>
+      <!-- Panier de la boutique -->
+      <div v-else class="d-flex flex-column basket_content">
+        <h2>Panier</h2>
+        <p :class="{'empty-basket': !props.carts.length, 'filled-basket': props.carts.length }">
+          {{ props.carts.length > 0 ? 'Votre panier :' : 'Votre panier est vide...' }}
+        </p>
+        <!-- Composant données panier -->
+        <CartProductList
+          @remove-from-cart="emit('removeFromCart', $event)"
+          :carts="carts"
+        />
+        <button @click="goToPayement()" class="btn btn-success text-center">
+          Commander ({{ props.totalBasket }})€
+        </button>
+        <Calc :open="state.open" @close="state.open = false" :transparent="false" />
+      </div>
     </Transition>
   </div>
 </template>
@@ -39,7 +38,9 @@ import CartProductList from './CartProductList.vue'
 import Calc from '../../../../components/Calc.vue'
 import type { ProductCartInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore.ts'
 
+const authStore = useAuthStore()
 const router = useRouter()
 
 const state = reactive<{
@@ -58,8 +59,10 @@ const emit = defineEmits<{
 }>()
 
 function goToPayement() {
-  if (props.carts.length > 0) {
+  if (authStore.isLoggedIn && props.carts.length > 0) {
     router.push({ path: '/payement' })
+  } else if(authStore.isLoggedIn && props.carts.length === 0) {
+    router.push({ path: '/boutique' })
   } else {
     router.push({ path: '/login' })
   }
@@ -119,11 +122,11 @@ function goToPayement() {
     border: var(--border);
     padding: 15px 10px 6px 10px;
     h2 {
-      font-size: 18px;
+      font-size: 19px;
     }
     .empty-basket,
     .filled-basket {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
     }
     .empty-basket {

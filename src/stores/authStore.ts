@@ -57,7 +57,7 @@ export const useAuthStore = defineStore('auth', {
     logout(router: any) {
       this.isLoggedIn = false
       this.token = null
-      this.userRole = null
+      this.userRole = []
       localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(USER_ROLE)
       router.push({ path: '/login' })

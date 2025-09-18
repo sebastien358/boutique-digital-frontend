@@ -1,4 +1,4 @@
-import { axiosAddToCart, axiosGetCarts, axiosRemoveFromToCart } from '@/shared/services/cart.service';
+import { axiosAddToCart, axiosGetItemsCart, axiosRemoveItemFromCart } from '@/shared/services/cart.service';
 import { defineStore } from 'pinia';
 import type { ProductCartInterface } from '@/shared/interfaces/Cart.interface';
 import { useProductStore } from '@/stores/productStore.ts'
@@ -23,17 +23,15 @@ export const useCartStore = defineStore('cart', {
   actions: {
     async getCarts() {
       try {
-        const response = await axiosGetCarts()
+        const response = await axiosGetItemsCart()
         if (response) {
-          const productToCart: ProductCartInterface[] = Array.isArray(response) ? response : [response]
-          this.cart = productToCart
+          const products: ProductCartInterface[] = Array.isArray(response) ? response : [response]
+          this.cart = products
         } else {
           this.cart = []
         }
-
-        console.log(this.cart)
-      } catch (e) {
-        console.error('Error: récupération des éléments du panier', e)
+      } catch(e) {
+        console.error('Error: récupération des produits du panier', e)
       }
     },
     async addToCart(id: number) {
@@ -52,18 +50,18 @@ export const useCartStore = defineStore('cart', {
           await this.getCarts()
         }
       } catch(e) {
-        console.error('Error: ajout d\'produit dans le formulaire', e)
+        console.error('Error: ajout d\'un produit au panier', e)
       }
     },
     async removeFromCart(id: number) {
       try {
         const itemExisting = this.cart.find((p) => p.id === id)
         if (itemExisting) {
-          await axiosRemoveFromToCart(id)
+          await axiosRemoveItemFromCart(id)
           await this.getCarts()
         }
       } catch(e) {
-        console.error('Error: supprimer un produit du panier', e)
+        console.error('Error: suppression d\'un produit', e)
       }
     }
   },

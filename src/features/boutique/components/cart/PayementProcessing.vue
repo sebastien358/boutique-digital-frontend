@@ -46,7 +46,6 @@ const handleSubmit = async () => {
       console.error('Erreur lors de la création du token', error);
     } else {
       console.log('Token de paiement créé avec succès', token);
-      // Afficher un message de succès
       alert('Paiement réussi !');
     }
   } catch (error) {
@@ -68,7 +67,7 @@ const handleSubmit = async () => {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     @include m.xl {
-      max-width: 550px;
+      max-width: 520px;
     }
   }
   .payment-form > h1 {
