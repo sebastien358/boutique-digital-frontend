@@ -59,10 +59,10 @@ const emit = defineEmits<{
 }>()
 
 function goToPayement() {
-  if (authStore.isLoggedIn && props.carts.length > 0) {
-    router.push({ path: '/payement' })
-  } else if(authStore.isLoggedIn && props.carts.length === 0) {
+  if (authStore.isLoggedIn && props.carts.length === 0) {
     router.push({ path: '/boutique' })
+  } else if(authStore.isLoggedIn && props.carts.length > 0) {
+    router.push({ path: '/payement' })
   } else {
     router.push({ path: '/login' })
   }

@@ -22,6 +22,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripe = ref(null);
 const cardStripe = ref(null);
 const cardElement = ref(null);
+import axios from 'axios'
 
 onMounted(async () => {
   stripe.value = await loadStripe('pk_test_51S7vMKGrri7JBEMH0ETlCFzS9xiN409EHLpu07ZRfJURU9LZ79aR2M1NcPjseKOXgZRo1W0MR2qPDb8Z50W3sszt00ksAK8QBQ');
@@ -29,7 +30,7 @@ onMounted(async () => {
     cardStripe.value = elements.create('card', {
       style: {
         base: {
-          fontSize: '16px',
+          fontSize: '14px',
           color: '#32325d',
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
           padding: '10px',
@@ -46,7 +47,14 @@ const handleSubmit = async () => {
       console.error('Erreur lors de la création du token', error);
     } else {
       console.log('Token de paiement créé avec succès', token);
-      alert('Paiement réussi !');
+      const response = await axios.post('http://localhost:8000/api/payement', new URLSearchParams({
+        token: token.id
+      }).toString());
+      if (response.data.success) {
+        alert('Paiement réussi !');
+      } else {
+        console.error('Erreur lors du paiement', response.data.error);
+      }
     }
   } catch (error) {
     console.error(error);
