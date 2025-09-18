@@ -12,13 +12,10 @@ export const useCartStore = defineStore('cart', {
     cart: [],
   }),
   getters: {
-    totatBasket(state) {
+    totalBasket(state) {
       const initialValue = 0
-      return state.cart.reduce(
-        (acc, product) => acc + product.price * product.quantity,
-        initialValue,
-      )
-    },
+      return state.cart.reduce((acc, product) => acc + product.price * product.quantity, initialValue)
+    }
   },
   actions: {
     async getCarts() {
@@ -26,9 +23,9 @@ export const useCartStore = defineStore('cart', {
         const response = await axiosGetItemsCart()
         if (response) {
           const products: ProductCartInterface[] = Array.isArray(response) ? response : [response]
-          this.cart = products
+          this.cart = products || []
         } else {
-          this.cart = []
+          console.error('La response est vide')
         }
       } catch(e) {
         console.error('Error: récupération des produits du panier', e)
@@ -39,14 +36,13 @@ export const useCartStore = defineStore('cart', {
         const productStore = useProductStore()
         const productExisting = productStore.products.find((p) => p.id === id)
         if (productExisting) {
-          const item = {
+          const itemToCart = {
             id: productExisting.id,
             title: productExisting.title,
             price: productExisting.price,
-            quantity: 1
+            quantity: 1,
           }
-          let itemToCart = [item]
-          await axiosAddToCart(itemToCart)
+          await axiosAddToCart([itemToCart])
           await this.getCarts()
         }
       } catch(e) {

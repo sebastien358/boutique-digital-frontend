@@ -2,10 +2,10 @@
   <div class="d-flex align-items-center justify-content-center p-20 container">
     <div class="payment-form">
       <h1 class="text-center mb-15">Paiement sécurisé</h1>
-      <p class="text-center mb-20">Entrez vos informations de carte de crédit pour effectuer le paiement</p>
+      <p class="text-center mb-15">Entrez vos informations de carte de crédit pour effectuer le paiement</p>
       <form @submit.prevent="handleSubmit">
-        <div class="form-group mb-5">
-          <label for="card-element">Carte</label>
+        <div class="form-group">
+          <label for="card-element"></label>
           <div id="card-element" ref="cardElement"></div>
         </div>
         <div class="d-flex flex-column">
@@ -60,6 +60,12 @@ const handleSubmit = async () => {
     console.error(error);
   }
 };
+
+const successMessage = ref<string>('')
+
+function setSuccessMessage(message) {
+  successMessage.value = message
+}
 </script>
 
 <style scoped lang="scss">
@@ -75,20 +81,26 @@ const handleSubmit = async () => {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     @include m.xl {
-      max-width: 520px;
+      max-width: 480px;
     }
   }
   .payment-form > h1 {
-    font-size: 21px;
+    font-size: 20px;
     @include m.xl {
-      font-size: 24px;
+      font-size: 22px;
     }
   }
   .payment-form > p {
     font-size: 14px;
-    @include m.xl {
-      font-size: 15px;
+    &:hover {
+      color: green;
     }
+    @include m.xl {
+      font-size: 14px;
+    }
+  }
+  .payment-form button  {
+    margin-top: 6px;
   }
   .payment-form button {
     padding: 11px;
@@ -98,6 +110,7 @@ const handleSubmit = async () => {
     border: 1px solid #ccc;
     border-radius: 5px;
     height: 40px;
+    margin-top: 5px;
   }
 }
 </style>

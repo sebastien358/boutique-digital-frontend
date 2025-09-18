@@ -16,7 +16,11 @@ export const useAdminCategory = defineStore('categoryAdmin', {
         const response = await axiosAdminGetCategories();
         if (response) {
           const categories: CategoryInterface[] = Array.isArray(response) ? response : [response]
-          this.category = categories
+          if (categories) {
+            this.category = categories
+          } else {
+            this.category = []
+          }
         } else {
           console.log('Erreur: response vide');
         }

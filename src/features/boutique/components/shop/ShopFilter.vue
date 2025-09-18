@@ -13,13 +13,30 @@
       <div class="d-flex flex-column shop-filter_price">
         <h3>Filtrer par prix</h3>
         <div
-          v-for="(priceRange, index) in [[0, 4000],[500, 1000],[1000, 1500],[1500, 2000],[2000, 4000]]" :key="index" class="mb-10">
-          <input @click="filteredByPrice(priceRange)" v-model="productStore.priceRange" :checked="productStore.priceRange[0] === priceRange[0]" name="priceRange" type="radio" />
+          v-for="(priceRange, index) in [
+            [0, 4000],
+            [500, 1000],
+            [1000, 1500],
+            [1500, 2000],
+            [2000, 4000],
+          ]"
+          :key="index"
+          class="mb-10"
+        >
+          <input
+            @click="filteredByPrice(priceRange)"
+            v-model="productStore.priceRange"
+            :checked="productStore.priceRange[0] === priceRange[0]"
+            name="priceRange"
+            type="radio"
+          />
           <span>
             {{
-              priceRange[0] === 0 ? 'Tous les produits' : 
-              priceRange[0] === 2000 ? 'Plus de 2000' : 
-              `Entre ${priceRange[0]} et ${priceRange[1]}`
+              priceRange[0] === 0
+                ? 'Tous les produits'
+                : priceRange[0] === 2000
+                  ? 'Plus de 2000'
+                  : `Entre ${priceRange[0]} et ${priceRange[1]}`
             }}
           </span>
         </div>
@@ -28,7 +45,7 @@
         <h3>Filtrer par catégories</h3>
         <div
           v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']"
-          :class="{'active-category' : productStore.category.includes(category)}"
+          :class="{ 'active-category': productStore.category.includes(category) }"
           :key="index"
           class="mb-15"
         >
@@ -40,7 +57,8 @@
     </div>
     <div class="d-flex flex-column shop-filter_reinitialisation">
       <p>
-        Nombre de produits : <span>{{ products.length }}</span>
+        Nombre de produits :
+        <span>{{ products.length }}</span>
       </p>
       <button @click="emit('initProductFilters')" class="btn btn-danger">Réinitialisation</button>
     </div>
@@ -48,8 +66,8 @@
 </template>
 
 <script setup lang="ts">
-import { useProductStore } from '../../../../stores/productStore'
 import type { ProductInterface } from '@/shared/interfaces'
+import { useProductStore } from '@/stores/productStore.ts'
 
 // Récupération des produits : PROPS
 
@@ -63,9 +81,9 @@ const productStore = useProductStore()
 
 async function inputSearchTerm() {
   try {
-    await productStore.searchProducts(productStore.searchTerm);
+    await productStore.searchProducts(productStore.searchTerm)
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
@@ -73,9 +91,9 @@ async function inputSearchTerm() {
 
 async function filteredByPrice(priceRange: number[]) {
   try {
-    await productStore.filteredProductByPrice(priceRange);
+    await productStore.filteredProductByPrice(priceRange)
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
@@ -83,10 +101,10 @@ async function filteredByPrice(priceRange: number[]) {
 
 async function filteredByCategory(category: string) {
   try {
-    await productStore.filteredProductByCategory(category);
-    productStore.category = category;
+    await productStore.filteredProductByCategory(category)
+    productStore.category = category
   } catch (e) {
-    console.error(e);
+    console.error(e)
   }
 }
 
@@ -98,8 +116,13 @@ const emit = defineEmits<{
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/scss/mixins' as m;
+
 .shop-filter {
-  border-right: var(--border);
+  border-right: 0;
+  @include m.lg {
+    border-right: var(--border);
+  }
   &_search {
     margin-bottom: 20px;
     input {
@@ -109,43 +132,92 @@ const emit = defineEmits<{
       padding: 10px;
     }
     h3 {
+      color: var(--text-primary-color);
       font-size: 16px;
       margin-bottom: 5px;
+      font-weight: normal;
+      @include m.lg {
+        font-size: 17px;
+        color: var(--gray-3);
+        font-weight: bold;
+      }
     }
   }
+}
+
+.shop-filter {
   &_price {
     margin-bottom: 15px;
     h3 {
-      font-size: 15px;
+      color: var(--text-primary-color);
+      font-size: 16px;
       margin-bottom: 10px;
+      font-weight: normal;
+      @include m.lg {
+        color: var(--gray-3);
+        font-weight: bold;
+      }
     }
     input {
       margin-right: 3px;
     }
     span {
+      color: var(--text-primary-color);
       font-size: 14px;
+      @include m.lg {
+        color: var(--gray-3);
+      }
     }
   }
+}
+
+.shop-filter {
   &_category {
+    margin-bottom: 30px;
+    @include m.lg {
+      margin-bottom: 0;
+    }
     h3 {
-      font-size: 15px;
+      color: var(--text-primary-color);
+      font-size: 16px;
       margin-bottom: 10px;
+      font-weight: normal;
+      @include m.lg {
+        font-size: 15px;
+        color: var(--gray-3);
+        font-weight: bold;
+      }
     }
     span {
+      color: var(--text-primary-color);
       cursor: pointer;
       font-size: 15px;
-    }
-    .active-category {
-      color: #008000;
+      .active-category {
+        color: #008000;
+      }
+      @include m.lg {
+        color: var(--gray-3);
+      }
     }
   }
+}
+
+
+.shop-filter {
   &_reinitialisation {
     p {
       margin-bottom: 3px;
       font-size: 13px;
+      color: var(--text-primary-color);
+      @include m.lg {
+        color: var(--gray-3);
+      }
     }
     p > span {
-      color: var(--green-validate-form);
+      color: var(--text-primary-color);
+      @include m.lg {
+        color: var(--green-validate-form);
+      }
     }
   }
 }

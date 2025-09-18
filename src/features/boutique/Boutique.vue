@@ -8,7 +8,7 @@
     />
     <Cart
       :carts="carts"
-      :totalBasket="cartStore.totatBasket"
+      :totalBasket="cartStore.totalBasket"
       @remove-from-cart="removeFromCart"
     />
   </div>
