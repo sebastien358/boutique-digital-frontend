@@ -9,21 +9,22 @@
     />
     <!-- Affichage de   s produits -->
     <div class="d-flex flex-column">
-      <button @click="state.open = !state.open" class="btn btn-primary">Filtrer les produits</button>
+      <button @click="state.open = !state.open" class="btn btn-primary">
+        Filtrer les produits
+      </button>
       <ShopProductList
         :products="products"
         :isLoggedIn="isLoggedIn"
         @add-to-cart="emit('addToCart', $event)"
         class="scrollable"
       />
+      <Calc @close="state.open = false" :open="state.isMobile && state.open" :transparent="true" />
     </div>
-    <Calc :open="state.isMobile && state.open" @close="state.open = false" :transparent="true" />
   </div>
 </template>
 
 <script setup lang="ts">
-
-import type { ProductInterface }from '@/shared/interfaces'
+import type { ProductInterface } from '@/shared/interfaces'
 import ShopProductList from './ShopProductList.vue'
 import ShopFilter from './ShopFilter.vue'
 import { reactive } from 'vue'
@@ -33,8 +34,8 @@ const state = reactive<{
   open: boolean
   isMobile: boolean
 }>({
-  open: !window.matchMedia('(max-width: 575px)').matches,
-  isMobile: window.matchMedia('(max-width: 575px)').matches
+  open: !window.matchMedia('(max-width: 992px)').matches,
+  isMobile: window.matchMedia('(max-width: 992px)').matches
 })
 
 defineProps<{

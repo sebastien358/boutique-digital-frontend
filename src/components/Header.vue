@@ -2,7 +2,7 @@
   <header class="d-flex align-items-center space-between">
     <div class="d-flex align-items-center">
       <router-link to="/boutique" class="d-flex align-items-center mr-20 router-link-title">
-        <img src="@/assets/images/logo.svg" />
+        <img src="@/assets/images/logo.svg" alt="logo header" />
         <h1>DigitalShop</h1>
       </router-link>
       <ul class="d-flex align-items-center hide-tablet">
@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import Calc from './Calc.vue'
-import { computed, reactive } from 'vue';
+import { reactive } from 'vue';
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 
@@ -77,11 +77,11 @@ const state = reactive<{
 })
 
 const authStore = useAuthStore()
-
 const router = useRouter()
 
 function onClickLogout() {
-  authStore.logout(router)
+  authStore.logout()
+  router.push({ path: '/login' })
 }
 </script>
 
@@ -108,7 +108,7 @@ header {
 }
 
 .container-menu {
-  z-index: 1;
+  z-index: 2;
   position: relative;
   .fa-bars {
     cursor: pointer;

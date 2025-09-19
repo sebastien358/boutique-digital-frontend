@@ -73,10 +73,10 @@ function goToPayement() {
 @use '@/assets/scss/mixins' as m;
 
 .basket {
-  z-index: 1;
+  z-index: 2;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 30px;
   .on-products-basket {
     border: var(--border-basket);
     box-shadow: var(--on-basket) 0 2px 11px, var(--on-basket) 0 2px 11px;

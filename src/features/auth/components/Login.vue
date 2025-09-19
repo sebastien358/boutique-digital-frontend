@@ -4,14 +4,14 @@
       <h2 class="mb-15 text-center">Connexion</h2>
       <form @submit="onSubmit">
         <div class="d-flex flex-column mb-20">
-          <label>Email</label>
+          <label><span>*</span>Email</label>
           <input v-model="email" type="email" />
           <span v-if="errorEmail" class="error-fields">
             {{ errorEmail }}
           </span>
         </div>
         <div class="d-flex flex-column mb-10">
-          <label>Mot de passe</label>
+          <label><span>*</span>Mot de passe</label>
           <input v-model="password" type="password" />
           <span v-if="errorPassword" class="error-fields">
             {{ errorPassword }}

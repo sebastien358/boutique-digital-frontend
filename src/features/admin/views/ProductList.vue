@@ -32,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { useProductAdminStore } from '../../../stores/admin/productAdminStore'
-import Modal from '../../../components/Modal.vue'
+import { useProductAdminStore } from '@/stores/admin/productAdminStore.ts'
+import Modal from '@/components/Modal.vue'
 import { reactive, ref } from 'vue'
 import { computed, onMounted } from 'vue'
 
@@ -64,7 +64,7 @@ async function loadProducts() {
   try {
     await productAdminStore.getProducts(currentPage.value, itemsPerPage.value)
   } catch (e) {
-    console.error('Erreur: récupération des produits', e)
+    console.error('Error: récupération des produits', e)
   }
 }
 

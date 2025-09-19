@@ -10,7 +10,7 @@
         </template>
       </router-view>
     </div>
-    <TheFooter class="footer" />
+    <TheFooter class="footer hide-tablet" />
   </div>
 </template>
 

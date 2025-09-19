@@ -1,15 +1,15 @@
 <template>
   <div>
     <Shop
-      :products="products"
-      :isLoggedIn="isLoggedIn"
       @init-product-filters="initProductFilters"
       @add-to-cart="addToCart"
+      :products="products"
+      :isLoggedIn="isLoggedIn"
     />
     <Cart
-      :carts="carts"
-      :totalBasket="cartStore.totalBasket"
       @remove-from-cart="removeFromCart"
+      :totalBasket="cartStore.totalBasket"
+      :carts="carts"
     />
   </div>
 </template>

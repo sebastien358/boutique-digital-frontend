@@ -117,6 +117,9 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 @use '@/assets/scss/mixins' as m;
+.shop-filter {
+  z-index: 2;
+}
 
 .shop-filter {
   border-right: 0;
@@ -201,7 +204,6 @@ const emit = defineEmits<{
     }
   }
 }
-
 
 .shop-filter {
   &_reinitialisation {

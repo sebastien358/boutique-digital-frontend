@@ -1,4 +1,4 @@
-/* import du fichier racine scsss */ 
+/* import du fichier racine scsss */
 import './assets/scss/main.scss'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

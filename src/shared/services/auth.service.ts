@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { useAuthStore } from '@/stores/authStore.ts'
 import type { LoginInterface, RegisterInterface } from '../interfaces';
 
 export async function axiosRegister(dataRegister: RegisterInterface): Promise<RegisterInterface> {
@@ -13,7 +13,7 @@ export async function axiosRegister(dataRegister: RegisterInterface): Promise<Re
     });
     return response.data;
   } catch(e) {
-    console.log('Erreur: ', e);
+    console.log('Error: ', e);
     throw e;
   }
 }
@@ -27,7 +27,7 @@ export async function axiosLogin(dataLogin: LoginInterface): Promise<LoginInterf
     });
     return response.data;
   } catch(e) {
-    console.log('Erreur: ', e);
+    console.log('Error: ', e);
     throw e;
   }
 }
@@ -49,7 +49,7 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
       return response.data;
     }
   } catch(e) {
-    console.log('Erreur: ', e);
+    console.log('Error: ', e);
     throw e;
   }
 }
@@ -59,18 +59,18 @@ export async function axiosGetUserInfo() {
     const response = await axios.get('http://127.0.0.1:8000/api/user/me')
     return response.data
   } catch(e) {
-    console.error('Erreur: ', e)
+    console.error('Error: ', e)
   }
 }
 
-export const authMiddleware = (TOKEN_KEY: string) => (config: any) => {
-  const token: string | null = localStorage.getItem(TOKEN_KEY);
-
+export const authMiddleware = (config) => {
+  const authStore = useAuthStore()
+  const token = authStore.token
   if (token) {
-    config.headers = config.headers || {};
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers = config.headers || {}
+    config.headers.Authorization = `Bearer ${token}`
   }
-  return config;
+  return config
 }
 
-axios.interceptors.request.use(authMiddleware('token'));
+axios.interceptors.request.use(authMiddleware)

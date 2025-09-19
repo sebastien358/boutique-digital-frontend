@@ -44,6 +44,10 @@ const emit = defineEmits<{
   grid-auto-rows: 475px;
   gap: 12px;
   grid-template-columns: repeat(1, 1fr);
+  @include mixin.md {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
   @include mixin.lg {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;

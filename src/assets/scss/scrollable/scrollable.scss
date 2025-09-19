@@ -1,4 +1,9 @@
+@use '@/assets/scss/mixins' as m;
+
 .scrollable {
   overflow-y: auto;
   height: calc(100vh - 96px);
+  @include m.lg-tablet {
+    height: calc(100vh - 105px);
+  }
 }

@@ -1,9 +1,11 @@
 import type { LoginInterface, RegisterInterface } from '@/shared/interfaces';
-import { authMiddleware, axiosEmailExists, axiosGetUserInfo, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
+import { axiosEmailExists, axiosGetUserInfo, axiosLogin, axiosRegister } from '@/shared/services/auth.service';
 import { defineStore } from 'pinia'
 
 const TOKEN_KEY = 'token'
 const USER_ROLE = 'userRole'
+const ROLE_ADMIN = 'ROLE_ADMIN'
+const ROLE_USER = 'ROLE_USER'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -16,26 +18,26 @@ export const useAuthStore = defineStore('auth', {
       try {
         return await axiosRegister(dataRegister);
       } catch(e) {
-        console.error('Erreur: inscription utilisateur', e);
+        console.error('Error: inscription', e);
       }
     },
     async login(dataLogin: LoginInterface) {
       try {
         const response = await axiosLogin(dataLogin);
         localStorage.setItem(TOKEN_KEY, response.token);
-        console.log(response)
+        this.token = response.token
         this.isLoggedIn = true
-        authMiddleware(TOKEN_KEY)
-        await this.userGetInfo()
+        await this.userGetInfo();
+        console.log(response)
       } catch(e) {
-        console.error('Erreur: connexion utilisateur', e);
+        console.error('Error: connexion', e);
       }
     },
     async emailExists(dataLogin?: LoginInterface, dataRegister?: RegisterInterface) {
       try {
         return await axiosEmailExists(dataLogin, dataRegister);
       } catch(e) {
-        console.error('Erreur: récupération email utilisateur', e);
+        console.error('Error: email existing', e);
       }
     },
     async userGetInfo() {
@@ -45,22 +47,21 @@ export const useAuthStore = defineStore('auth', {
         this.userRole = response.roles;
         console.log(response)
       } catch(e) {
-        console.error('Erreur: récupérarion utilisateur', e)
+        console.error('Error: information user', e)
       }
     },
     roleAdmin(): boolean {
-      return this.userRole !== null && this.userRole.includes('ROLE_ADMIN')
+      return this.userRole !== null && this.userRole.includes(ROLE_ADMIN)
     },
     roleUser() {
-      return this.userRole !== null && this.userRole.includes('ROLE_USER')
+      return this.userRole !== null && this.userRole.includes(ROLE_USER)
     },
-    logout(router: any) {
-      this.isLoggedIn = false
+    logout() {
       this.token = null
+      this.isLoggedIn = false
       this.userRole = []
       localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(USER_ROLE)
-      router.push({ path: '/login' })
     }
   }
 })

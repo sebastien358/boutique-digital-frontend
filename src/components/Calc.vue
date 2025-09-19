@@ -6,24 +6,24 @@
 
 <script setup lang="ts">
 defineProps<{
-  open: boolean
-  transparent: boolean
-}>()
+  open: boolean;
+  transparent?: boolean;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: "close"): void;
+}>();
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .calc {
-  z-index: 0;
-  position: absolute;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
   width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #00000073;
+  background-color: #0000005e;
+  z-index: 1;
 }
 
 .transparent {

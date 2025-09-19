@@ -4,35 +4,35 @@
       <h2 class="mb-15 text-center">Inscription</h2>
       <form @submit="onSubmit">
         <div class="d-flex flex-column mb-20">
-          <label>Nom</label>
+          <label><span>*</span>Nom</label>
           <input v-model="lastname" type="text" />
           <span v-if="errorLastname" class="error-fields">
             {{ errorLastname }}
           </span>
         </div>
         <div class="d-flex flex-column mb-20">
-          <label>Prénom</label>
+          <label><span>*</span>Prénom</label>
           <input v-model="firstname" type="text" />
           <span v-if="errorFirstname" class="error-fields">
             {{ errorFirstname }}
           </span>
         </div>
         <div class="d-flex flex-column mb-20">
-          <label>Email</label>
+          <label><span>*</span>Email</label>
           <input v-model="email" type="email" />
           <span v-if="errorEmail" class="error-fields">
             {{ errorEmail }}
           </span>
         </div>
         <div class="d-flex flex-column mb-20">
-          <label>Mot de passe</label>
+          <label><span>*</span>Mot de passe</label>
           <input v-model="password" type="password" />
           <span v-if="errorPassword" class="error-fields">
             {{ errorPassword }}
           </span>
         </div>
         <div class="d-flex flex-column mb-10">
-          <label>Confirmation de mot de passe</label>
+          <label><span>*</span>Confirmation de mot de passe</label>
           <input v-model="confirmPassword" type="password" />
           <span v-if="errorConfirmPassword" class="error-fields">
             {{ errorConfirmPassword }}
