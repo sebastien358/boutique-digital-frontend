@@ -1,76 +1,94 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center m-20 order-form">
-    <div class="form-container">
-      <h2 class="text-center">Commande</h2>
-      <form @submit="onSubmit">
-        <div class="container-username">
-          <div class="mb-20">
-            <label><span>*</span>Prénom</label>
-            <input v-model="firstName" type="text" autofocus />
-            <span v-if="errorFirstname" class="error-fields">
-              {{ errorFirstname }}
+  <div class="container">
+    <div class="text-center">
+      <span v-if="errorMessage" class="d-flex flex-column error-message">
+        {{ errorMessage }}
+      </span>
+      <span v-if="successMessage" class="d-flex flex-column success-message">
+        {{ successMessage }}
+      </span>
+    </div>
+    <div class="d-flex align-items-center flex-column justify-content-center order">
+      <h1 class="text-center">Récapitulatif de la commande</h1>
+      <!-- Infos de la commande de l'utlilisateur -->
+      <div class="d-flex flex-column justify-content-center info-command">
+        <div v-for="cart in carts" :key="cart.id" class="d-flex align-items-center space-between info-command_details">
+          <h4>{{ cart.title }}</h4>
+          <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+              <font-awesome-icon icon="fa-solid fa-minus" />
+              <span class="quantity">{{ cart.quantity }}</span>
+              <font-awesome-icon icon="fa-solid fa-plus" />
+            </div>
+            <strong class="price">{{ cart.price }}€</strong>
+          </div>
+        </div>
+      </div>
+      <!-- Formulaire de la commande -->
+      <div class="form-container">
+        <!--<h2 class="text-center">Commande</h2>-->
+        <form @submit="onSubmit">
+          <div class="container-username">
+            <div class="mb-20">
+              <label><span>*</span>Prénom</label>
+              <input v-model="firstName" type="text" autofocus />
+              <span v-if="errorFirstname" class="error-fields">
+                {{ errorFirstname }}
+              </span>
+            </div>
+            <div class="mb-20">
+              <label><span>*</span>Nom</label>
+              <input v-model="lastName" type="text" />
+              <span v-if="errorLastname" class="error-fields">
+                {{ errorLastname }}
+              </span>
+            </div>
+          </div>
+          <div class="d-flex flex-column mb-20">
+            <label><span>*</span>Adresse</label>
+            <input v-model="address" type="text" />
+            <span v-if="errorAddress" class="error-fields">
+              {{ errorAddress }}
             </span>
           </div>
-          <div class="mb-20">
-            <label><span>*</span>Nom</label>
-            <input v-model="lastName" type="text" />
-            <span v-if="errorLastname" class="error-fields">
-              {{ errorLastname }}
+          <div class="d-flex flex-column mb-20">
+            <label><span>*</span>Code Postal</label>
+            <input v-model="zipCode" type="text" />
+            <span v-if="errorZipCode" class="error-fields">
+              {{ errorZipCode }}
             </span>
           </div>
-        </div>
-        <div class="d-flex flex-column mb-20">
-          <label><span>*</span>Adresse</label>
-          <input v-model="address" type="text" />
-          <span v-if="errorAddress" class="error-fields">
-            {{ errorAddress }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-20">
-          <label><span>*</span>Code Postal</label>
-          <input v-model="zipCode" type="text" />
-          <span v-if="errorZipCode" class="error-fields">
-            {{ errorZipCode }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-20">
-          <label><span>*</span>Ville</label>
-          <input v-model="city" type="text" />
-          <span v-if="errorCity" class="error-fields">
-            {{ errorCity }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-20">
-          <label for="pays"><span>*</span>Pays</label>
-          <select v-model="country" name="pays">
-            <option value="">--Please choose an option--</option>
-            <option value="France">France</option>
-            <option value="Belgique">Belgique</option>
-            <option value="Suisse">Suisse</option>
+          <div class="d-flex flex-column mb-20">
+            <label><span>*</span>Ville</label>
+            <input v-model="city" type="text" />
+            <span v-if="errorCity" class="error-fields">
+              {{ errorCity }}
+            </span>
+          </div>
+          <div class="d-flex flex-column mb-20">
+            <label for="pays"><span>*</span>Pays</label>
+            <select v-model="country" name="pays">
+              <option value="">--Please choose an option--</option>
+              <option value="France">France</option>
+              <option value="Belgique">Belgique</option>
+              <option value="Suisse">Suisse</option>
             </select>
-          <span v-if="errorCountry" class="error-fields">
-            {{ errorCountry }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-10">
-          <label><span>*</span>Téléphone</label>
-          <input v-model="phoneNumber" type="tel" />
-          <span v-if="errorPhoneNumber" class="error-fields">
-            {{ errorPhoneNumber }}
-          </span>
-        </div>
-        <div class="text-center mb-10">
-          <span v-if="errorMessage" class="error-message">
-            {{ errorMessage }}
-          </span>
-          <span v-if="successMessage" class="success-message">
-            {{ successMessage }}
-          </span>
-        </div>
-        <button class="btn btn-primary" :disabled="isSubmitting">
-          Enregistrer
-        </button>
-      </form>
+            <span v-if="errorCountry" class="error-fields">
+              {{ errorCountry }}
+            </span>
+          </div>
+          <div class="d-flex flex-column mb-10">
+            <label><span>*</span>Téléphone</label>
+            <input v-model="phoneNumber" type="tel" />
+            <span v-if="errorPhoneNumber" class="error-fields">
+              {{ errorPhoneNumber }}
+            </span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <button class="btn btn-success" :disabled="isSubmitting">Enregistrer</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -80,13 +98,37 @@ import { useForm, useField } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useCommandStore } from '@/stores/commandStore.ts'
+import { useCartStore } from '@/stores/cartStore.ts'
 
 const successMessage = ref<string>('')
 const errorMessage = ref<string>('')
 
-const commandeStore = useCommandStore()
+// info cart user
+
+const cartStore = useCartStore()
+const carts = computed(() => cartStore.cart)
+
+async function loadCarts() {
+  try {
+    await cartStore.getCarts()
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+onMounted(async () => {
+  try {
+    await loadCarts()
+  } catch(e) {
+    console.error(e)
+  }
+})
+
+// Created form command
+
+const commandStore = useCommandStore()
 const router = useRouter()
 
 const schema = z.object({
@@ -99,9 +141,9 @@ const schema = z.object({
     .min(2, 'Le nom doit comporter au moins 2 caractères')
     .max(50, 'Le nom ne peut pas dépasser 50 caractères'),
   address: z
-    .string({ message: 'L\'adresse est requise' })
-    .min(5, 'L\'adresse doit comporter au moins 5 caractères')
-    .max(100, 'L\'adresse ne peut pas dépasser 100 caractères'),
+    .string({ message: "L'adresse est requise" })
+    .min(5, "L'adresse doit comporter au moins 5 caractères")
+    .max(100, "L'adresse ne peut pas dépasser 100 caractères"),
   zipCode: z
     .string({ message: 'Le code postal est requis' })
     .regex(/^\d{5}$/, 'Le code postal doit être composé de 5 chiffres'),
@@ -111,16 +153,19 @@ const schema = z.object({
     .max(50, 'La ville ne peut pas dépasser 50 caractères'),
   country: z
     .string({ message: 'Le pays est requis' })
-    .refine(value => ['France', 'Belgique', 'Suisse'].includes(value), {
-      message: 'Pays invalid'
+    .refine((value) => ['France', 'Belgique', 'Suisse'].includes(value), {
+      message: 'Pays invalid',
     }),
   phoneNumber: z
     .string({ message: 'Le numéro de téléphone est requis' })
-    .regex(/^0\d{9}$/, 'Le numéro de téléphone doit commencer par 0 et être composé de 10 chiffres'),
+    .regex(
+      /^0\d{9}$/,
+      'Le numéro de téléphone doit commencer par 0 et être composé de 10 chiffres',
+    ),
 })
 
 const { handleSubmit, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema)
+  validationSchema: toTypedSchema(schema),
 })
 
 const { value: firstName, errorMessage: errorFirstname } = useField('firstName')
@@ -133,23 +178,24 @@ const { value: phoneNumber, errorMessage: errorPhoneNumber } = useField('phoneNu
 
 const onSubmit = handleSubmit(async (dataCommand) => {
   try {
-    const response = await commandeStore.addCommand(dataCommand)
-    if (response.status >= 200 && response.status < 300) {
-      router.push({ path: '/payment' })
-      setSuccessMessage('La Commande a été validée')
+    const response = await commandStore.addCommand(dataCommand)
+    if (response !== undefined) {
+      setSuccessMessage('La commande a été validée')
     } else {
       setErrorMessage('La commande a échouée')
     }
-  } catch(e) {
+  } catch (e) {
     setErrorMessage('La commande a échouée')
     console.error('Error : la commande a échouée', e)
   }
 })
 
 function setSuccessMessage(message: string) {
+  errorMessage.value = ''
   successMessage.value = message
   setTimeout(() => {
     successMessage.value = ''
+    router.push({ path: '/payment' })
   }, 2000)
 }
 
@@ -162,11 +208,57 @@ function setErrorMessage(message: string) {
 </script>
 
 <style scoped lang="scss">
-.order-form {
+.container {
   height: 100%;
+}
+
+.info-command {
+  margin-bottom: 50px;
+  width: 100%;
+  row-gap: 10px;
+  &_details {
+    background-color: white;
+    border: var(--border);
+    padding: 30px;
+    .quantity {
+      margin: 0 10px;
+    }
+    .price {
+      color: var(--danger-1);
+      margin-left: 120px;
+    }
+    .fa-minus, .fa-plus {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .fa-minus {
+      color: red;
+    }
+    .fa-plus {
+      color: green;
+    }
+    strong {
+      font-size: 14px;
+    }
+  }
+}
+
+.order {
+  height: 100%;
+  padding: 20px;
+  h1 {
+    font-size: 24px;
+    margin-bottom: 80px;
+  }
   .form-container {
     width: 100%;
-    max-width: 550px;
+    max-width: 1200px;
+    padding: 30px 20px 10px 20px;
+  }
+  .form-container input, select {
+    border: 0;
+    border-bottom: var(--border);
+    width: 100%;
   }
   .form-container > h2 {
     margin-bottom: 25px;
@@ -175,9 +267,26 @@ function setErrorMessage(message: string) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 12px;
-    input[type='text'] {
-      width: 100%;
-    }
   }
+  .btn-success {
+    padding: 18px 50px;
+  }
+}
+
+@mixin messageError {
+  text-align: center;
+  min-width: 100%;
+  color: var(--text-primary-color);
+  padding: 20px;
+}
+
+.error-message {
+  background-color: red;
+  @include messageError;
+}
+
+.success-message {
+  background-color: green;
+  @include messageError;
 }
 </style>

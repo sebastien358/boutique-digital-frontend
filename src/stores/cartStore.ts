@@ -24,6 +24,7 @@ export const useCartStore = defineStore('cart', {
         if (response) {
           const products: ProductCartInterface[] = Array.isArray(response) ? response : [response]
           this.cart = products || []
+          console.log(response)
         } else {
           console.error('La response est vide')
         }
