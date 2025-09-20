@@ -6,14 +6,14 @@
         <div class="container-username">
           <div class="mb-20">
             <label><span>*</span>Prénom</label>
-            <input v-model="firstname" type="text" autofocus />
+            <input v-model="firstName" type="text" autofocus />
             <span v-if="errorFirstname" class="error-fields">
               {{ errorFirstname }}
             </span>
           </div>
           <div class="mb-20">
             <label><span>*</span>Nom</label>
-            <input v-model="lastname" type="text" />
+            <input v-model="lastName" type="text" />
             <span v-if="errorLastname" class="error-fields">
               {{ errorLastname }}
             </span>
@@ -81,18 +81,20 @@ import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useCommandStore } from '@/stores/commandStore.ts'
 
 const successMessage = ref<string>('')
 const errorMessage = ref<string>('')
 
+const commandeStore = useCommandStore()
 const router = useRouter()
 
 const schema = z.object({
-  firstname: z
+  firstName: z
     .string({ message: 'Le prénom est requis' })
     .min(2, 'Le prénom doit comporter au moins 2 caractères')
     .max(50, 'Le prénom ne peut pas dépasser 50 caractères'),
-  lastname: z
+  lastName: z
     .string({ message: 'Le nom est requis' })
     .min(2, 'Le nom doit comporter au moins 2 caractères')
     .max(50, 'Le nom ne peut pas dépasser 50 caractères'),
@@ -121,8 +123,8 @@ const { handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(schema)
 })
 
-const { value: firstname, errorMessage: errorFirstname } = useField('firstname')
-const { value: lastname, errorMessage: errorLastname } = useField('lastname')
+const { value: firstName, errorMessage: errorFirstname } = useField('firstName')
+const { value: lastName, errorMessage: errorLastname } = useField('lastName')
 const { value: address, errorMessage: errorAddress } = useField('address')
 const { value: zipCode, errorMessage: errorZipCode } = useField('zipCode')
 const { value: city, errorMessage: errorCity } = useField('city')
@@ -131,8 +133,13 @@ const { value: phoneNumber, errorMessage: errorPhoneNumber } = useField('phoneNu
 
 const onSubmit = handleSubmit(async (dataCommand) => {
   try {
-    console.log(dataCommand)
-    setSuccessMessage('La Commande a été validée')
+    const response = await commandeStore.addCommand(dataCommand)
+    if (response.status >= 200 && response.status < 300) {
+      router.push({ path: '/payment' })
+      setSuccessMessage('La Commande a été validée')
+    } else {
+      setErrorMessage('La commande a échouée')
+    }
   } catch(e) {
     setErrorMessage('La commande a échouée')
     console.error('Error : la commande a échouée', e)
@@ -142,7 +149,6 @@ const onSubmit = handleSubmit(async (dataCommand) => {
 function setSuccessMessage(message: string) {
   successMessage.value = message
   setTimeout(() => {
-    router.push({ path: '/payment' })
     successMessage.value = ''
   }, 2000)
 }
