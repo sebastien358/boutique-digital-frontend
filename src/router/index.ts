@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/authStore'
 import { createRouter, createWebHistory } from 'vue-router'
 import PayementProcessing from '@/features/boutique/components/cart/PayementProcessing.vue'
 import NotFound from '@/components/NotFound.vue'
+import OrderForm from '@/features/boutique/components/cart/OrderForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,8 +25,9 @@ const router = createRouter({
     },
     { path: '/register', component: Register },
     { path: '/login', component: Login },
+    { path: '/order-form', component: OrderForm },
     {
-      path: '/payement',
+      path: '/payment',
       meta: {
         requiresAuth: true,
         requiresUser: true

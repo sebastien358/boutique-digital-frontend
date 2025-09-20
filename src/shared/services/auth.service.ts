@@ -4,10 +4,8 @@ import type { LoginInterface, RegisterInterface } from '../interfaces';
 
 export async function axiosRegister(dataRegister: RegisterInterface): Promise<RegisterInterface> {
   try {
-    const { lastname, firstname, email, password } = dataRegister;
+    const { email, password } = dataRegister;
     const response = await axios.post('http://127.0.0.1:8000/api/register', {
-      lastname,
-      firstname,
       email,
       password
     });

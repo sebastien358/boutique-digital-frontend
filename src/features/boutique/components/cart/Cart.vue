@@ -23,7 +23,7 @@
           @remove-from-cart="emit('removeFromCart', $event)"
           :carts="carts"
         />
-        <button @click="goToPayement()" class="btn btn-success text-center">
+        <button @click="goToCommand" class="btn btn-success text-center">
           Commander ({{ props.totalBasket }})€
         </button>
         <Calc :open="state.open" @close="state.open = false" :transparent="false" />
@@ -58,11 +58,11 @@ const emit = defineEmits<{
   (e: 'removeFromCart', id: number): void
 }>()
 
-function goToPayement() {
+function goToCommand() {
   if (authStore.isLoggedIn && props.carts.length === 0) {
     router.push({ path: '/boutique' })
   } else if(authStore.isLoggedIn && props.carts.length > 0) {
-    router.push({ path: '/payement' })
+    router.push({ path: '/order-form' })
   } else {
     router.push({ path: '/login' })
   }
@@ -73,7 +73,7 @@ function goToPayement() {
 @use '@/assets/scss/mixins' as m;
 
 .basket {
-  z-index: 2;
+  z-index: 3;
   position: fixed;
   bottom: 10px;
   right: 30px;

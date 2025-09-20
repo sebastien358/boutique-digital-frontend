@@ -17,13 +17,13 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 .calc {
+  z-index: 1;
   position: fixed;
   top: 0px;
   left: 0px;
   height: 100vh;
   width: 100%;
   background-color: #0000005e;
-  z-index: 1;
 }
 
 .transparent {

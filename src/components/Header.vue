@@ -108,7 +108,7 @@ header {
 }
 
 .container-menu {
-  z-index: 2;
+  z-index: -1;
   position: relative;
   .fa-bars {
     cursor: pointer;

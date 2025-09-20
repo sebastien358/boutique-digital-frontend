@@ -118,9 +118,8 @@ const emit = defineEmits<{
 <style scoped lang="scss">
 @use '@/assets/scss/mixins' as m;
 .shop-filter {
-  z-index: 2;
+  z-index: 1;
 }
-
 .shop-filter {
   border-right: 0;
   @include m.lg {

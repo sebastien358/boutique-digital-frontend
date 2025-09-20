@@ -4,20 +4,6 @@
       <h2 class="mb-15 text-center">Inscription</h2>
       <form @submit="onSubmit">
         <div class="d-flex flex-column mb-20">
-          <label><span>*</span>Nom</label>
-          <input v-model="lastname" type="text" />
-          <span v-if="errorLastname" class="error-fields">
-            {{ errorLastname }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-20">
-          <label><span>*</span>Prénom</label>
-          <input v-model="firstname" type="text" />
-          <span v-if="errorFirstname" class="error-fields">
-            {{ errorFirstname }}
-          </span>
-        </div>
-        <div class="d-flex flex-column mb-20">
           <label><span>*</span>Email</label>
           <input v-model="email" type="email" />
           <span v-if="errorEmail" class="error-fields">
@@ -53,20 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '../../../stores/authStore'
+
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import * as z from 'zod'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/authStore.ts'
 
 const schema = z.object({
-  lastname: z
-    .string({ message: 'Veuillez remplir votre nom' })
-    .min(3, 'Le nom doit contenir au minimum 3 caractères'),
-  firstname: z
-    .string({ message: 'Veuillez remplir votre prénom' })
-    .min(3, 'Le prénom doit contenir au minimum 3 caractères'),
   email: z
     .string({ message: 'Veuillez remplir votre adresse e-mail' })
     .email('Adresse e-mail invalide'),
@@ -83,8 +64,6 @@ const { handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(schema),
 })
 
-const { value: lastname, errorMessage: errorLastname } = useField('lastname')
-const { value: firstname, errorMessage: errorFirstname } = useField('firstname')
 const { value: email, errorMessage: errorEmail } = useField('email')
 const { value: password, errorMessage: errorPassword } = useField('password')
 const { value: confirmPassword, errorMessage: errorConfirmPassword } = useField('confirmPassword')
