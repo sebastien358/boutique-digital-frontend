@@ -77,7 +77,7 @@
               {{ errorCountry }}
             </span>
           </div>
-          <div class="d-flex flex-column mb-10">
+          <div class="d-flex flex-column mb-15">
             <label><span>*</span>Téléphone</label>
             <input v-model="phoneNumber" type="tel" />
             <span v-if="errorPhoneNumber" class="error-fields">
@@ -213,7 +213,7 @@ function setErrorMessage(message: string) {
 }
 
 .info-command {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   width: 100%;
   row-gap: 10px;
   &_details {
@@ -248,7 +248,7 @@ function setErrorMessage(message: string) {
   padding: 20px;
   h1 {
     font-size: 24px;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
   }
   .form-container {
     width: 100%;
