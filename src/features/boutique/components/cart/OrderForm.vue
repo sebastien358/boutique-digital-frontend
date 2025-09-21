@@ -28,12 +28,12 @@
           </div>
         </div>
       </div>
-      <!-- Total de la commande -->
-      <div class="d-flex align-items-center justify-content-center totalCommand">
-        <p>Total : {{ totalCommand }} €</p>
-      </div>
       <!-- Formulaire de la commande -->
       <div class="form-container">
+        <!-- Total de la commande -->
+        <div class="d-flex align-items-center justify-content-center totalCommand">
+          <h3>Prix : {{ totalCommand }} €</h3>
+        </div>
         <form @submit="onSubmit">
           <div class="container-username">
             <div class="mb-20">
@@ -261,16 +261,18 @@ function setErrorMessage(message: string) {
     border: var(--border);
     padding: 20px;
     .quantity {
+      font-size: 15px;
       margin: 0 10px;
     }
     .price {
       color: var(--success-2);
-      margin-left: 120px;
+      padding-left: 120px;
     }
     .fa-minus,
     .fa-plus {
       cursor: pointer;
       font-weight: bold;
+      font-size: 16px;
     }
     .fa-minus {
       color: red;
@@ -295,9 +297,9 @@ function setErrorMessage(message: string) {
   .totalCommand {
     border: var(--border);
     padding: 20px 60px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     background-color: white;
-    font-size: 14px;
+    font-size: 15px;
   }
   .form-container {
     width: 100%;

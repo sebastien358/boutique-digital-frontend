@@ -38,10 +38,10 @@ const emit = defineEmits<{
 }>()
 
 function productFromCart(id: number) {
-  if (!authStore.isLoggedIn) {
-    router.push({ path: '/login' })
-  } else {
+  if (authStore.isLoggedIn) {
     emit('addToCart', id)
+  } else {
+    router.push({ path: '/login' })
   }
 }
 </script>

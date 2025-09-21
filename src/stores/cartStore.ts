@@ -15,7 +15,8 @@ export const useCartStore = defineStore('cart', {
   getters: {
     totalBasket(state) {
       const initialValue = 0
-      return state.cart.reduce((acc, product) => acc + product.price * product.quantity, initialValue)
+      return state.cart.reduce((acc, product) =>
+        acc + product.price * product.quantity, initialValue)
     }
   },
   actions: {

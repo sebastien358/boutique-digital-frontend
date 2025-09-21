@@ -1,7 +1,7 @@
 import axios from 'axios';
-import type { ProductCartFormInterface, ProductCartInterface } from '@/shared/interfaces'
+import type { ProductCartInterface } from '@/shared/interfaces'
 
-export async function axiosAddToCart(productToCart): Promise<ProductCartFormInterface | null> {
+export async function axiosAddToCart(productToCart: any[]): Promise<any> {
   try {
     const response = await axios.post('http://localhost:8000/api/item/new', productToCart)
     if (response.data.status > 200 && response.data.status < 300) {
