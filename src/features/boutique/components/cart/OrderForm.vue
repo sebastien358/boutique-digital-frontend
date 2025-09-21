@@ -12,7 +12,11 @@
       <h1 class="text-center">Récapitulatif de la commande</h1>
       <!-- Infos de la commande de l'utlilisateur -->
       <div class="d-flex flex-column justify-content-center info-command">
-        <div v-for="cart in carts" :key="cart.id" class="d-flex align-items-center space-between info-command_details">
+        <div
+          v-for="cart in carts"
+          :key="cart.id"
+          class="d-flex align-items-center space-between info-command_details"
+        >
           <h4>{{ cart.title }}</h4>
           <div class="d-flex align-items-center">
             <div class="d-flex align-items-center">
@@ -113,7 +117,7 @@ const carts = computed(() => cartStore.cart)
 async function loadCarts() {
   try {
     await cartStore.getCarts()
-  } catch(e) {
+  } catch (e) {
     console.error(e)
   }
 }
@@ -121,7 +125,7 @@ async function loadCarts() {
 onMounted(async () => {
   try {
     await loadCarts()
-  } catch(e) {
+  } catch (e) {
     console.error(e)
   }
 })
@@ -134,23 +138,23 @@ const router = useRouter()
 const schema = z.object({
   firstName: z
     .string({ message: 'Le prénom est requis' })
-    .min(2, 'Le prénom doit comporter au moins 2 caractères')
-    .max(50, 'Le prénom ne peut pas dépasser 50 caractères'),
+    .min(2, {message: 'Le prénom doit comporter au moins 2 caractères' })
+    .max(50, { message: 'Le prénom ne peut pas dépasser 50 caractères' }),
   lastName: z
     .string({ message: 'Le nom est requis' })
-    .min(2, 'Le nom doit comporter au moins 2 caractères')
-    .max(50, 'Le nom ne peut pas dépasser 50 caractères'),
+    .min(2, { message: 'Le nom doit comporter au moins 2 caractères' })
+    .max(50, { message: 'Le nom ne peut pas dépasser 50 caractères' }),
   address: z
-    .string({ message: "L'adresse est requise" })
-    .min(5, "L'adresse doit comporter au moins 5 caractères")
-    .max(100, "L'adresse ne peut pas dépasser 100 caractères"),
+    .string({ message: 'L\'adresse est requise' })
+    .min(5, { message: 'L\'adresse doit comporter au moins 5 caractères' })
+    .max(100, { message: 'L\'adresse ne peut pas dépasser 100 caractères' }),
   zipCode: z
     .string({ message: 'Le code postal est requis' })
-    .regex(/^\d{5}$/, 'Le code postal doit être composé de 5 chiffres'),
+    .regex(/^\d{5}$/, { message: 'Le code postal doit être composé de 5 chiffres' }),
   city: z
     .string({ message: 'La ville est requise' })
-    .min(2, 'La ville doit comporter au moins 2 caractères')
-    .max(50, 'La ville ne peut pas dépasser 50 caractères'),
+    .min(2, { message: 'La ville doit comporter au moins 2 caractères' })
+    .max(50, { message: 'La ville ne peut pas dépasser 50 caractères' }),
   country: z
     .string({ message: 'Le pays est requis' })
     .refine((value) => ['France', 'Belgique', 'Suisse'].includes(value), {
@@ -158,9 +162,7 @@ const schema = z.object({
     }),
   phoneNumber: z
     .string({ message: 'Le numéro de téléphone est requis' })
-    .regex(
-      /^0\d{9}$/,
-      'Le numéro de téléphone doit commencer par 0 et être composé de 10 chiffres',
+    .regex(/^0\d{9}$/, { message: 'Le numéro de téléphone doit commencer par 0 et être composé de 10 chiffres' },
     ),
 })
 
@@ -176,11 +178,11 @@ const { value: city, errorMessage: errorCity } = useField('city')
 const { value: country, errorMessage: errorCountry } = useField('country')
 const { value: phoneNumber, errorMessage: errorPhoneNumber } = useField('phoneNumber')
 
-const onSubmit = handleSubmit(async (dataCommand) => {
+const onSubmit = handleSubmit(async (dataCommand, { resetForm }) => {
   try {
     const response = await commandStore.addCommand(dataCommand)
-    if (response !== undefined) {
-      setSuccessMessage('La commande a été validée')
+    if (response.success) {
+      setSuccessMessage('La commande a été validée', resetForm)
     } else {
       setErrorMessage('La commande a échouée')
     }
@@ -190,11 +192,12 @@ const onSubmit = handleSubmit(async (dataCommand) => {
   }
 })
 
-function setSuccessMessage(message: string) {
+function setSuccessMessage(message: string, resetForm: () => void) {
   errorMessage.value = ''
   successMessage.value = message
   setTimeout(() => {
     successMessage.value = ''
+    resetForm()
     router.push({ path: '/payment' })
   }, 2000)
 }
@@ -208,26 +211,44 @@ function setErrorMessage(message: string) {
 </script>
 
 <style scoped lang="scss">
+@mixin messageError {
+  text-align: center;
+  min-width: 100%;
+  color: var(--text-primary-color);
+  padding: 20px;
+}
+
+.error-message {
+  background-color: red;
+  @include messageError;
+}
+
+.success-message {
+  background-color: green;
+  @include messageError;
+}
+
 .container {
-  height: 100%;
+  //height: 100%;
 }
 
 .info-command {
-  margin-bottom: 60px;
+  margin-bottom: 70px;
   width: 100%;
   row-gap: 10px;
   &_details {
     background-color: white;
     border: var(--border);
-    padding: 30px;
+    padding: 20px;
     .quantity {
       margin: 0 10px;
     }
     .price {
-      color: var(--danger-1);
+      color: var(--success-2);
       margin-left: 120px;
     }
-    .fa-minus, .fa-plus {
+    .fa-minus,
+    .fa-plus {
       cursor: pointer;
       font-weight: bold;
     }
@@ -248,14 +269,16 @@ function setErrorMessage(message: string) {
   padding: 20px;
   h1 {
     font-size: 24px;
-    margin-bottom: 60px;
+    margin-top: 20px;
+    margin-bottom: 80px;
   }
   .form-container {
     width: 100%;
     max-width: 1200px;
     padding: 30px 20px 10px 20px;
   }
-  .form-container input, select {
+  .form-container input,
+  select {
     border: 0;
     border-bottom: var(--border);
     width: 100%;
@@ -271,22 +294,5 @@ function setErrorMessage(message: string) {
   .btn-success {
     padding: 18px 50px;
   }
-}
-
-@mixin messageError {
-  text-align: center;
-  min-width: 100%;
-  color: var(--text-primary-color);
-  padding: 20px;
-}
-
-.error-message {
-  background-color: red;
-  @include messageError;
-}
-
-.success-message {
-  background-color: green;
-  @include messageError;
 }
 </style>
