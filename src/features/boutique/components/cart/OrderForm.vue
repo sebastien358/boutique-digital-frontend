@@ -20,17 +20,20 @@
           <h4>{{ cart.title }}</h4>
           <div class="d-flex align-items-center">
             <div class="d-flex align-items-center">
-              <font-awesome-icon icon="fa-solid fa-minus" />
+              <font-awesome-icon @click="removeProductFromCartExisting(cart.id)"  icon="fa-solid fa-minus" />
               <span class="quantity">{{ cart.quantity }}</span>
-              <font-awesome-icon icon="fa-solid fa-plus" />
+              <font-awesome-icon @click="addProductFromCartExisting(cart.id)" icon="fa-solid fa-plus" />
             </div>
             <strong class="price">{{ cart.price }}€</strong>
           </div>
         </div>
       </div>
+      <!-- Total de la commande -->
+      <div class="d-flex align-items-center justify-content-center totalCommand">
+        <p>Total : {{ totalCommand }} €</p>
+      </div>
       <!-- Formulaire de la commande -->
       <div class="form-container">
-        <!--<h2 class="text-center">Commande</h2>-->
         <form @submit="onSubmit">
           <div class="container-username">
             <div class="mb-20">
@@ -113,10 +116,11 @@ const errorMessage = ref<string>('')
 
 const cartStore = useCartStore()
 const carts = computed(() => cartStore.cart)
+const totalCommand = computed(() => cartStore.totalBasket)
 
 async function loadCarts() {
   try {
-    await cartStore.getCarts()
+    await cartStore.getCartItems()
   } catch (e) {
     console.error(e)
   }
@@ -129,6 +133,26 @@ onMounted(async () => {
     console.error(e)
   }
 })
+
+// ajouter un produit au panier existant
+
+async function addProductFromCartExisting(id: number) {
+  try {
+    await cartStore.addProductFromCartExisting(id)
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+// Retirer un produit du panier existant
+
+async function removeProductFromCartExisting(id: number) {
+  try {
+    await cartStore.removeFromCart(id)
+  } catch(e) {
+    console.error(e)
+  }
+}
 
 // Created form command
 
@@ -228,12 +252,8 @@ function setErrorMessage(message: string) {
   @include messageError;
 }
 
-.container {
-  //height: 100%;
-}
-
 .info-command {
-  margin-bottom: 70px;
+  margin-bottom: 40px;
   width: 100%;
   row-gap: 10px;
   &_details {
@@ -272,13 +292,20 @@ function setErrorMessage(message: string) {
     margin-top: 20px;
     margin-bottom: 80px;
   }
+  .totalCommand {
+    border: var(--border);
+    padding: 20px 60px;
+    margin-bottom: 40px;
+    background-color: white;
+    font-size: 14px;
+  }
   .form-container {
     width: 100%;
     max-width: 1200px;
     padding: 30px 20px 10px 20px;
   }
   .form-container input,
-  select {
+    select {
     border: 0;
     border-bottom: var(--border);
     width: 100%;

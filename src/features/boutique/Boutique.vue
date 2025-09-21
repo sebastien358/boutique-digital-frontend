@@ -55,7 +55,7 @@ const carts = computed(() => cartStore.cart)
 
 async function loadItemsCart() {
   try {
-    await cartStore.getCarts()
+    await cartStore.getCartItems()
   } catch (e) {
     console.error('Erreur: récupération des éléments du panier', e)
   }
