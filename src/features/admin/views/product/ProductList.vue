@@ -17,7 +17,9 @@
             <button @click="openModal(product.id)" class="btn btn-danger">Supprimer</button>
           </div>
         </div>
+        <!-- Modal confirmation de suppression d\'un article --->
         <Modal :open="state.open" :productId="state.productId" @close="state.open = false" />
+        <!-- Pagination des produits -->
         <div class="d-flex align-items-center justify-content-center pagination">
           <button @click="previousPage()" :class="{ 'btn-pagination': true }" :disabled="currentPage === 1">Précédent</button>
           <span>Page {{ currentPage }} - {{ totalPages }}</span>

@@ -1,8 +1,15 @@
 import axios from 'axios'
 
-export async function axiosGetAdminOrders() {
+const BASE_URL = 'http://127.0.0.1:8000/api/admin'
+
+export async function axiosGetAdminOrders(currentPage: number, itemPerPage: number) {
   try {
-    const response = await axios.get('http://localhost:8000/api/admin/command/list')
+    const response = await axios.get(`${BASE_URL}/order/list`, {
+      params: {
+        page: currentPage,
+        limit: itemPerPage
+      }
+    })
     return response.data
   } catch(e) {
     console.error('Error: récupération des commandes', e)
@@ -10,3 +17,11 @@ export async function axiosGetAdminOrders() {
   }
 }
 
+export async function axiosAdminDeleteOrder(id: number) {
+  try {
+    const response = await axios.delete(`${BASE_URL}/order/delete/${id}`)
+    return response.data
+  } catch(e) {
+    console.error('error: supression d\'un panier', e)
+  }
+}

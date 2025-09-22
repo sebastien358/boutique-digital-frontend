@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 import Order from '@/features/admin/views/order/Order.vue'
-import ProductForm from '@/features/admin/views/ProductForm.vue'
-import ProductList from '@/features/admin/views/ProductList.vue'
+import ProductForm from '@/features/admin/views/product/ProductForm.vue'
+import ProductList from '@/features/admin/views/product/ProductList.vue'
 
 export const ADMIN_ROUTES: RouteRecordRaw[] = [
   { path: '', redirect: '/product-list' },

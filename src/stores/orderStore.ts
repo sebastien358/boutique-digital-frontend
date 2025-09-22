@@ -7,7 +7,7 @@ export const useCommandStore = defineStore('command', {
   actions: {
     async addCommand(dataCommand) {
       try {
-        return await axiosAddCommand(dataCommand)
+        await axiosAddCommand(dataCommand)
       } catch(e) {
         console.error('Error: la commande a échouée', e)
       }

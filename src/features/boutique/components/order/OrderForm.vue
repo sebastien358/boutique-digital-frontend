@@ -106,7 +106,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, ref } from 'vue'
-import { useCommandStore } from '@/stores/commandStore.ts'
+import { useCommandStore } from '@/stores/orderStore.ts'
 import { useCartStore } from '@/stores/cartStore.ts'
 
 const successMessage = ref<string>('')
@@ -265,7 +265,7 @@ function setErrorMessage(message: string) {
 }
 
 .info-command {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   width: 100%;
   row-gap: 10px;
   &_details {
@@ -304,7 +304,7 @@ function setErrorMessage(message: string) {
   h1 {
     font-size: 24px;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
   .totalCommand {
     border: var(--border);

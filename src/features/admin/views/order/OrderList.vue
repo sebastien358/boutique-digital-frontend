@@ -18,7 +18,6 @@ defineProps<{
 
 <style scoped lang="scss">
 .order-list {
-  padding: 20px;
   row-gap: 15px;
 }
 </style>

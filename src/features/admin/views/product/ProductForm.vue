@@ -67,8 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminCategory } from '../../../stores/admin/categoryAdminStore'
-import { useProductAdminStore } from '../../../stores/admin/productAdminStore'
+import { useAdminCategory } from '../../../../stores/admin/categoryAdminStore.ts'
+import { useProductAdminStore } from '../../../../stores/admin/productAdminStore.ts'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -83,14 +83,14 @@ const route = useRoute();
 
 const state = reactive<{
   product: any,
-  images: object }>({
+  images: object
+}>({
     product: {},
     images: []
 })
 
 if (route.params.id) {
   state.product = await productAdminStore.getCurrentProduct(route.params.id);
-  // console.log(state.product)
 }
 
 async function deleteImage(productId: number, pictureId: number, index?: any) {
