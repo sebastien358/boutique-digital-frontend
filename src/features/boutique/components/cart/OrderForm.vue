@@ -20,7 +20,7 @@
           <h4>{{ cart.title }}</h4>
           <div class="d-flex align-items-center">
             <div class="d-flex align-items-center">
-              <font-awesome-icon @click="removeProductFromCartExisting(cart.id)"  icon="fa-solid fa-minus" />
+              <font-awesome-icon @click="removeProductFromCartExisting(cart.id)" icon="fa-solid fa-minus" />
               <span class="quantity">{{ cart.quantity }}</span>
               <font-awesome-icon @click="addProductFromCartExisting(cart.id)" icon="fa-solid fa-plus" />
             </div>
@@ -112,11 +112,19 @@ import { useCartStore } from '@/stores/cartStore.ts'
 const successMessage = ref<string>('')
 const errorMessage = ref<string>('')
 
-// info cart user
+// import du store CartStore
 
 const cartStore = useCartStore()
+
+// Liste des éléments du panier
+
 const carts = computed(() => cartStore.cart)
+
+// total de la commande
+
 const totalCommand = computed(() => cartStore.totalBasket)
+
+// Function, récupération des articles de la commande
 
 async function loadCarts() {
   try {
@@ -205,7 +213,7 @@ const { value: phoneNumber, errorMessage: errorPhoneNumber } = useField('phoneNu
 const onSubmit = handleSubmit(async (dataCommand, { resetForm }) => {
   try {
     const response = await commandStore.addCommand(dataCommand)
-    if (response.success) {
+    if (response !== null) {
       setSuccessMessage('La commande a été validée', resetForm)
     } else {
       setErrorMessage('La commande a échouée')
@@ -216,6 +224,8 @@ const onSubmit = handleSubmit(async (dataCommand, { resetForm }) => {
   }
 })
 
+// Message de confirmation : success
+
 function setSuccessMessage(message: string, resetForm: () => void) {
   errorMessage.value = ''
   successMessage.value = message
@@ -225,6 +235,8 @@ function setSuccessMessage(message: string, resetForm: () => void) {
     router.push({ path: '/payment' })
   }, 2000)
 }
+
+// message de confirmation : error
 
 function setErrorMessage(message: string) {
   errorMessage.value = message
@@ -266,13 +278,13 @@ function setErrorMessage(message: string) {
     }
     .price {
       color: var(--success-2);
-      padding-left: 120px;
+      padding-left: 40px;
     }
     .fa-minus,
     .fa-plus {
       cursor: pointer;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 14px;
     }
     .fa-minus {
       color: red;
@@ -292,7 +304,7 @@ function setErrorMessage(message: string) {
   h1 {
     font-size: 24px;
     margin-top: 20px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
   .totalCommand {
     border: var(--border);

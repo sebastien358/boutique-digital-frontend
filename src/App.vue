@@ -27,17 +27,19 @@ import TheFooter from './components/Footer.vue'
   grid-template-areas: 'header' 'views' 'footer';
   grid-template-rows: 48px auto 48px;
   height: 100vh;
-}
-
-.header {
-  grid-area: header;
-}
-
-.views {
-  grid-area: views;
-}
-
-.footer {
-  grid-area: footer;
+  .header {
+    grid-area: header;
+  }
+  .views {
+    grid-area: views;
+    height: calc(100vh - 48px);
+    @include m.lg {
+      height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+  }
+  .footer {
+    grid-area: footer;
+  }
 }
 </style>

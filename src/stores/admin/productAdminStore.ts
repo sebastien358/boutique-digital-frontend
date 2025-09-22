@@ -49,7 +49,7 @@ export const useProductAdminStore = defineStore('productAdmin', {
     },
     async deleteProduct(id: number) {
       try {
-        const response = await axiosAdminDeleteProduct(id);
+        await axiosAdminDeleteProduct(id);
         const productStore = useProductStore();
         this.products = this.products.filter(p => p.id !== id);
         productStore.products = productStore.products.filter(p => p.id !== id);

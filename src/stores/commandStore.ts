@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { axiosAddCommand } from '@/shared/services/command.service.ts'
+import { axiosAddCommand } from '@/shared/services/order.service.ts'
 
 export const useCommandStore = defineStore('command', {
   state: () => ({
