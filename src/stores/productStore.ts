@@ -34,7 +34,7 @@ export const useProductStore = defineStore('product', {
         const response = await axiosGetProducts(this.offset, this.limit);
         if (response) {
           const products: ProductInterface[] = Array.isArray(response) ? response : [response];
-          this.products = append ? [...this.products, ...products] : products;
+          this.products = append ? [ ...this.products, ...products ] : products;
         } else {
           console.log('Error: response vide');
         }

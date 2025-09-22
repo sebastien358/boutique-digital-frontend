@@ -1,5 +1,5 @@
 <template>
-  <div v-if="orders.length" class="order-admin-store">
+  <div v-if="orders.length && orders.length > 0" class="order-admin-store">
     <OrderList :orders="orders" />
     <div class="d-flex flex-column">
       <div class="d-flex align-items-center justify-content-center mt-10">

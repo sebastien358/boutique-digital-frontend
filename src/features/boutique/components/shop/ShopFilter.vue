@@ -25,11 +25,11 @@
         >
           <input
             @click="filteredByPrice(priceRange)"
-            v-model="productStore.priceRange"
             :checked="productStore.priceRange[0] === priceRange[0]"
             name="priceRange"
             type="radio"
           />
+          
           <span>
             {{
               priceRange[0] === 0

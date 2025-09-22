@@ -15,7 +15,7 @@
         <strong>Price: <span>{{ item.product.price }} €</span></strong>
       </div>
     </div>
-    <div class="container-button">
+    <div class="container-button mt-10">
       <button @click="onClickDeleteOrder(order.id)" class="btn btn-danger">Supprimer</button>
     </div>
   </div>
@@ -50,7 +50,6 @@ async function onClickDeleteOrder(id: number) {
   background-color: white;
   padding: 20px 15px 10px 15px;
   &_content {
-    margin-bottom: 25px;
     strong {
       font-size: 15px;
     }
@@ -59,7 +58,7 @@ async function onClickDeleteOrder(id: number) {
     }
   }
   &_product {
-    margin-bottom: 25px;
+    margin-top: 25px;
     strong {
       font-size: 15px;
     }
@@ -70,6 +69,9 @@ async function onClickDeleteOrder(id: number) {
   .container-button {
     display: flex;
     justify-content: center;
+    @include m.lg {
+      justify-content: flex-end;
+    }
   }
 }
 </style>
