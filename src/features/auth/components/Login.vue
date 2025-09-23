@@ -32,12 +32,19 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '../../../stores/authStore'
+import { useAuthStore } from '@/stores/authStore.ts'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useRouter } from 'vue-router'
 import * as z from 'zod'
 import { ref } from 'vue'
+
+const authStore = useAuthStore()
+
+const router = useRouter()
+
+const successMessage = ref<string>('')
+const errorMessage = ref<string>('')
 
 const schema = z.object({
   email: z
@@ -54,8 +61,6 @@ const { handleSubmit, isSubmitting } = useForm({
 
 const { value: email, errorMessage: errorEmail } = useField('email')
 const { value: password, errorMessage: errorPassword } = useField('password')
-
-const authStore = useAuthStore()
 
 const onSubmit = handleSubmit(async (dataLogin, { resetForm }) => {
   try {
@@ -76,18 +81,23 @@ const onSubmit = handleSubmit(async (dataLogin, { resetForm }) => {
   }
 })
 
-const successMessage = ref<string>('')
-const errorMessage = ref<string>('')
-
-const router = useRouter()
+function roleAuthentication() {
+  if (authStore.roleAdmin()) {
+    router.push({ path: '/admin' })
+  } else if(authStore.roleUser()) {
+    router.push({ path: '/user' })
+  } else {
+    router.push({ path: '/login' })
+  }
+}
 
 function setSuccessMessage(message: string, resetForm: () => void) {
   errorMessage.value = ''
   successMessage.value = message
   setTimeout(() => {
     successMessage.value = ''
+    roleAuthentication()
     resetForm()
-    router.push({ path: '/admin' })
   }, 2000)
 }
 

@@ -213,7 +213,7 @@ const { value: phoneNumber, errorMessage: errorPhoneNumber } = useField('phoneNu
 const onSubmit = handleSubmit(async (dataCommand, { resetForm }) => {
   try {
     const response = await commandStore.addCommand(dataCommand)
-    if (response !== null) {
+    if (response) {
       setSuccessMessage('La commande a été validée', resetForm)
     } else {
       setErrorMessage('La commande a échouée')

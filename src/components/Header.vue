@@ -9,8 +9,11 @@
         <li class="mr-10">
           <router-link to="/boutique">Boutique</router-link>
         </li>
-        <li v-if="authStore.roleAdmin()">
+        <li v-if="authStore.roleAdmin()" class="mr-10">
           <router-link to="/admin">Admin</router-link>
+        </li>
+        <li v-if="authStore.roleUser()">
+          <router-link to="/orders">Profil</router-link>
         </li>
       </ul>
     </div>
@@ -43,6 +46,9 @@
         </li>
         <li v-if="authStore.roleAdmin()">
           <router-link to="/admin">Admin</router-link>
+        </li>
+        <li v-if="authStore.roleUser()">
+          <router-link to="/orders">Profil</router-link>
         </li>
         <div v-if="!authStore.isLoggedIn">
           <li>

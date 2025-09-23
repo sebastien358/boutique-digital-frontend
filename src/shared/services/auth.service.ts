@@ -2,10 +2,12 @@ import axios from 'axios';
 import { useAuthStore } from '@/stores/authStore.ts'
 import type { LoginInterface, RegisterInterface } from '../interfaces';
 
+const BASE_URL = 'http://127.0.0.1:8000'
+
 export async function axiosRegister(dataRegister: RegisterInterface): Promise<RegisterInterface> {
   try {
     const { email, password } = dataRegister;
-    const response = await axios.post('http://127.0.0.1:8000/api/register', {
+    const response = await axios.post(`${BASE_URL}/api/register`, {
       email,
       password
     });
@@ -19,7 +21,7 @@ export async function axiosRegister(dataRegister: RegisterInterface): Promise<Re
 export async function axiosLogin(dataLogin: LoginInterface): Promise<LoginInterface> {
   try {
     const { email, password } = dataLogin;
-    const response = await axios.post('http://127.0.0.1:8000/api/login_check', {
+    const response = await axios.post(`${BASE_URL}/api/login_check`, {
       username: email,
       password
     });
@@ -34,14 +36,14 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
   try {
     if (dataLogin) {
       const { email } = dataLogin;
-      const response = await axios.post('http://127.0.0.1:8000/api/user/email-exists', {
+      const response = await axios.post(`${BASE_URL}/api/user/email-exists`, {
         email
       });
       return response.data;
     }
     if (dataRegister) {
       const { email } = dataRegister;
-      const response = await axios.post('http://127.0.0.1:8000/api/email-exists', {
+      const response = await axios.post(`${BASE_URL}/api/email-exists`, {
         email
       });
       return response.data;
@@ -54,7 +56,7 @@ export async function axiosEmailExists(dataLogin?: LoginInterface, dataRegister?
 
 export async function axiosGetUserInfo() {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/user/me')
+    const response = await axios.get(`${BASE_URL}/api/user/me`)
     return response.data
   } catch(e) {
     console.error('Error: ', e)

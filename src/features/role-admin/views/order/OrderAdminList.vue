@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column order-list">
-    <OrderDisplay
+    <OrderAdminDisplay
       v-for="order in orders"
       :order="order"
       :key="order.id"
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import OrderDisplay from '@/features/admin/views/order/OrderDisplay.vue'
+import OrderAdminDisplay from '@/features/role-admin/views/order/OrderAdminDisplay.vue'
 
 defineProps<{
   orders: Object

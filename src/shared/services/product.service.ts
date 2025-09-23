@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://127.0.0.1:8000'
+
 export async function axiosGetProducts(offset: number, limit: number) {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/products', {
+    const response = await axios.get(`${BASE_URL}/products`, {
       params: {
         offset,
         limit
@@ -16,7 +18,7 @@ export async function axiosGetProducts(offset: number, limit: number) {
 
 export async function axiosSearchProducts(search: string) {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/products/search', {
+    const response = await axios.get(`${BASE_URL}/products/search`, {
       params: {
         search
       }
@@ -29,7 +31,7 @@ export async function axiosSearchProducts(search: string) {
 
 export async function axiosFilteredProductByPrice(minPrice: number, maxPrice: number) {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/products/filtered/price', {
+    const response = await axios.get(`${BASE_URL}/products/filtered/price`, {
       params: {
         minPrice,
         maxPrice
@@ -43,7 +45,7 @@ export async function axiosFilteredProductByPrice(minPrice: number, maxPrice: nu
 
 export async function axiosFilteredProductByCategory(category: string) {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/products/filtered/category', {
+    const response = await axios.get(`${BASE_URL}/products/filtered/category`, {
       params: {
         category
       }

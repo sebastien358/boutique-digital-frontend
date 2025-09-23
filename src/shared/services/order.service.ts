@@ -1,16 +1,28 @@
 import axios from 'axios'
 
-export async function axiosAddCommand(dataCommand) {
+const BASE_URL = 'http://localhost:8000'
+
+export async function axiosGetOrders() {
   try {
-    const response = await axios.post('http://localhost:8000/api/command/new', dataCommand)
+    const response = await axios.get(`${BASE_URL}/api/order/list`)
+    return response.data
+  } catch(e) {
+    console.error('Error: récupération des commandes', e)
+    throw e
+  }
+}
+
+export async function axiosAddOrder(dataCommand) {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/order/new`, dataCommand)
     if (response.data.status >= 200 && response.data.status < 300) {
       return response.data
     } else {
-      console.error('la commande a échouée')
-      return null
+      console.error('Error: la commande a échouée')
+      return false
     }
   } catch(e) {
-    console.error('Erreur lors de la création de la commande', e)
+    console.error('Error: création d\'une commande', e)
     throw e
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="orders.length && orders.length > 0" class="order-admin-store">
-    <OrderList :orders="orders" />
+    <OrderAdminList :orders="orders" />
     <div class="d-flex flex-column">
       <div class="d-flex align-items-center justify-content-center mt-10">
         <button @click="previousPage()" class="btn-pagination" :disabled="currentPage === 0">Précédent</button>
@@ -17,7 +17,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useOrderAdminStore } from '@/stores/admin/orderAdminStore.ts'
-import OrderList from '@/features/admin/views/order/OrderList.vue'
+import OrderAdminList from '@/features/role-admin/views/order/OrderAdminList.vue'
+
 const currentPage = ref<number>(1)
 const itemPerPage = ref<number>(3)
 

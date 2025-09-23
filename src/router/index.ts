@@ -1,5 +1,5 @@
-import Admin from '@/features/admin/Admin.vue'
-import { ADMIN_ROUTES } from '@/features/admin/routes/route.admin.ts'
+import Admin from '@/features/role-admin/Admin.vue'
+import { ADMIN_ROUTES } from '@/features/role-admin/routes/route.admin.ts'
 import Login from '@/features/auth/components/Login.vue'
 import Register from '@/features/auth/components/Register.vue'
 import Boutique from '@/features/boutique/Boutique.vue'
@@ -8,6 +8,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import PayementProcessing from '@/features/boutique/components/cart/PayementProcessing.vue'
 import NotFound from '@/components/NotFound.vue'
 import OrderForm from '@/features/boutique/components/order/OrderForm.vue'
+import User from '@/features/role-user/User.vue'
+import { USER_ROUTES } from '@/features/role-user/routes/route.user.ts'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +35,15 @@ const router = createRouter({
         requiresUser: true
       },
       component: PayementProcessing
+    },
+    {
+      path: '/user',
+      meta: {
+        requiresAuth: true,
+        requiresUser: true
+      },
+      component: User,
+      children: USER_ROUTES
     },
     { path: '/:notFound(.*)*', component: NotFound }
   ]
