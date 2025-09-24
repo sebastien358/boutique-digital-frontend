@@ -11,7 +11,7 @@ interface ProductState {
   products: ProductInterface[]
   searchTerm: string
   priceRange: [number, number]
-  category: string
+  category: [string]
   offset: number
   limit: number
   isLoading: boolean
@@ -22,7 +22,7 @@ export const useProductStore = defineStore('product', {
     products: [],
     searchTerm: '',
     priceRange: [0, 4000],
-    category: 'all',
+    category: ['all'],
     offset: 0,
     limit: 20,
     isLoading: true
@@ -95,7 +95,7 @@ export const useProductStore = defineStore('product', {
       this.products = [];
       this.searchTerm = '';
       this.priceRange = [0, 4000];
-      this.category = 'all';
+      this.category = ['all'];
       this.offset = 0;
       this.limit = 20;
       await this.getProducts();

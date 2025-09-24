@@ -24,7 +24,7 @@ export async function axiosAddOrder(dataCommand) {
       return response.data
     } else {
       console.error('Error: la commande a échouée')
-      return false
+      return null
     }
   } catch(e) {
     console.error('Error: création d\'une commande', e)

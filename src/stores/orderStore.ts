@@ -13,7 +13,6 @@ export const useCommandStore = defineStore('order', {
         if (response) {
           this.order = Array.isArray(response.orders) ? response.orders : [response.orders]
           this.totalOrders = response.total
-          console.log(this.order)
         } else {
           console.error('La response est vide')
         }

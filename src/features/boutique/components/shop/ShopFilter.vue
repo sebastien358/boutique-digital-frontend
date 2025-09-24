@@ -29,7 +29,7 @@
             name="priceRange"
             type="radio"
           />
-          
+
           <span>
             {{
               priceRange[0] === 0
@@ -47,7 +47,7 @@
           v-for="(category, index) in ['all', 'streaming', 'gamer', 'desktop']"
           :class="{ 'active-category': productStore.category.includes(category) }"
           :key="index"
-          class="mb-15"
+          class="mb-15 cat"
         >
           <span @click="filteredByCategory(category)">
             {{ category }}
@@ -191,15 +191,11 @@ const emit = defineEmits<{
       }
     }
     span {
-      color: var(--text-primary-color);
       cursor: pointer;
       font-size: 15px;
-      .active-category {
-        color: #008000;
-      }
-      @include m.lg {
-        color: var(--gray-3);
-      }
+    }
+    .active-category {
+      color: var(--success-2);
     }
   }
 }
