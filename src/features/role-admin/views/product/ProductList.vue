@@ -19,12 +19,8 @@
         </div>
         <!-- Modal confirmation de suppression d\'un article --->
         <Modal :open="state.open" :productId="state.productId" @close="state.open = false" />
-        <!-- Pagination des produits -->
-        <div class="d-flex align-items-center justify-content-center pagination">
-          <button @click="previousPage()" :class="{ 'btn-pagination': true }" :disabled="currentPage === 1">Précédent</button>
-          <span>Page {{ currentPage }} - {{ totalPages }}</span>
-          <button @click="nextPage()" :class="{ 'btn-pagination': true }" :disabled="currentPage === totalPages">Suivant</button>
-        </div>
+        <!-- pagination -->
+        <Pagination @previousPage="previousPage()" @nextPage="nextPage()" :totalPages="totalPages" :currentPage="currentPage" />
       </div>
     </div>
   </div>
@@ -35,9 +31,10 @@
 
 <script setup lang="ts">
 import { useProductAdminStore } from '@/stores/admin/productAdminStore.ts'
-import Modal from '@/components/Modal.vue'
+import Modal from '@/components/modal/Modal.vue'
 import { reactive, ref } from 'vue'
 import { computed, onMounted } from 'vue'
+import Pagination from '@/components/pagination/Pagination.vue'
 
 const productAdminStore = useProductAdminStore()
 

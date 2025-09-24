@@ -5,8 +5,7 @@ import Register from '@/features/auth/components/Register.vue'
 import Boutique from '@/features/boutique/Boutique.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { createRouter, createWebHistory } from 'vue-router'
-import PayementProcessing from '@/features/boutique/components/cart/PayementProcessing.vue'
-import NotFound from '@/components/NotFound.vue'
+import NotFound from '@/components/not-found/NotFound.vue'
 import OrderForm from '@/features/boutique/components/order/OrderForm.vue'
 import User from '@/features/role-user/User.vue'
 import { USER_ROUTES } from '@/features/role-user/routes/route.user.ts'
@@ -28,14 +27,6 @@ const router = createRouter({
     { path: '/register', component: Register },
     { path: '/login', component: Login },
     { path: '/order-form', component: OrderForm },
-    {
-      path: '/payment',
-      meta: {
-        requiresAuth: true,
-        requiresUser: true
-      },
-      component: PayementProcessing
-    },
     {
       path: '/user',
       meta: {

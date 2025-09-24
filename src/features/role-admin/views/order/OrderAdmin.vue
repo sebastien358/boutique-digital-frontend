@@ -1,13 +1,13 @@
 <template>
-  <div v-if="orders.length && orders.length > 0" class="order-admin-store">
-    <OrderAdminList :orders="orders" />
-    <div class="d-flex flex-column">
-      <div class="d-flex align-items-center justify-content-center mt-10">
-        <button @click="previousPage()" class="btn-pagination" :disabled="currentPage === 0">Précédent</button>
-        <span>Page {{ currentPage }} - {{ totalPages }}</span>
-        <button @click="nextPage()" class="btn-pagination" :disabled="currentPage === totalPages">Suivant</button>
-      </div>
-    </div>
+  <div v-if="orders.length > 0" class="order-admin-store">
+    <OrderList :orders="orders" :showDeleteButton="true" />
+    <!-- pagination -->
+    <Pagination
+      @previousPage="previousPage()"
+      @nextPage="nextPage()"
+      :totalPages="totalPages"
+      :currentPage="currentPage"
+    />
   </div>
   <div v-else class="d-flex align-items-center justify-content-center no-order">
     <p>Aucune commande pour le moment.</p>
@@ -17,7 +17,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useOrderAdminStore } from '@/stores/admin/orderAdminStore.ts'
-import OrderAdminList from '@/features/role-admin/views/order/OrderAdminList.vue'
+import Pagination from '@/components/pagination/Pagination.vue'
+import OrderList from '@/components/order/OrderList.vue'
+
+defineProps<{
+  showDeleteButton: boolean
+}>()
 
 const currentPage = ref<number>(1)
 const itemPerPage = ref<number>(3)

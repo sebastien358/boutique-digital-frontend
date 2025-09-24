@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import Shop from '../boutique/components/shop/Shop.vue'
+import Shop from '@/features/boutique/components/shop/Shop.vue'
 import Cart from './components/cart/Cart.vue'
-import { useProductStore } from '../../stores/productStore'
+import { useProductStore } from '@/stores/productStore.ts'
 import { computed, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore';
 

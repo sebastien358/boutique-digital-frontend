@@ -2,7 +2,7 @@
   <header class="d-flex align-items-center space-between">
     <div class="d-flex align-items-center">
       <router-link to="/boutique" class="d-flex align-items-center mr-20 router-link-title">
-        <img src="@/assets/images/logo.svg" alt="logo header" />
+        <img src="../../assets/images/logo.svg" alt="logo header" />
         <h1>DigitalShop</h1>
       </router-link>
       <ul class="d-flex align-items-center hide-tablet">
@@ -71,9 +71,9 @@
 </template>
 
 <script setup lang="ts">
-import Calc from './Calc.vue'
+import Calc from '../calc/Calc.vue'
 import { reactive } from 'vue';
-import { useAuthStore } from '../stores/authStore'
+import { useAuthStore } from '../../stores/authStore.ts'
 import { useRouter } from 'vue-router'
 
 const state = reactive<{

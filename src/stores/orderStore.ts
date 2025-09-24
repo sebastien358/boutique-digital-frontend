@@ -1,15 +1,29 @@
 import { defineStore } from 'pinia'
-import { axiosAddOrder } from '@/shared/services/order.service.ts'
+import { axiosAddOrder, axiosGetOrders } from '@/shared/services/order.service.ts'
 
-export const useCommandStore = defineStore('command', {
+export const useCommandStore = defineStore('order', {
   state: () => ({
-    order: []
+    order: [],
+    totalOrders: 0
   }),
   actions: {
+    async getOrders(currentPage: number, itemPerPage: number) {
+      try {
+        const response = await axiosGetOrders(currentPage, itemPerPage)
+        if (response) {
+          this.order = Array.isArray(response.orders) ? response.orders : [response.orders]
+          this.totalOrders = response.total
+          console.log(this.order)
+        } else {
+          console.error('La response est vide')
+        }
+      } catch(e) {
+        console.error('Error: récupération des commandes', e)
+      }
+    },
     async addCommand(dataCommand) {
       try {
-        const response = await axiosAddOrder(dataCommand)
-        return response
+        return await axiosAddOrder(dataCommand)
       } catch(e) {
         console.error('Error: la commande a échouée', e)
       }

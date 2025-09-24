@@ -12,7 +12,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/command">
+        <router-link to="/order">
           <button class="btn btn-router-link">Liste des commandes</button>
         </router-link>
       </li>

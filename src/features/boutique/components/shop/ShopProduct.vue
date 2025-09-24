@@ -1,7 +1,7 @@
 <template>
   <div class="shop-product">
     <div class="d-flex flex-column">
-      <div v-if="product.pictures && product.pictures.length > 0">
+      <div v-if="product.pictures.length > 0">
         <img :src="product.pictures[0].url" alt="image du produit" class="img-product" />
       </div>
       <div v-else>

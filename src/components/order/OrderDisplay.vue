@@ -1,7 +1,7 @@
 <template>
   <div class="order-display">
     <div class="d-flex flex-column order-display_content">
-      <strong>Prénom: <span>{{ order.firstName }}</span></strong>
+      <stron>Prénom: <span>{{ order.firstName }}</span></stron>
       <strong>Nom: <span>{{ order.lastName }}</span></strong>
       <strong>Adresse: <span>{{ order.address }}</span></strong>
       <strong>Code postal: <span>{{ order.zipCode }}</span></strong>
@@ -15,24 +15,26 @@
         <strong>Price: <span>{{ item.product.price }} €</span></strong>
       </div>
     </div>
-    <div class="container-button mt-10">
-      <button @click="onClickDeleteOrder(order.id)" class="btn btn-danger">Supprimer</button>
+    <div v-if="showDeleteButton" class="container-button mt-10">
+      <button @click="deleteOrder(order.id)" class="btn btn-danger">Supprimer</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useOrderAdminStore } from '@/stores/admin/orderAdminStore.ts'
-const orderAdminStore = useOrderAdminStore()
+
+const orderAdminStore =  useOrderAdminStore()
 
 defineProps<{
-  order: Object
+  order: object
+  showDeleteButton: boolean
 }>()
 
-async function onClickDeleteOrder(id: number) {
+async function deleteOrder(id: number) {
   try {
     await orderAdminStore.deleteOrder(id)
-  } catch (e) {
+  } catch(e) {
     console.error(e)
   }
 }

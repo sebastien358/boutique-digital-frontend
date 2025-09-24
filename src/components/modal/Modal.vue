@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProductAdminStore } from "../stores/admin/productAdminStore"
+import { useProductAdminStore } from "../../stores/admin/productAdminStore.ts"
 const productAdminStore = useProductAdminStore();
 
 const props = defineProps<{

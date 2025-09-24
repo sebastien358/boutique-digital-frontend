@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import CartProductList from './CartProductList.vue'
-import Calc from '../../../../components/Calc.vue'
+import Calc from '../../../../components/calc/Calc.vue'
 import type { ProductCartInterface } from '@/shared/interfaces';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore.ts'

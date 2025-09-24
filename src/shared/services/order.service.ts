@@ -2,9 +2,14 @@ import axios from 'axios'
 
 const BASE_URL = 'http://localhost:8000'
 
-export async function axiosGetOrders() {
+export async function axiosGetOrders(currentPage, itemPerPage) {
   try {
-    const response = await axios.get(`${BASE_URL}/api/order/list`)
+    const response = await axios.get(`${BASE_URL}/api/order/list`, {
+      params: {
+        page: currentPage,
+        limit: itemPerPage
+      }
+    })
     return response.data
   } catch(e) {
     console.error('Error: récupération des commandes', e)

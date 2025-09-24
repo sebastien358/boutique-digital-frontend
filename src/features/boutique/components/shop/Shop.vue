@@ -28,7 +28,7 @@ import type { ProductInterface } from '@/shared/interfaces'
 import ShopProductList from './ShopProductList.vue'
 import ShopFilter from './ShopFilter.vue'
 import { reactive } from 'vue'
-import Calc from '@/components/Calc.vue'
+import Calc from '@/components/calc/Calc.vue'
 
 const state = reactive<{
   open: boolean
