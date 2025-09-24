@@ -19,12 +19,12 @@ export async function axiosGetOrders(currentPage, itemPerPage) {
 
 export async function axiosAddOrder(dataCommand) {
   try {
-    const response = await axios.post(`${BASE_URL}/api/order/new`, dataCommand)
-    if (response.data.status >= 200 && response.data.status < 300) {
-      return response.data
+    const response = await axios.post(`${BASE_URL}/api/order/nw`, dataCommand)
+    if (response.status >= 200 && response.status < 300) {
+      return response
     } else {
       console.error('Error: la commande a échouée')
-      return null
+      return false
     }
   } catch(e) {
     console.error('Error: création d\'une commande', e)

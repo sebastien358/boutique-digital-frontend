@@ -1,5 +1,5 @@
 <template>
-  <div v-if="products && products.length > 0">
+  <div v-if="products.length > 0">
     <div class="scrollable product-list">
       <div class="products">
         <div v-for="product in products" :key="product.id" class="d-flex align-items-center space-between products-views">

@@ -29,11 +29,7 @@
           </div>
           <div class="d-flex flex-column mb-20">
             <label for="image">Image(s)</label>
-            <input
-              type="file"
-              multiple
-              @change="onChangeImages(($event.target as HTMLInputElement).files)"
-            />
+            <input type="file" multiple @change="onChangeImages(($event.target as HTMLInputElement).files)" />
           </div>
           <div class="d-flex flex-column mb-10">
             <label for="category"><span>*</span>catégories</label>
@@ -118,7 +114,7 @@ const schema = z.object({
     .string({ message: 'Le titre est requis' })
     .min(5, { message: 'Le titre doit comporter au moins 5 caractères' })
     .max(45, { message: 'Le titre ne peut pas dépasser 45 caractères' }),
-  image: z.array(z.instanceof(File)).optional(),
+  //image: z.array(z.instanceof(File)).optional(),
   description: z
     .string({ message: 'La description est requise' })
     .min(10, { message: 'La description doit comporter au moins 10 caractères' })
@@ -144,21 +140,21 @@ const { handleSubmit, isSubmitting } = useForm({
 const { value: title, errorMessage: errorTitle } = useField('title')
 const { value: description, errorMessage: errorDescription } = useField('description')
 const { value: price, errorMessage: errorPrice } = useField('price')
-const { value: image, errorMessage: errorImage } = useField('image')
+//const { value: image } = useField('image')
 const { value: category, errorMessage: errorCategory } = useField('category')
 
-const onSubmit = handleSubmit(async (dataProduct) => {
+const onSubmit = handleSubmit(async (dataProduct, {resetForm}) => {
   try {
     if (Object.keys(state.product).length > 0) {
       delete dataProduct.image
       dataProduct.images = [ ...state.images ]
       await productAdminStore.updateProduct(dataProduct, route.params.id);
-      setSuccessMessage('Le produit a été modifié avec succès')
+      setSuccessMessage('Le produit a été modifié avec succès',resetForm)
     } else {
       delete dataProduct.image
       dataProduct.images = state.images
       await productAdminStore.newProduct(dataProduct)
-      setSuccessMessage('Le produit a été ajouté avec succès', null)
+      setSuccessMessage('Le produit a été ajouté avec succès', resetForm)
     }
   } catch (e) {
     setErrorMessage("L'envoi d'un produit n'a pas pu aboutir")
@@ -176,8 +172,8 @@ const setSuccessMessage = (message: string, resetForm: () => void) => {
   successMessage.value = message
   setTimeout(() => {
     successMessage.value = ''
-    // resetForm()
-    // router.push({ path: '/product-list' })
+    resetForm()
+    router.push({ path: '/product-list' })
   }, 2000)
 }
 

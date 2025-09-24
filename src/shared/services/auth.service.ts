@@ -6,12 +6,12 @@ const BASE_URL = 'http://127.0.0.1:8000'
 
 export async function axiosRegister(dataRegister: RegisterInterface): Promise<RegisterInterface> {
   try {
-    const { email, password } = dataRegister;
-    const response = await axios.post(`${BASE_URL}/api/register`, {
-      email,
-      password
-    });
-    return response.data;
+    const response = await axios.post('${BASE_URL}/api/register', dataRegister);
+    if (response.status >= 200 && response.status < 300) {
+      return response.data
+    } else {
+      return false
+    }
   } catch(e) {
     console.log('Error: ', e);
     throw e;
@@ -25,7 +25,11 @@ export async function axiosLogin(dataLogin: LoginInterface): Promise<LoginInterf
       username: email,
       password
     });
-    return response.data;
+    if (response.status >= 200 && response.status < 300) {
+      return response.data;
+    } else {
+      return false
+    }
   } catch(e) {
     console.log('Error: ', e);
     throw e;

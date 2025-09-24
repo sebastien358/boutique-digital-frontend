@@ -215,8 +215,10 @@ const onSubmit = handleSubmit(async (dataCommand, { resetForm }) => {
     const response = await commandStore.addCommand(dataCommand)
     if (response) {
       setSuccessMessage('La commande a été validée', resetForm)
+      return true
     } else {
       setErrorMessage('La commande a échouée')
+      return false
     }
   } catch (e) {
     setErrorMessage('La commande a échouée')

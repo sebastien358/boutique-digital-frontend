@@ -20,7 +20,11 @@ export async function axiosGetAdminOrders(currentPage: number, itemPerPage: numb
 export async function axiosAdminDeleteOrder(id: number) {
   try {
     const response = await axios.delete(`${BASE_URL}/order/delete/${id}`)
-    return response.data
+    if (response.status === 204 || response.status === 200) {
+      return response
+    } else {
+      return false
+    }
   } catch(e) {
     console.error('error: supression d\'un panier', e)
   }
