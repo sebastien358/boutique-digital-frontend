@@ -20,11 +20,16 @@
         <!-- Modal confirmation de suppression d\'un article --->
         <Modal :open="state.open" :productId="state.productId" @close="state.open = false" />
         <!-- pagination -->
-        <Pagination @previousPage="previousPage()" @nextPage="nextPage()" :totalPages="totalPages" :currentPage="currentPage" />
+        <Pagination
+          @previousPage="previousPage()"
+          @nextPage="nextPage()"
+          :totalPages="totalPages"
+          :currentPage="currentPage"
+        />
       </div>
     </div>
   </div>
-  <div v-else class="no-product">
+  <div v-else class="no-data">
     <p>Aucun produit à afficher pour le moment.</p>
   </div>
 </template>
@@ -124,10 +129,10 @@ const totalPages = computed(() =>
   }
 }
 
-.no-product {
+.no-data {
   @include center-page;
   p {
-    color: #95a5a6;
+    color: var(--no-data);
     font-size: 14px;
   }
 }

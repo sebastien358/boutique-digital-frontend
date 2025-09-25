@@ -65,7 +65,7 @@ export async function axiosAdminProductNew(formData: ProductFormInterface) {
       return false
     }
   } catch(e) {
-    console.error('Error: ', e);
+    console.error('Error server', e);
   }
 }
 
@@ -78,6 +78,6 @@ export async function axiosAdminProductEdit(formData: ProductFormInterface, id: 
       return false
     }
   } catch(e) {
-    console.error('Error: ', e);
+    console.error('Error server', e);
   }
 }

@@ -8,7 +8,7 @@
 
 // form
 
-@use './form//form.scss' as *;
+@use './form/form.scss' as *;
 
 // spinner
 
@@ -21,3 +21,7 @@
 // mixins
 
 @use './mixins' as *;
+
+// utils
+
+@use './utils/utils' as *;

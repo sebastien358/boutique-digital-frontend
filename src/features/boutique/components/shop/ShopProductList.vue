@@ -69,7 +69,7 @@ const emit = defineEmits<{
   height: 100%;
   p {
     font-size: 14px;
-    color: #718093;
+    color: var(--no-data);
   }
 }
 </style>

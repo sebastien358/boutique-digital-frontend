@@ -1,69 +1,3 @@
-@use '@/assets/scss/mixins' as mixin;
-
-:root {
-  --primary-1: #3498db;
-  --primary-2: #2980b9;
-  --danger-1: #e74c3c;
-  --danger-2: #c0392b;
-  --success-1: #2ecc71;
-  --success-2: #27ae60;
-  --green-1: #4CAF50;
-  --green-2: #3e8e41;
-  --gray-1: #f6f6f6;
-  --gray-2: #ddd;
-  --gray-3: #34495e;
-  --text-color: #444;
-  --text-primary-color: #ffffff;
-  --green-validate-form: #008000;
-  --on-basket: #32ff7e;
-  --border: 1px solid var(--gray-2);
-  --border-basket: var(--on-basket);
-  --border-radius: 4px;
-  --font-family: 'Roboto', sans-serif;
-}
-
-// reset
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-img {
-  width: 100%;
-  object-fit: cover;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  margin: 0;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-img {
-  max-width: 100%;
-}
-
-a {
-  color: var(--text-color);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-body {
-  font-family: var(--font-family);
-  color: var(--text-color);
-  background-color: var(--gray-1);
-}
-
 // flex
 
 .d-flex {
@@ -88,12 +22,6 @@ body {
 
 .space-between {
   justify-content: space-between;
-}
-
-// flex fill
-
-.flex-fill {
-  flex: 1 1 auto;
 }
 
 // padding
@@ -192,22 +120,15 @@ body {
   margin-top: 20px;
 }
 
-
-a.router-link-active {
-  text-decoration: underline;
-}
-
 // text center
 
 .text-center {
   text-align: center;
 }
 
-// utils
+// flex fill
 
-@include mixin.lg-tablet {
-  .hide-tablet {
-    display: none;
-  }
+.flex-fill {
+  flex: 1 1 auto;
 }
 

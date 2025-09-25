@@ -27,7 +27,7 @@ export const useCartStore = defineStore('cart', {
           const products: ProductCartInterface[] = Array.isArray(response) ? response : [response]
           this.cart = products
         } else {
-          console.error('Error: La réponse est vide')
+          console.log('Error: La réponse est vide')
         }
       } catch(e) {
         console.error('Error: récupération des produits', e)

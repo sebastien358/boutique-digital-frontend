@@ -12,7 +12,7 @@ export async function axiosGetProducts(offset: number, limit: number) {
     });
     return response.data;
   } catch(e) {
-    console.error('Erreur serveur: ', e);
+    console.error('Error server: ', e);
   }
 }
 
@@ -25,7 +25,7 @@ export async function axiosSearchProducts(search: string) {
     });
     return response.data;
   } catch(e) {
-    console.error('Erreur serveur: ', e);
+    console.error('Error server: ', e);
   }
 }
 
@@ -39,7 +39,7 @@ export async function axiosFilteredProductByPrice(minPrice: number, maxPrice: nu
     });
     return response.data;
   } catch(e) {
-    console.error('Erreur serveur: ', e);
+    console.error('Error server: ', e);
   }
 }
 
@@ -52,6 +52,6 @@ export async function axiosFilteredProductByCategory(category: string) {
     });
     return response.data;
   } catch(e) {
-    console.error('Erreur serveur: ', e);
+    console.error('Error server: ', e);
   }
 }

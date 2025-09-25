@@ -78,7 +78,6 @@ function goToCommand() {
   bottom: 10px;
   right: 30px;
   .on-products-basket {
-    border: var(--border-basket);
     box-shadow: var(--on-basket) 0 2px 11px, var(--on-basket) 0 2px 11px;
   }
   &_toggle {

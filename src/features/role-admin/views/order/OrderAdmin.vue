@@ -35,7 +35,7 @@ async function loadOrderUser() {
   try {
     await orderAdminStore.getOrders(currentPage.value, itemPerPage.value)
   } catch (e) {
-    console.error('Erreur de la récupération des commandes des clients', e)
+    console.error('Error de la récupération des commandes', e)
   }
 }
 
@@ -82,8 +82,7 @@ const totalPages = computed(() =>
 .no-order {
   height: 100%;
   p {
-    color: var(--danger-1);
-    font-weight: 500;
+    color: var(--no-data);
     font-size: 14px;
   }
 }

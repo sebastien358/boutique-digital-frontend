@@ -1,14 +1,26 @@
 <template>
   <div class="d-flex align-items-center justify-content-center mt-10 pagination">
-    <button @click="previousPage()" :class="{ 'btn-pagination': true }" :disabled="currentPage === 1">Précédent</button>
+    <button
+      @click="previousPage()"
+      :class="{ 'btn-pagination': true }"
+      :disabled="currentPage === 1"
+    >
+      Précédent
+    </button>
     <span>Page {{ currentPage }} - {{ totalPages }}</span>
-    <button @click="nextPage()" :class="{ 'btn-pagination': true }" :disabled="currentPage === totalPages">Suivant</button>
+    <button
+      @click="nextPage()"
+      :class="{ 'btn-pagination': true }"
+      :disabled="currentPage === totalPages"
+    >
+      Suivant
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  totalPages: number,
+  totalPages: number
   currentPage: number
 }>()
 
@@ -18,19 +30,11 @@ const emit = defineEmits<{
 }>()
 
 function previousPage() {
-  try {
-    emit('previousPage')
-  } catch(e) {
-    console.error(e)
-  }
+  emit('previousPage')
 }
 
 function nextPage() {
-  try {
-    emit('nextPage')
-  } catch(e) {
-    console.error(e)
-  }
+  emit('nextPage')
 }
 </script>
 

@@ -38,7 +38,7 @@
     </div>
     <!-- Menu Tablet -->
     <div class="container-menu">
-      <font-awesome-icon @click="state.open = !state.open" icon="fa-solid fa-bars" />
+      <font-awesome-icon @click="state.open = !state.open" icon="fa-light fa-bars" />
       <Transition>
       <ul v-if="state.open" class="menu-tablet">
         <li>
@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import Calc from '../calc/Calc.vue'
 import { reactive } from 'vue';
-import { useAuthStore } from '../../stores/authStore.ts'
+import { useAuthStore } from '@/stores/authStore.ts'
 import { useRouter } from 'vue-router'
 
 const state = reactive<{

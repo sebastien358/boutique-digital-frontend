@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = 'http://localhost:8000/api/order'
 
-export async function axiosGetOrders(currentPage, itemPerPage) {
+export async function axiosGetOrders(currentPage: number, itemPerPage: number) {
   try {
-    const response = await axios.get(`${BASE_URL}/api/order/list`, {
+    const response = await axios.get(`${BASE_URL}/list`, {
       params: {
         page: currentPage,
         limit: itemPerPage
@@ -12,22 +12,22 @@ export async function axiosGetOrders(currentPage, itemPerPage) {
     })
     return response.data
   } catch(e) {
-    console.error('Error: récupération des commandes', e)
+    console.error('Error server', e)
     throw e
   }
 }
 
 export async function axiosAddOrder(dataCommand) {
   try {
-    const response = await axios.post(`${BASE_URL}/api/order/nw`, dataCommand)
+    const response = await axios.post(`${BASE_URL}/new`, dataCommand)
     if (response.status >= 200 && response.status < 300) {
       return response
     } else {
-      console.error('Error: la commande a échouée')
+      console.error('Error server')
       return false
     }
   } catch(e) {
-    console.error('Error: création d\'une commande', e)
+    console.error('Error server', e)
     throw e
   }
 }
